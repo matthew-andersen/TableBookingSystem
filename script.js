@@ -8,15 +8,15 @@ function handleLocationSelection(name) {
     if (f.style.fill == "red") {
         alert("Sorry, this has been booked");
     } else {
-        var days = window.prompt("Enter how many days");
-        if (days != "") {
+        var days = window.prompt("Enter how many days").trim();
+        if (days != "" && days != null) {
             var cost = days * 25;
             if (window.confirm("Your booking is for " + days + " days. This will cost a total of: $" + cost + ". Press OK to confirm.") == true) {
                 f.style.fill = "red";
             }
         }
         else {
-            window.alert("Please enter a booking duration")
+            window.alert("Please enter a valid booking duration")
         }
     }
 }
