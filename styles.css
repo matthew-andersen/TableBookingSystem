@@ -1,7 +1,61 @@
 /*Empty stylesheet for application site*/
 
-svg {
-    width: 50%;
-    height: 50%;
+body {
+    margin: 0;
+    height: 99vh;
 }
 
+svg {
+    width: 100%;
+    height: 100%;
+}
+
+p {
+    margin: 0;
+}
+
+div#left-col {
+    width: 25%;
+    height: 100vh;
+    float: left;
+    background-color: yellow;
+    position: relative;
+}
+
+div#right-col {
+    width: 75%;
+    height: 100%;
+    float: right;
+}
+
+div#filter-box {
+    height: 30%;
+    border-bottom: solid black 3px;
+}
+
+div#review-box {
+    width: 80%;
+    height: 60%;
+    padding-top: 10%;
+    margin-left: 10%;
+}
+
+div#cart-box {
+    background-color: white;
+    height: 80%;
+    padding: 2%;
+    font-family: Arial, sans-serif;
+}
+
+div#cart-box-header {
+    border-bottom: solid black 3px;
+    height: 10%;
+    font-weight: bold;
+    margin-top: 5%;
+    margin-bottom: 3%;
+
+}
+
+#submit-button {
+    margin-top: 5%;
+}
