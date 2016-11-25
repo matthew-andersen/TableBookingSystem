@@ -3,31 +3,48 @@
 var userOrder = [];
 var roomList = [];
 
-$(document).ready(function loadCSV() {
-    $.ajax({
-        url: 'data.csv',
-        dataType: 'text'
-    }).done(createRoomList);
+var todayDate = new Date();
+var currentYear = todayDate.getFullYear();
+var currentMonth = todayDate.getMonth();
+var currentDate = todayDate.getDate();
+var currentHour = todayDate.getHours();
+var completeDate = [currentYear, currentMonth, currentDate, currentHour];
 
-    function createRoomList(data) {
-        var allInfo = data.split(/\r?\n|\r/);
-        for (var line = 0; line < allInfo.length; line++) {
-            roomList.push(allInfo[line].split(','));
-        }
-        initialiseRoom()
-    }
 
-    function initialiseRoom() {
-        for (i = 0; i < roomList.length; i++) {
-            var room = document.getElementById(roomList[i][0]);
-            if (roomList[i][1] == "false") {
-                room.style.fill = "red"
-            } else {
-                room.style.fill = "green"
+// Initialises the application on page load
+$(document).ready(
+    function loadCSV() {
+        $.ajax({
+            url: 'data.csv',
+            dataType: 'text'
+        }).done(createRoomList);
+
+        function createRoomList(data) {
+            var allInfo = data.split(/\r?\n|\r/);
+            for (var line = 0; line < allInfo.length; line++) {
+                roomList.push(allInfo[line].split(','));
             }
+            initialiseRoom()
         }
-    }
-});
+
+        function initialiseRoom() {
+            var i;
+            for (i = 0; i < roomList.length; i++) {
+                var room = document.getElementById(roomList[i][0]);
+                if (roomList[i][1] == "false") {
+                    room.style.fill = "red"
+                } else {
+                    room.style.fill = "green"
+                }
+
+            }
+            initialiseDate()
+        }
+
+        function initialiseDate() {
+            document.getElementById("date-display-box").innerHTML = moment(completeDate).format('MMMM Do YYYY - h:00a');
+        }
+    });
 
 function handleLocationSelection(name, location) {
 // Function checks if location has been booked and if it is not it allows the user to make a booking also includes basic error checking
@@ -64,4 +81,17 @@ function submitOrder() {
     alert("Thank you for your booking!");
     $("#cart-box-order").text("")
 
+}
+
+function changeDate(change) {
+    if (change == "hour_back") {
+        completeDate[3] = completeDate[3] - 1;
+    } else if (change == "day_back") {
+        completeDate[2] = completeDate[2] - 1;
+    } else if (change == "hour_forward") {
+        completeDate[3] = completeDate[3] + 1;
+    } else if (change == "day_forward") {
+        completeDate[2] = completeDate[2] + 1;
+    }
+    document.getElementById("date-display-box").innerHTML = moment(completeDate).format('MMMM Do YYYY - h:00a')
 }

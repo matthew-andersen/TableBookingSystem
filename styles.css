@@ -1,5 +1,9 @@
 /*Empty stylesheet for application site*/
 
+* {
+    font-family: Arial, sans-serif;
+}
+
 body {
     margin: 0;
     height: 99vh;
@@ -7,7 +11,7 @@ body {
 
 svg {
     width: 100%;
-    height: 100%;
+    height: 90%;
 }
 
 p {
@@ -28,6 +32,11 @@ div#right-col {
     float: right;
 }
 
+div#date-nav-box {
+    height: 10%;
+    background-color: black;
+}
+
 div#filter-box {
     height: 30%;
     border-bottom: solid black 3px;
@@ -44,7 +53,6 @@ div#cart-box {
     background-color: white;
     height: 80%;
     padding: 2%;
-    font-family: Arial, sans-serif;
 }
 
 div#cart-box-header {
@@ -58,4 +66,44 @@ div#cart-box-header {
 
 #submit-button {
     margin-top: 5%;
+}
+
+#date-display-box {
+    float: left;
+    width: 60%;
+    color: white;
+    height: 80%;
+    font-size: 58px;
+}
+
+#hour-nav-arrow-left {
+    height: 100%;
+    width: 10%;
+    float: left;
+    background-image: url("assets/left-hour-arrow.png");
+    background-repeat: no-repeat;
+}
+
+#day-nav-arrow-left {
+    height: 100%;
+    width: 10%;
+    float: left;
+    background-image: url("assets/left-day-arrow.png");
+    background-repeat: no-repeat;
+}
+
+#hour-nav-arrow-right {
+    height: 100%;
+    width: 10%;
+    float: right;
+    background-image: url("assets/right-hour-arrow.png");
+    background-repeat: no-repeat;
+}
+
+#day-nav-arrow-right {
+    height: 100%;
+    width: 10%;
+    float: right;
+    background-image: url("assets/right-day-arrow.png");
+    background-repeat: no-repeat;
 }
