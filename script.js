@@ -1,6 +1,33 @@
 // JavaScript for handling events
 
 var userOrder = [];
+var roomList = [];
+
+$(document).ready(function loadCSV() {
+    $.ajax({
+        url: 'data.csv',
+        dataType: 'text'
+    }).done(createRoomList);
+
+    function createRoomList(data) {
+        var allInfo = data.split(/\r?\n|\r/);
+        for (var line = 0; line < allInfo.length; line++) {
+            roomList.push(allInfo[line].split(','));
+        }
+        initialiseRoom()
+    }
+
+    function initialiseRoom() {
+        for (i = 0; i < roomList.length; i++) {
+            var room = document.getElementById(roomList[i][0]);
+            if (roomList[i][1] == "false") {
+                room.style.fill = "red"
+            } else {
+                room.style.fill = "green"
+            }
+        }
+    }
+});
 
 function handleLocationSelection(name, location) {
 // Function checks if location has been booked and if it is not it allows the user to make a booking also includes basic error checking
@@ -20,7 +47,7 @@ function handleLocationSelection(name, location) {
                 //text(location + " for " + days + " days: $" + cost);
                 //$("#cart-box").text(location + " for " + days + " days: $" + cost);
                 room_id.style.fill = "yellow";
-                userOrder.push(room_id)
+                userOrder.push(name)
             }
         }
         else {
@@ -32,10 +59,8 @@ function handleLocationSelection(name, location) {
 function submitOrder() {
     var i;
     for (i = 0; i < userOrder.length; i++) {
-        userOrder[i].style.fill = "red"
+        document.getElementById(userOrder[i]).style.fill = "red"
     }
-   // if (userOrder != false) {
-        //alert(userOrder == true);
     alert("Thank you for your booking!");
     $("#cart-box-order").text("")
 
