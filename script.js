@@ -10,8 +10,8 @@ var currentYear = todayDate.getFullYear();
 var currentMonth = todayDate.getMonth();
 var currentDay = todayDate.getDate();
 var currentHour = todayDate.getHours();
-var currentDateTime = [currentYear, currentMonth, currentDay, currentHour];
-var onScreenDate = [currentYear, currentMonth, currentDay, currentHour];
+var currentDateTime = moment([currentYear, currentMonth, currentDay, currentHour]);
+var onScreenDate = moment([currentYear, currentMonth, currentDay, currentHour]);
 
 
 // Initialises the application on page load
@@ -104,7 +104,18 @@ function submitOrder() {
 //     return true;
 // }
 
-function dateBackCheck(onScreenDate, currentDate) {
+function dayBackCheck(onScreenDate, currentDate) {
+    if (onScreenDate.year)
+
+        for (var i = 0; i < 3; i++) {
+            if (onScreenDate[i] > currentDate[i]) {
+                return true;
+            }
+        }
+    return false;
+}
+
+function hourBackCheck(onScreenDate, currentDate) {
     for (var i = 0; i < 4; i++) {
         if (onScreenDate[i] > currentDate[i]) {
             return true;
@@ -114,38 +125,31 @@ function dateBackCheck(onScreenDate, currentDate) {
 }
 
 function changeDate(change) {
-    if (change == "hourBack" && dateBackCheck(onScreenDate, currentDateTime) == true) {
-        onScreenDate[3] = onScreenDate[3] - 1;
-        //if moving back below 0, move back a day
-        if (moment(onScreenDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
-            onScreenDate[3] = 23;
-            onScreenDate[2] = onScreenDate[2] - 1;
-            //if moving back below the first day of the month, move back a month
-            if (moment(onScreenDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
-                onScreenDate[1] = onScreenDate[1] - 1;
-                alert(onScreenDate)
-            }
+    if (change == "hourBack" && onScreenDate.isAfter(currentDateTime, 'hour')) {
+        onScreenDate.add(-1, 'hours');
+
+    } else if (change == "dayBack" && (onScreenDate.isAfter(currentDateTime, 'day'))) {
+        var potentialNewDate = onScreenDate.clone();
+        potentialNewDate.add(-1, 'days');
+        if (potentialNewDate.isSame(currentDateTime, 'day')) {
+            if (potentialNewDate.isSameOrAfter(onScreenDate, 'hour')) {
+                onScreenDate.add(-1, 'days');
+            } else onScreenDate = currentDateTime.clone();
+
+        } else {
+            onScreenDate.add(-1, 'days');
         }
 
-    } else if (change == "dayBack" && dateBackCheck(onScreenDate, currentDateTime) == true) {
-        onScreenDate[2] = onScreenDate[2] - 1;
-        if (moment(onScreenDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
-            onScreenDate[1] = onScreenDate[1] - 1;
-            onScreenDate[2] = 3
-        }
 
     } else if (change == "hourForward") {
-        onScreenDate[3] = onScreenDate[3] + 1;
-        if (moment(onScreenDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
-            onScreenDate[2] = onScreenDate[2] + 1;
-            onScreenDate[3] = 0
-        }
+        onScreenDate.add(1, 'hours');
+        // onScreenDate[3] = onScreenDate[3] + 1;
+        // if (moment(onScreenDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
+        //     onScreenDate[2] = onScreenDate[2] + 1;
+        //     onScreenDate[3] = 0
+        // }
     } else if (change == "dayForward") {
-        onScreenDate[2] = onScreenDate[2] + 1;
-        if (moment(onScreenDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
-            onScreenDate[1] = onScreenDate[1] + 1;
-            onScreenDate[2] = 1
-        }
+        onScreenDate.add(1, 'days');
     }
-    document.getElementById("date-display-box").innerHTML = moment(onScreenDate).format('MMMM Do YYYY - h:00a');
+    document.getElementById("date-display-box").innerHTML = onScreenDate.format('MMMM Do YYYY - h:00a');
 }
