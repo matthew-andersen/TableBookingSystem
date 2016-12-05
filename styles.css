@@ -70,6 +70,7 @@ div#cart-box-header {
 
 #date-display-box {
     float: left;
+    text-align: center;
     width: 60%;
     color: white;
     height: 80%;

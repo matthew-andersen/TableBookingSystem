@@ -1,13 +1,23 @@
 <?php
+
+//$HOST = 'localhost';
+//$USER = 'root';
+//$PASS = '';
+
+$HOST = 'sql6.freesqldatabase.com';
+$USER = 'sql6147851';
+$PASS = 'JKPbi1FfB7';
+$DB = 'sql6147851';
+
 $q = $_GET['q'];
 
-$con = mysqli_connect('localhost', 'root', '');
+$con = mysqli_connect($HOST, $USER, $PASS);
 
 if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
 
-mysqli_select_db($con, "booking_system");
+mysqli_select_db($con, $DB);
 
 $sql = "UPDATE workspace SET available=0 WHERE room_id='$q'";
 
