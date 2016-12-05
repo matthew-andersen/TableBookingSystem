@@ -86,6 +86,7 @@ function submitOrder() {
     for (var i = 0; i < userOrder.length; i++) {
         alert(userOrder[i]);
         // document.getElementById(userOrder[i]).style.fill = "red"
+        //TODO: Here is where we need to send the record (booking_id, table_id, onScreenDate, duration, user_id) to a new record table
         xmlhttp.open("GET", "orderprocess.php?q=" + userOrder[i], true);
         xmlhttp.send();
         alert("Thank you for your booking!");
