@@ -8,10 +8,10 @@ var roomList = [];
 var todayDate = new Date();
 var currentYear = todayDate.getFullYear();
 var currentMonth = todayDate.getMonth();
-var currentDate = todayDate.getDate();
+var currentDay = todayDate.getDate();
 var currentHour = todayDate.getHours();
-var currentDateTime = [currentYear, currentMonth, currentDate, currentHour];
-var completeDate = [currentYear, currentMonth, currentDate, currentHour];
+var currentDateTime = [currentYear, currentMonth, currentDay, currentHour];
+var onScreenDate = [currentYear, currentMonth, currentDay, currentHour];
 
 
 // Initialises the application on page load
@@ -52,7 +52,7 @@ function colourChange(workspaceInfo) {
 }
 
 function initialiseDate() {
-    document.getElementById("date-display-box").innerHTML = moment(completeDate).format('MMMM Do YYYY - h:00a');
+    document.getElementById("date-display-box").innerHTML = moment(onScreenDate).format('MMMM Do YYYY - h:00a');
 }
 
 function handleLocationSelection(name, location) {
@@ -94,47 +94,58 @@ function submitOrder() {
     }
 }
 
-function arraysEqual(arr1, arr2) {
-    if (arr1.length !== arr2.length)
-        return false;
-    for (var i = arr1.length; i--;) {
-        if (arr1[i] !== arr2[i])
-            return false;
+// function arraysEqual(arr1, arr2) {
+//     if (arr1.length !== arr2.length)
+//         return false;
+//     for (var i = arr1.length; i--;) {
+//         if (arr1[i] !== arr2[i])
+//             return false;
+//     }
+//     return true;
+// }
+
+function dateBackCheck(onScreenDate, currentDate) {
+    for (var i = 0; i < 4; i++) {
+        if (onScreenDate[i] > currentDate[i]) {
+            return true;
+        }
     }
-    return true;
+    return false;
 }
 
 function changeDate(change) {
-    if (change == "hourBack" && arraysEqual(completeDate, currentDateTime) == false) {
-        completeDate[3] = completeDate[3] - 1;
-        if (moment(completeDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
-            completeDate[3] = 23;
-            completeDate[2] = completeDate[2] - 1;
-            if (moment(completeDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
-                completeDate[1] = completeDate[1] - 1;
-                alert(completeDate)
+    if (change == "hourBack" && dateBackCheck(onScreenDate, currentDateTime) == true) {
+        onScreenDate[3] = onScreenDate[3] - 1;
+        //if moving back below 0, move back a day
+        if (moment(onScreenDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
+            onScreenDate[3] = 23;
+            onScreenDate[2] = onScreenDate[2] - 1;
+            //if moving back below the first day of the month, move back a month
+            if (moment(onScreenDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
+                onScreenDate[1] = onScreenDate[1] - 1;
+                alert(onScreenDate)
             }
         }
 
-    } else if (change == "dayBack" && arraysEqual(completeDate, currentDateTime) == false) {
-        completeDate[2] = completeDate[2] - 1;
-        if (moment(completeDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
-            completeDate[1] = completeDate[1] - 1;
-            completeDate[2] = 3
+    } else if (change == "dayBack" && dateBackCheck(onScreenDate, currentDateTime) == true) {
+        onScreenDate[2] = onScreenDate[2] - 1;
+        if (moment(onScreenDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
+            onScreenDate[1] = onScreenDate[1] - 1;
+            onScreenDate[2] = 3
         }
 
     } else if (change == "hourForward") {
-        completeDate[3] = completeDate[3] + 1;
-        if (moment(completeDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
-            completeDate[2] = completeDate[2] + 1;
-            completeDate[3] = 0
+        onScreenDate[3] = onScreenDate[3] + 1;
+        if (moment(onScreenDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
+            onScreenDate[2] = onScreenDate[2] + 1;
+            onScreenDate[3] = 0
         }
     } else if (change == "dayForward") {
-        completeDate[2] = completeDate[2] + 1;
-        if (moment(completeDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
-            completeDate[1] = completeDate[1] + 1;
-            completeDate[2] = 1
+        onScreenDate[2] = onScreenDate[2] + 1;
+        if (moment(onScreenDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
+            onScreenDate[1] = onScreenDate[1] + 1;
+            onScreenDate[2] = 1
         }
     }
-    document.getElementById("date-display-box").innerHTML = moment(completeDate).format('MMMM Do YYYY - h:00a');
+    document.getElementById("date-display-box").innerHTML = moment(onScreenDate).format('MMMM Do YYYY - h:00a');
 }
