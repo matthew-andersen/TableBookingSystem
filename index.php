@@ -15,12 +15,7 @@
 <body>
 
 <div id="left-col">
-    <div id="filter-box"><p><?php echo date('dS'); ?>
-            <?php
-            echo "The time is " . date("h:i:sa");
-            ?>
-
-        </p></div>
+    <div id="filter-box"></div>
     <div id="review-box">
         <div id="cart-box">
             <div id="cart-box-header">Your Cart</div>

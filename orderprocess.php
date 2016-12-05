@@ -1,5 +1,4 @@
 <?php
-
 $q = $_GET['q'];
 
 $con = mysqli_connect('localhost', 'root', '');
