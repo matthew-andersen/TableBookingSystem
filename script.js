@@ -89,53 +89,52 @@ function submitOrder() {
         xmlhttp.open("GET", "orderprocess.php?q=" + userOrder[i], true);
         xmlhttp.send();
         alert("Thank you for your booking!");
-
         $("#cart-box-order").text("")
 
     }
+}
 
-    function arraysEqual(arr1, arr2) {
-        if (arr1.length !== arr2.length)
+function arraysEqual(arr1, arr2) {
+    if (arr1.length !== arr2.length)
+        return false;
+    for (var i = arr1.length; i--;) {
+        if (arr1[i] !== arr2[i])
             return false;
-        for (var i = arr1.length; i--;) {
-            if (arr1[i] !== arr2[i])
-                return false;
-        }
-        return true;
     }
+    return true;
+}
 
-    function changeDate(change) {
-        if (change == "hourBack" && arraysEqual(completeDate, currentDateTime) == false) {
-            completeDate[3] = completeDate[3] - 1;
-            if (moment(completeDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
-                completeDate[3] = 23;
-                completeDate[2] = completeDate[2] - 1;
-                if (moment(completeDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
-                    completeDate[1] = completeDate[1] - 1;
-                    alert(completeDate)
-                }
-            }
-
-        } else if (change == "dayBack" && arraysEqual(completeDate, currentDateTime) == false) {
+function changeDate(change) {
+    if (change == "hourBack" && arraysEqual(completeDate, currentDateTime) == false) {
+        completeDate[3] = completeDate[3] - 1;
+        if (moment(completeDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
+            completeDate[3] = 23;
             completeDate[2] = completeDate[2] - 1;
             if (moment(completeDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
                 completeDate[1] = completeDate[1] - 1;
-                completeDate[2] = 3
-            }
-
-        } else if (change == "hourForward") {
-            completeDate[3] = completeDate[3] + 1;
-            if (moment(completeDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
-                completeDate[2] = completeDate[2] + 1;
-                completeDate[3] = 0
-            }
-        } else if (change == "dayForward") {
-            completeDate[2] = completeDate[2] + 1;
-            if (moment(completeDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
-                completeDate[1] = completeDate[1] + 1;
-                completeDate[2] = 1
+                alert(completeDate)
             }
         }
-        document.getElementById("date-display-box").innerHTML = moment(completeDate).format('MMMM Do YYYY - h:00a');
+
+    } else if (change == "dayBack" && arraysEqual(completeDate, currentDateTime) == false) {
+        completeDate[2] = completeDate[2] - 1;
+        if (moment(completeDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
+            completeDate[1] = completeDate[1] - 1;
+            completeDate[2] = 3
+        }
+
+    } else if (change == "hourForward") {
+        completeDate[3] = completeDate[3] + 1;
+        if (moment(completeDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
+            completeDate[2] = completeDate[2] + 1;
+            completeDate[3] = 0
+        }
+    } else if (change == "dayForward") {
+        completeDate[2] = completeDate[2] + 1;
+        if (moment(completeDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
+            completeDate[1] = completeDate[1] + 1;
+            completeDate[2] = 1
+        }
     }
+    document.getElementById("date-display-box").innerHTML = moment(completeDate).format('MMMM Do YYYY - h:00a');
 }
