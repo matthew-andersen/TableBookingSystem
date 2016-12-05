@@ -52,6 +52,7 @@ function colourChange(workspaceInfo) {
 }
 
 function initialiseDate() {
+    // TODO: alert(currentDateTime.format("Y,M,D,HH"))
     document.getElementById("date-display-box").innerHTML = moment(onScreenDate).format('MMMM Do YYYY - h:00a');
 }
 
