@@ -2,8 +2,12 @@
 
 xhttp = new XMLHttpRequest();
 
+var AVAILABLE = "#29912A";
+var UNAVAILABLE = "rgb(223, 223, 223)";
+var SELECTED = "#E0CA1F";
+
 var userOrder = [];
-var roomList = [];
+// var roomList = [];
 
 var todayDate = new Date();
 var currentYear = todayDate.getFullYear();
@@ -15,7 +19,7 @@ var onScreenDate = moment([currentYear, currentMonth, currentDay, currentHour]);
 
 
 // Initialises the application on page load
-document.addEventListener('DOMContentLoaded', function roomGen() {
+$(document).ready(function roomGen() {
     initialiseDate();
     if (window.XMLHttpRequest) {
         // code for IE7+, Firefox, Chrome, Opera, Safari
@@ -30,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function roomGen() {
             // document.getElementById("txtHint").innerHTML = this.responseText;
         }
     };
-    xmlhttp.open("GET", "process.php?q=", true);
+    xmlhttp.open("GET", "availability_process.php?q=", true);
     xmlhttp.send();
 });
 
@@ -45,9 +49,9 @@ function colourChange(workspaceInfo) {
     var roomID = workspaceInfo[0];
     var room = document.getElementById(roomID);
     if (workspaceInfo[1] == 1) {
-        room.style.fill = "green";
+        room.style.fill = AVAILABLE;
     } else if (workspaceInfo[1] == 0) {
-        room.style.fill = "red";
+        room.style.fill = UNAVAILABLE;
     }
 }
 
@@ -61,9 +65,9 @@ function handleLocationSelection(name, location) {
 // The booking is then confirmed by the user and the location is 'redded-out'
 // This may not be the best function name, but it will do for now
     var room_svg_object = document.getElementById(name);
-    if (room_svg_object.style.fill == "red") {
+    if (room_svg_object.style.fill == UNAVAILABLE) {
         alert("Sorry, this has been booked");
-    } else if (room_svg_object.style.fill == "yellow") {
+    } else if (room_svg_object.style.fill == SELECTED) {
         alert("This booking needs to be confirmed")
     } else {
         var days = window.prompt("Enter how many days").trim();
@@ -73,7 +77,7 @@ function handleLocationSelection(name, location) {
                 document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + days + " days: $" + cost + "</p>";
                 //text(location + " for " + days + " days: $" + cost);
                 //$("#cart-box").text(location + " for " + days + " days: $" + cost);
-                room_svg_object.style.fill = "yellow";
+                room_svg_object.style.fill = SELECTED;
                 userOrder.push(name);
             }
         }
@@ -86,11 +90,12 @@ function handleLocationSelection(name, location) {
 function submitOrder() {
     for (var i = 0; i < userOrder.length; i++) {
         alert(userOrder[i]);
-        // document.getElementById(userOrder[i]).style.fill = "red"
-        xmlhttp.open("GET", "orderprocess.php?q=" + userOrder[i], true);
+        // document.getElementById(userOrder[i]).style.fill = UNAVAILABLE
+        xmlhttp.open("GET", "order_process.php?q=" + userOrder[i], true);
         xmlhttp.send();
         alert("Thank you for your booking!");
-        $("#cart-box-order").text("")
+        $("#cart-box-order").text("");
+        location.reload()
 
     }
 }
@@ -105,25 +110,25 @@ function submitOrder() {
 //     return true;
 // }
 
-function dayBackCheck(onScreenDate, currentDate) {
-    if (onScreenDate.year)
-
-        for (var i = 0; i < 3; i++) {
-            if (onScreenDate[i] > currentDate[i]) {
-                return true;
-            }
-        }
-    return false;
-}
-
-function hourBackCheck(onScreenDate, currentDate) {
-    for (var i = 0; i < 4; i++) {
-        if (onScreenDate[i] > currentDate[i]) {
-            return true;
-        }
-    }
-    return false;
-}
+// function dayBackCheck(onScreenDate, currentDate) {
+//     if (onScreenDate.year)
+//
+//         for (var i = 0; i < 3; i++) {
+//             if (onScreenDate[i] > currentDate[i]) {
+//                 return true;
+//             }
+//         }
+//     return false;
+// }
+//
+// function hourBackCheck(onScreenDate, currentDate) {
+//     for (var i = 0; i < 4; i++) {
+//         if (onScreenDate[i] > currentDate[i]) {
+//             return true;
+//         }
+//     }
+//     return false;
+// }
 
 function changeDate(change) {
     if (change == "hourBack" && onScreenDate.isAfter(currentDateTime, 'hour')) {

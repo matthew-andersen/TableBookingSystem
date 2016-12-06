@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>iNQ Bookings</title>
     <script src="jquery-3.1.1.js"></script>
     <script src="moment.js"></script>
     <script src="script.js" type="text/javascript"></script>
@@ -38,7 +38,7 @@
          xmlns="http://www.w3.org/2000/svg">
 
         <!--SVG coordinates for map outline-->
-        <g fill="black" stroke="none" transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)">
+        <g fill="#000000" stroke="none" transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)">
             <path
                 d="M4850 4910 l0 -1690 660 0 660 0 0 30 0 30 -630 0 -630 0 0 575 0 575 780 0 780 0 0 -585 0 -585 30 0 30 0 0 585 0 585 440 0 440 0 0 -357 -1 -358 -212 -218 -212 -217 -77 0 -78 0 0 -30 0 -30 93 0 92 0 228 228 227 227 0 1118 0 1117 560 0 560 0 0 30 0 30 -620 0 -620 0 0 -30 c0 -27 3 -30 30 -30 l30 0 0 -710 0 -710 -355 0 -355 0 0 710 0 710 140 0 140 0 0 30 0 30 -140 0 -140 0 0 65 0 65 -30 0 -30 0 0 -805 0 -805 -380 0 -380 0 0 1025 0 1025 380 0 380 0 0 -40 c0 -38 2 -40 30 -40 l30 0 0 70 0 70 -485 0 -485 0 0 -30 c0 -29 2 -30 45 -30 l45 0 0 -1025 0 -1025 -455 0 -455 0 0 1025 0 1025 225 0 225 0 0 30 0 30 -255 0 -255 0 0 -1690z"></path>
             <path
@@ -59,14 +59,15 @@
         </g>
 
         <!--SVG coordinates for 'Room 1'-->
-        <a fill="grey" href="#" id="room_1" onclick="handleLocationSelection('room_1', 'Room 1')">
-            <g stroke="none" transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)">
-                <path d="M440 3365 l0 -815 700 0 700 0 0 815 0 815 -700 0 -700 0 0 -815z"></path>
+        <a href="#" fill="" id="room_1" onclick="handleLocationSelection('room_1', 'Room 1')">
+            <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)">
+                <path stroke-width="5" stroke="#557731"
+                      d="M440 3365 l0 -815 700 0 700 0 0 815 0 815 -700 0 -700 0 0 -815z"></path>
             </g>
         </a>
 
         <!--SVG coordinates for 'Room 2'-->
-        <a fill="grey" href="#" id="room_2" onclick="handleLocationSelection('room_2', 'Room 2')">
+        <a fill="" href="#" id="room_2" onclick="handleLocationSelection('room_2', 'Room 2')">
             <g stroke="none" transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)">
                 <path
                     d="M440 1615 l0 -904 33 -5 c30 -4 1213 -37 1320 -36 l47 0 0 925 0 925 -700 0 -700 0 0 -905z"></path>
@@ -76,4 +77,7 @@
     </svg>
 </div>
 </body>
+<!--<link rel="stylesheet" type="text/css" href="/jquery.datetimepicker.css">-->
+<!--<script src="/jquery.js"></script>-->
+<!--<script src="/jquery.datetimepicker.full.min.js"></script>-->
 </html>
