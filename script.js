@@ -1,24 +1,29 @@
 // JavaScript for handling events
 
+// XMLHttp object is used to communicate with the server without refreshing the page
 xhttp = new XMLHttpRequest();
 
+// Global variables for various colours of the SVG objects
 var AVAILABLE = "#29912A";
 var UNAVAILABLE = "rgb(223, 223, 223)";
 var SELECTED = "#E0CA1F";
 
+// List that stores all the selected rooms of the user
 var userOrder = [];
 // var roomList = [];
 
+// Global variables to handle date/time - both current and onscreen date/time
 var todayDate = new Date();
 var currentYear = todayDate.getFullYear();
 var currentMonth = todayDate.getMonth();
 var currentDay = todayDate.getDate();
 var currentHour = todayDate.getHours();
 var currentDateTime = moment([currentYear, currentMonth, currentDay, currentHour]);
-var onScreenDate = moment([currentYear, currentMonth, currentDay, currentHour]);
+var onScreenDate = moment([currentYear, currentMonth, currentDay, currentHour])
 
 
-// Initialises the application on page load
+// Initialises the application on page load/refresh
+// Sets the date, and displays room availability via colouring
 $(document).ready(function roomGen() {
     initialiseDate();
     if (window.XMLHttpRequest) {
@@ -38,6 +43,7 @@ $(document).ready(function roomGen() {
     xmlhttp.send();
 });
 
+// Used to turn data received from the database into a list which can be used to change the colour of room objects
 function listHandle(workspaceList) {
     workspaceList = workspaceList.split(",");
     for (var count = 2; count < workspaceList.length + 1; count += 2) {
@@ -45,6 +51,7 @@ function listHandle(workspaceList) {
     }
 }
 
+// Changes colour of room based on availability
 function colourChange(workspaceInfo) {
     var roomID = workspaceInfo[0];
     var room = document.getElementById(roomID);
@@ -55,15 +62,15 @@ function colourChange(workspaceInfo) {
     }
 }
 
+/* Sets 'datebox' div to contain the current date*/
 function initialiseDate() {
     // TODO: alert(currentDateTime.format("Y,M,D,HH"))
     document.getElementById("date-display-box").innerHTML = moment(onScreenDate).format('MMMM Do YYYY - h:00a');
 }
 
-function handleLocationSelection(name, location) {
 // Function checks if location has been booked and if it is not it allows the user to make a booking also includes basic error checking
-// The booking is then confirmed by the user and the location is 'redded-out'
-// This may not be the best function name, but it will do for now
+// The booking is then confirmed by the user and the location is 'greyed-out'
+function handleLocationSelection(name, location) {
     var room_svg_object = document.getElementById(name);
     if (room_svg_object.style.fill == UNAVAILABLE) {
         alert("Sorry, this has been booked");
@@ -87,6 +94,7 @@ function handleLocationSelection(name, location) {
     }
 }
 
+// Sends all the rooms the user ordered to be processed then resets the 'cart' and reloads the page
 function submitOrder() {
     for (var i = 0; i < userOrder.length; i++) {
         alert(userOrder[i]);
@@ -101,40 +109,11 @@ function submitOrder() {
     }
 }
 
-// function arraysEqual(arr1, arr2) {
-//     if (arr1.length !== arr2.length)
-//         return false;
-//     for (var i = arr1.length; i--;) {
-//         if (arr1[i] !== arr2[i])
-//             return false;
-//     }
-//     return true;
-// }
-
-// function dayBackCheck(onScreenDate, currentDate) {
-//     if (onScreenDate.year)
-//
-//         for (var i = 0; i < 3; i++) {
-//             if (onScreenDate[i] > currentDate[i]) {
-//                 return true;
-//             }
-//         }
-//     return false;
-// }
-//
-// function hourBackCheck(onScreenDate, currentDate) {
-//     for (var i = 0; i < 4; i++) {
-//         if (onScreenDate[i] > currentDate[i]) {
-//             return true;
-//         }
-//     }
-//     return false;
-// }
-
+// Essentially the Magnum Opus of this JS file.. lmao
+// Used to go back/forward in day/time - won't allow the user to go behind the current time
 function changeDate(change) {
     if (change == "hourBack" && onScreenDate.isAfter(currentDateTime, 'hour')) {
         onScreenDate.add(-1, 'hours');
-
     } else if (change == "dayBack" && (onScreenDate.isAfter(currentDateTime, 'day'))) {
         var potentialNewDate = onScreenDate.clone();
         potentialNewDate.add(-1, 'days');
@@ -142,19 +121,12 @@ function changeDate(change) {
             if (potentialNewDate.isSameOrAfter(onScreenDate, 'hour')) {
                 onScreenDate.add(-1, 'days');
             } else onScreenDate = currentDateTime.clone();
-
         } else {
             onScreenDate.add(-1, 'days');
         }
-
-
     } else if (change == "hourForward") {
         onScreenDate.add(1, 'hours');
-        // onScreenDate[3] = onScreenDate[3] + 1;
-        // if (moment(onScreenDate).format('MMMM Do YYYY - h:00a') == "Invalid date") {
-        //     onScreenDate[2] = onScreenDate[2] + 1;
-        //     onScreenDate[3] = 0
-        // }
+
     } else if (change == "dayForward") {
         onScreenDate.add(1, 'days');
     }
