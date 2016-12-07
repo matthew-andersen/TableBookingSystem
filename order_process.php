@@ -19,7 +19,10 @@ $DB = 'booking_system';
 //$DB = 'sql6147851';
 
 // The item to be queried - which is the room id
-$q = $_GET['q'];
+$q = $_REQUEST['q'];
+$q = json_decode($q);
+
+//echo $q[0][1];
 
 // Used to initially connect to the database
 $con = mysqli_connect($HOST, $USER, $PASS);
@@ -35,9 +38,26 @@ mysqli_select_db($con, $DB);
 
 // The SQL query which updates the availability in the the database
 //for($i = 0; $q.length)
-$sql = "UPDATE workspace SET available=0 WHERE room_id='$q'";
+
+$booking_id = $q[0][0];
+$date_created = $q[0][1];
+$user_id = $q[0][2];
+$num_days = $q[0][3];
+$num_desk_hours = $q[0][4];
+$num_room_hours = $q[0][5];
+$start_datetime = $q[0][6];
+$end_datetime = $q[0][7];
+$location_id = $q[0][8];
+
+//$sql = "INSERT INTO booking_record_table(booking_id, date_created, user_id, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id) VALUES ($q[0][0], $q[0][1], $q[0][2], $q[0][3], $q[0][4], $q[0][5], $q[0][6], $q[0][7], $q[0][8])";
+//$sql = "INSERT INTO booking_record_table(booking_id, date_created, user_id, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id) VALUES ($q[0], $q[1], $q[2], $q[3], $q[4], $q[5], $q[6], $q[7], $q[8])";
+//$sql = "INSERT INTO `booking_record_table`(`booking_id`, `date_created`, `user_id`, `num_days`, `num_desk_hours`, `num_room_hours`, `start_datetime`, `end_datetime`, `location_id`) VALUES ('5','1','1','1', '1', '1', '1', '1','1')";
+//$sql = "INSERT INTO `booking_record_table`(`booking_id`, `date_created`, `user_id`, `num_days`, `num_desk_hours`, `num_room_hours`, `start_datetime`, `end_datetime`, `location_id`) VALUES ($q[0][0], $q[0][1], $q[0][2], $q[0][3], $q[0][4], $q[0][5], $q[0][6], $q[0][7], $q[0][8])";
+$sql = "INSERT INTO `booking_record_table`(`booking_id`, `date_created`, `user_id`, `num_days`, `num_desk_hours`, `num_room_hours`, `start_datetime`, `end_datetime`, `location_id`) VALUES ('$booking_id', '$date_created', '$user_id', '$num_days', '$num_desk_hours', '$num_room_hours', '$start_datetime', '$end_datetime', '$location_id')";
+//$sql = "UPDATE workspace SET available=0 WHERE room_id='$q'";
 
 // Actually querying the database
 mysqli_query($con, $sql);
 
 mysqli_close($con);
+?>

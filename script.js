@@ -29,6 +29,11 @@ $(document).ready(function roomGen() {
     initialiseDate();
     var currentBookings = getBookings();
     updateView(currentBookings, onScreenDate);
+    var userInfo = getUserAccount();
+    var spanTags = document.getElementsByTagName("SPAN");
+    for (var i = 1; i < userInfo.length; i++){
+        spanTags[i-1].innerHTML = spanTags[i-1].innerHTML + userInfo[i];
+    }
 });
 
 // // Used to turn data received from the database into a list which can be used to change the colour of room objects
@@ -58,6 +63,13 @@ function initialiseDate() {
 
 // Function checks if location has been booked and if it is not it allows the user to make a booking also includes basic error checking
 // The booking is then confirmed by the user and the location is 'greyed-out'
+function isValidNumDays(days, numDaysRemaining) {
+    //returns true if days is a number, greater than 0 and within the num of days left to the user.
+    return (!isNaN(days) && (days > 0) && (days <= numDaysRemaining));
+}
+
+// Function checks if location has been booked and if it is not it allows the user to make a booking also includes basic error checking
+// The booking is then confirmed by the user and the location is 'greyed-out'
 function handleLocationSelection(name, location) {
     var room_svg_object = document.getElementById(name);
     if (room_svg_object.style.fill == UNAVAILABLE) {
@@ -66,7 +78,7 @@ function handleLocationSelection(name, location) {
         alert("This booking needs to be confirmed")
     } else {
         var days = window.prompt("Enter how many days").trim();
-        if (days != "" && days != null) {
+        if (isValidNumDays(days, numDaysRemaining)) {
             var cost = days * 25;
             if (window.confirm("Your booking is for " + days + " days. This will cost a total of: $" + cost + ". Press OK to confirm.") == true) {
                 document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + days + " days: $" + cost + "</p>";
@@ -75,8 +87,9 @@ function handleLocationSelection(name, location) {
                 room_svg_object.style.fill = SELECTED;
                 var bookingDateTime = onScreenDate.clone();
                 bookingDateTime.add(days, 'days');
-                // userOrder.push(['3', currentDateTime.format('YYYY MM DD HH'), '14', days, '24', '0', onScreenDate.format('YYYY MM DD HH'), bookingDateTime.format('YYYY MM DD HH'), name]);
-                userOrder.push(name);
+                userOrder.push(['4', currentDateTime.format('YYYY MM DD HH'), '14', days.toString(), '24', '0', onScreenDate.format('YYYY MM DD HH'), bookingDateTime.format('YYYY MM DD HH'), name]);
+                // userOrder.push(['99', '1', '1', '1', '1', '1', '1', '1', '1']);
+                // userOrder.push(name);
                 alert(userOrder);
             }
         }
@@ -86,20 +99,50 @@ function handleLocationSelection(name, location) {
     }
 }
 
+function getUserAccount() {
+    var userRequest = new XMLHttpRequest();
+    var userAccountInfo;
+    //when the request loads, run this anonymous function
+    userRequest.onload = function () {
+        //what to you want to do with the response?
+        userAccountInfo = this.responseText.split(',');
+    };
+    //open the file to make the request. Need to be false so program execution halts until response is ready
+    userRequest.open("get", "getUserAccount.php", false);
+
+    userRequest.send();
+    return userAccountInfo;
+}
+
 // Sends all the rooms the user ordered to be processed then resets the 'cart' and reloads the page
 function submitOrder() {
-    for (var i = 0; i < userOrder.length; i++) {
-        alert(userOrder[i]);
-        // document.getElementById(userOrder[i]).style.fill = UNAVAILABLE
-        //TODO: Here is where we need to send the record (booking_id, table_id, onScreenDate, duration, user_id) to a new record table
-        newRequest.open("GET", "order_process.php?q=" + userOrder[i], true);
-        newRequest.send();
-        alert("Thank you for your booking!");
-        $("#cart-box-order").text("");
-        location.reload();
+    $.ajax({
+        url: 'order_process.php',
+        type: 'POST',
+        data: {'q': JSON.stringify(userOrder)}
+        // success: function(data) {
+        //     window.alert(data);
+        // }
+    });
+    // newRequest.open("POST", "order_process.php?q=" + newArr, true);
+    // newRequest.send();
+    alert("Thank you for your booking!");
+    $("#cart-box-order").text("");
+    location.reload();
 
-    }
 }
+//     for (var i = 0; i < userOrder.length; i++) {
+//         alert(userOrder[i]);
+//         // document.getElementById(userOrder[i]).style.fill = UNAVAILABLE
+//         //TODO: Here is where we need to send the record (booking_id, table_id, onScreenDate, duration, user_id) to a new record table
+//         newRequest.open("GET", "order_process.php?q=" + userOrder[i], true);
+//         newRequest.send();
+//         alert("Thank you for your booking!");
+//         $("#cart-box-order").text("");
+//         location.reload();
+//
+//     }
+// }
 
 // Essentially the Magnum Opus of this JS file... lmao
 // Used to go back/forward in day/time - won't allow the user to go behind the current time
@@ -128,7 +171,7 @@ function changeDate(change) {
 }
 
 function updateView(bookings, onScreenDate) {
-    for (var i = 0; i < bookings.length; i++){
+    for (var i = 0; i < bookings.length; i++) {
         var startDatetimeString = bookings[i][1];
         var endDatetimeString = bookings[i][2];
 
@@ -136,7 +179,7 @@ function updateView(bookings, onScreenDate) {
         var endDateTime = moment(endDatetimeString, "YYYY-MM-DD HH:mm:ss");
 
         var locationElement = document.getElementById(bookings[i][0]);
-        if (onScreenDate.isBetween(startDateTime, endDateTime) || onScreenDate.isSame(startDateTime)){
+        if (onScreenDate.isBetween(startDateTime, endDateTime) || onScreenDate.isSame(startDateTime)) {
             locationElement.style.fill = UNAVAILABLE;
         }
         else {
@@ -146,7 +189,7 @@ function updateView(bookings, onScreenDate) {
 }
 
 //returns an array of bookings from the database, each booking is its own array with location, start datetime of booking and end datetime of booking
-function getBookings(){
+function getBookings() {
     //final array where each booking is its own array
     var arrayBookings = [];
 
@@ -154,7 +197,7 @@ function getBookings(){
     newRequest.onload = function () {
         //what to you want to do with the response?
         var strBookings = this.responseText.replace("\"", "").split("|");
-        for(var i = 0; i < strBookings.length - 1; i++){
+        for (var i = 0; i < strBookings.length - 1; i++) {
             var arrayBooking = strBookings[i].split(",");
             arrayBookings.push(arrayBooking);
         }

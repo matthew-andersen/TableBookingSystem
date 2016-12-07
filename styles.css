@@ -39,20 +39,20 @@ div#date-nav-box {
 }
 
 div#filter-box {
-    height: 30%;
+    height: 50%;
     border-bottom: solid black 3px;
 }
 
 div#review-box {
     width: 80%;
-    height: 60%;
+    height: 30%;
     padding-top: 10%;
     margin-left: 10%;
 }
 
 div#cart-box {
     background-color: white;
-    height: 80%;
+    height: 95%;
     padding: 2%;
     border: solid black 1px
 }
@@ -111,4 +111,23 @@ div#cart-box-header {
     float: right;
     background-image: url("assets/right-day-arrow.png");
     background-repeat: no-repeat;
+}
+
+#account-info {
+    height: 45px;
+    background-color: #314869;
+    text-align: center;
+}
+
+img {
+    vertical-align: middle;
+}
+
+span{
+    display: inline-block;
+    margin-right: 25px;
+    color: white;
+    font-size: 1.5em;
+    line-height: 1.5em;
+    vertical-align: middle;
 }

@@ -15,7 +15,16 @@
 <body>
 
 <div id="left-col">
-    <div id="filter-box"></div>
+    <div id="filter-box">
+        <div id="account-info">
+            <img src="calendar2.png" alt="number of days" height="30" width="30">
+            <span id="numDays"></span>
+            <img src="clock2.png" alt="number of desk hours" height="30" width="30">
+            <span id="numDeskHours"></span>
+            <img src="meeting2.png" alt="number of meeting hours" height="30" width="30">
+            <span id="numRoomHours"></span>
+        </div>
+    </div>
     <div id="review-box">
         <div id="cart-box">
             <div id="cart-box-header">Your Cart</div>
