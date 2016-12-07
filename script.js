@@ -77,6 +77,9 @@ function handleLocationSelection(name, location) {
     } else if (room_svg_object.style.fill == SELECTED) {
         alert("This booking needs to be confirmed")
     } else {
+        //get the user account information from the database;
+        var accountInfo = getUserAccount();
+        var numDaysRemaining = accountInfo[1];
         var days = window.prompt("Enter how many days").trim();
         if (isValidNumDays(days, numDaysRemaining)) {
             var cost = days * 25;
