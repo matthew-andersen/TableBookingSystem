@@ -4,9 +4,9 @@
 xhttp = new XMLHttpRequest();
 
 // Global variables for various colours of the SVG objects
-var AVAILABLE = "#29912A";
+var AVAILABLE = "rgb(94, 172, 95)";
 var UNAVAILABLE = "rgb(223, 223, 223)";
-var SELECTED = "#E0CA1F";
+var SELECTED = "rgb(41, 145, 42)";
 
 // List that stores all the selected rooms of the user
 var userOrder = [];
@@ -19,48 +19,35 @@ var currentMonth = todayDate.getMonth();
 var currentDay = todayDate.getDate();
 var currentHour = todayDate.getHours();
 var currentDateTime = moment([currentYear, currentMonth, currentDay, currentHour]);
-var onScreenDate = moment([currentYear, currentMonth, currentDay, currentHour])
+var onScreenDate = moment([currentYear, currentMonth, currentDay, currentHour]);
 
 
 // Initialises the application on page load/refresh
 // Sets the date, and displays room availability via colouring
 $(document).ready(function roomGen() {
     initialiseDate();
-    if (window.XMLHttpRequest) {
-        // code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp = new XMLHttpRequest();
-    } else {
-        // code for IE6, IE5
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            listHandle(this.responseText);
-            // document.getElementById("txtHint").innerHTML = this.responseText;
-        }
-    };
-    xmlhttp.open("GET", "availability_process.php?q=", true);
-    xmlhttp.send();
+    var currentBookings = getBookings();
+    updateView(currentBookings, onScreenDate);
 });
 
-// Used to turn data received from the database into a list which can be used to change the colour of room objects
-function listHandle(workspaceList) {
-    workspaceList = workspaceList.split(",");
-    for (var count = 2; count < workspaceList.length + 1; count += 2) {
-        colourChange(workspaceList.slice(count - 2, count))
-    }
-}
+// // Used to turn data received from the database into a list which can be used to change the colour of room objects
+// function listHandle(workspaceList) {
+//     workspaceList = workspaceList.split(",");
+//     for (var count = 2; count < workspaceList.length + 1; count += 2) {
+//         colourChange(workspaceList.slice(count - 2, count))
+//     }
+// }
 
 // Changes colour of room based on availability
-function colourChange(workspaceInfo) {
-    var roomID = workspaceInfo[0];
-    var room = document.getElementById(roomID);
-    if (workspaceInfo[1] == 1) {
-        room.style.fill = AVAILABLE;
-    } else if (workspaceInfo[1] == 0) {
-        room.style.fill = UNAVAILABLE;
-    }
-}
+// function colourChange(workspaceInfo) {
+//     var roomID = workspaceInfo[0];
+//     var room = document.getElementById(roomID);
+//     if (workspaceInfo[1] == 1) {
+//         room.style.fill = AVAILABLE;
+//     } else if (workspaceInfo[1] == 0) {
+//         room.style.fill = UNAVAILABLE;
+//     }
+// }
 
 /* Sets 'datebox' div to contain the current date*/
 function initialiseDate() {
@@ -85,7 +72,11 @@ function handleLocationSelection(name, location) {
                 //text(location + " for " + days + " days: $" + cost);
                 //$("#cart-box").text(location + " for " + days + " days: $" + cost);
                 room_svg_object.style.fill = SELECTED;
-                userOrder.push(name);
+                var bookingDateTime = onScreenDate.clone();
+                bookingDateTime.add(days, 'days');
+
+                // userOrder.push(['3', currentDateTime.format('YYYY MM DD HH'), '14', days, '24', '0', onScreenDate.format('YYYY MM DD HH'), bookingDateTime.format('YYYY MM DD HH'), name]);
+                alert(userOrder);
             }
         }
         else {
@@ -104,12 +95,12 @@ function submitOrder() {
         xmlhttp.send();
         alert("Thank you for your booking!");
         $("#cart-box-order").text("");
-        location.reload()
+        location.reload();
 
     }
 }
 
-// Essentially the Magnum Opus of this JS file.. lmao
+// Essentially the Magnum Opus of this JS file... lmao
 // Used to go back/forward in day/time - won't allow the user to go behind the current time
 function changeDate(change) {
     if (change == "hourBack" && onScreenDate.isAfter(currentDateTime, 'hour')) {
@@ -131,4 +122,46 @@ function changeDate(change) {
         onScreenDate.add(1, 'days');
     }
     document.getElementById("date-display-box").innerHTML = onScreenDate.format('MMMM Do YYYY - h:00a');
+    var bookings = getBookings();
+    updateView(bookings, onScreenDate);
+}
+
+function updateView(bookings, onScreenDate) {
+    for (var i = 0; i < bookings.length; i++){
+        var startDatetimeString = bookings[i][1];
+        var endDatetimeString = bookings[i][2];
+
+        var startDateTime = moment(startDatetimeString, "YYYY-MM-DD HH:mm:ss");
+        var endDateTime = moment(endDatetimeString, "YYYY-MM-DD HH:mm:ss");
+
+        var locationElement = document.getElementById(bookings[i][0]);
+        if (onScreenDate.isBetween(startDateTime, endDateTime) || onScreenDate.isSame(startDateTime)){
+            locationElement.style.fill = "red";
+        }
+        else {
+            locationElement.style.fill = "green";
+        }
+    }
+}
+
+//returns an array of bookings from the database, each booking is its own array with location, start datetime of booking and end datetime of booking
+function getBookings(){
+    //final array where each booking is its own array
+    var arrayBookings = [];
+
+    var newRequest = new XMLHttpRequest();
+    //when the request loads, run this anonymous function
+    newRequest.onload = function () {
+        //what to you want to do with the response?
+        var strBookings = this.responseText.replace("\"", "").split("|");
+        for(var i = 0; i < strBookings.length - 1; i++){
+            var arrayBooking = strBookings[i].split(",");
+            arrayBookings.push(arrayBooking);
+        }
+    };
+    //open the file to make the request. Need to be false so program execution halts until response is ready
+    newRequest.open("get", "update_availability.php", false);
+
+    newRequest.send();
+    return arrayBookings;
 }

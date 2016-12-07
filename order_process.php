@@ -34,6 +34,7 @@ if (!$con) {
 mysqli_select_db($con, $DB);
 
 // The SQL query which updates the availability in the the database
+//for($i = 0; $q.length)
 $sql = "UPDATE workspace SET available=0 WHERE room_id='$q'";
 
 // Actually querying the database
