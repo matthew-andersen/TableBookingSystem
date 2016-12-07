@@ -2,6 +2,7 @@
 
 // XMLHttp object is used to communicate with the server without refreshing the page
 xhttp = new XMLHttpRequest();
+var newRequest = new XMLHttpRequest();
 
 // Global variables for various colours of the SVG objects
 var AVAILABLE = "rgb(94, 172, 95)";
@@ -74,8 +75,8 @@ function handleLocationSelection(name, location) {
                 room_svg_object.style.fill = SELECTED;
                 var bookingDateTime = onScreenDate.clone();
                 bookingDateTime.add(days, 'days');
-
                 // userOrder.push(['3', currentDateTime.format('YYYY MM DD HH'), '14', days, '24', '0', onScreenDate.format('YYYY MM DD HH'), bookingDateTime.format('YYYY MM DD HH'), name]);
+                userOrder.push(name);
                 alert(userOrder);
             }
         }
@@ -91,8 +92,8 @@ function submitOrder() {
         alert(userOrder[i]);
         // document.getElementById(userOrder[i]).style.fill = UNAVAILABLE
         //TODO: Here is where we need to send the record (booking_id, table_id, onScreenDate, duration, user_id) to a new record table
-        xmlhttp.open("GET", "order_process.php?q=" + userOrder[i], true);
-        xmlhttp.send();
+        newRequest.open("GET", "order_process.php?q=" + userOrder[i], true);
+        newRequest.send();
         alert("Thank you for your booking!");
         $("#cart-box-order").text("");
         location.reload();
@@ -136,10 +137,10 @@ function updateView(bookings, onScreenDate) {
 
         var locationElement = document.getElementById(bookings[i][0]);
         if (onScreenDate.isBetween(startDateTime, endDateTime) || onScreenDate.isSame(startDateTime)){
-            locationElement.style.fill = "red";
+            locationElement.style.fill = UNAVAILABLE;
         }
         else {
-            locationElement.style.fill = "green";
+            locationElement.style.fill = AVAILABLE;
         }
     }
 }
@@ -149,7 +150,6 @@ function getBookings(){
     //final array where each booking is its own array
     var arrayBookings = [];
 
-    var newRequest = new XMLHttpRequest();
     //when the request loads, run this anonymous function
     newRequest.onload = function () {
         //what to you want to do with the response?
