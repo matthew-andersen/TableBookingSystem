@@ -25,15 +25,19 @@ var onScreenDate = moment([currentYear, currentMonth, currentDay, currentHour]);
 
 // Initialises the application on page load/refresh
 // Sets the date, and displays room availability via colouring
+function updateUserInfoView(userInfo) {
+    var spanTags = document.getElementsByTagName("SPAN");
+    for (var i = 1; i < userInfo.length; i++) {
+        spanTags[i - 1].innerHTML = spanTags[i - 1].innerHTML + userInfo[i];
+    }
+}
+
 $(document).ready(function roomGen() {
     initialiseDate();
     var currentBookings = getBookings();
     updateView(currentBookings, onScreenDate);
     var userInfo = getUserAccount();
-    var spanTags = document.getElementsByTagName("SPAN");
-    for (var i = 1; i < userInfo.length; i++) {
-        spanTags[i - 1].innerHTML = spanTags[i - 1].innerHTML + userInfo[i];
-    }
+    updateUserInfoView(userInfo);
 });
 
 // // Used to turn data received from the database into a list which can be used to change the colour of room objects
@@ -88,7 +92,7 @@ function handleLocationSelection(name, location) {
                 bookingDateTime.add(days, 'days');
                 if (isValidEndDatetime(bookingDateTime)) {
                     room_svg_object.style.fill = SELECTED;
-                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), '14', days.toString(), '24', '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
+                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), '14', days.toString(), '0', '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
 
                     //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
                     //text(location + " for " + days + " days: $" + cost);
@@ -155,19 +159,32 @@ function submitOrder() {
     alert("Thank you for your booking!");
     $("#cart-box-order").text("");
     location.reload();
+    //user order indices: 3, 4, 5
+    var numDays = userOrder[0][3];
+    var numDeskHours = userOrder[0][4];
+    var numRoomHours = userOrder[0][5];
+    // alert(numDays + " " + numDeskHours + " " + numRoomHours);
+    var currentAccountInfo = getUserAccount();
+    alert(currentAccountInfo[1]);
+    if (numDays != 0 ){
+        currentAccountInfo[1] -= numDays;
+    }
+    //UNCOMMENT WHEN NEEDED
+    // else if (numDeskHours != 0){
+    //     currentAccountInfo[2] -= numDeskHours;
+    // }
+    // else if (numRoomHours != 0){
+    //     currentAccountInfo[3] -= numRoomHours;
+    // }
+    $.ajax({
+        url: 'update_user_account.php',
+        type: 'POST',
+        data: {'q': JSON.stringify(currentAccountInfo)},
+        // success: function () {
+        //     window.alert(data);
+        // }
+    });
 }
-//     for (var i = 0; i < userOrder.length; i++) {
-//         alert(userOrder[i]);
-//         // document.getElementById(userOrder[i]).style.fill = UNAVAILABLE
-//         //TODO: Here is where we need to send the record (booking_id, table_id, onScreenDate, duration, user_id) to a new record table
-//         newRequest.open("GET", "order_process.php?q=" + userOrder[i], true);
-//         newRequest.send();
-//         alert("Thank you for your booking!");
-//         $("#cart-box-order").text("");
-//         location.reload();
-//
-//     }
-// }
 
 // Essentially the Magnum Opus of this JS file... lmao
 // Used to go back/forward in day/time - won't allow the user to go behind the current time
