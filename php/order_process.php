@@ -39,7 +39,7 @@ mysqli_select_db($con, $DB);
 // The SQL query which updates the availability in the the database
 //for($i = 0; $q.length)
 
-$booking_id = $q[0][0];
+//$booking_id = $q[0][0];
 $date_created = $q[0][1];
 $user_id = $q[0][2];
 $num_days = $q[0][3];
@@ -50,7 +50,7 @@ $end_datetime = $q[0][7];
 $location_id = $q[0][8];
 
 //$sql = "INSERT INTO `booking_record_table`(`booking_id`, `date_created`, `user_id`, `num_days`, `num_desk_hours`, `num_room_hours`, `start_datetime`, `end_datetime`, `location_id`) VALUES ('5','1','1','1', '1', '1', '1', 'HERE','1')";
-$sql = "INSERT INTO `booking_record_table`(`booking_id`, `date_created`, `user_id`, `num_days`, `num_desk_hours`, `num_room_hours`, `start_datetime`, `end_datetime`, `location_id`) VALUES ('$booking_id','$date_created','$user_id','$num_days', '$num_desk_hours', '$num_room_hours', '$start_datetime', '$end_datetime','$location_id')";
+$sql = "INSERT INTO `booking_record_table`(`date_created`, `user_id`, `num_days`, `num_desk_hours`, `num_room_hours`, `start_datetime`, `end_datetime`, `location_id`) VALUES ('$date_created','$user_id','$num_days', '$num_desk_hours', '$num_room_hours', '$start_datetime', '$end_datetime','$location_id')";
 
 
 // Actually querying the database
