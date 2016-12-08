@@ -5,10 +5,10 @@
 <head>
     <meta charset="UTF-8">
     <title>iNQ Bookings</title>
-    <script src="jquery-3.1.1.js"></script>
-    <script src="moment.js"></script>
-    <script src="script.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/moment.js"></script>
+    <script src="js/script.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 
 </head>
 
@@ -17,11 +17,11 @@
 <div id="left-col">
     <div id="filter-box">
         <div id="account-info">
-            <img src="calendar2.png" alt="number of days" height="30" width="30">
+            <img src="images/account-icons/calendar2.png" alt="number of days" height="30" width="30">
             <span id="numDays"></span>
-            <img src="clock2.png" alt="number of desk hours" height="30" width="30">
+            <img src="images/account-icons/clock2.png" alt="number of desk hours" height="30" width="30">
             <span id="numDeskHours"></span>
-            <img src="meeting2.png" alt="number of meeting hours" height="30" width="30">
+            <img src="images/account-icons/meeting2.png" alt="number of meeting hours" height="30" width="30">
             <span id="numRoomHours"></span>
         </div>
     </div>
@@ -68,7 +68,7 @@
         </g>
 
         <!--SVG coordinates for 'Room 1'-->
-        <a href="#" fill="" id="room_1" onclick="handleLocationSelection('room_1', 'Room 1')">
+        <a href="#" fill="white" id="room_1" onclick="handleLocationSelection('room_1', 'Room 1')">
             <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)">
                 <path stroke-width="5" stroke="#557731"
                       d="M440 3365 l0 -815 700 0 700 0 0 815 0 815 -700 0 -700 0 0 -815z"></path>
@@ -76,7 +76,7 @@
         </a>
 
         <!--SVG coordinates for 'Room 2'-->
-        <a fill="" href="#" id="room_2" onclick="handleLocationSelection('room_2', 'Room 2')">
+        <a fill="white" href="#" id="room_2" onclick="handleLocationSelection('room_2', 'Room 2')">
             <g stroke="none" transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)">
                 <path
                     d="M440 1615 l0 -904 33 -5 c30 -4 1213 -37 1320 -36 l47 0 0 925 0 925 -700 0 -700 0 0 -905z"></path>
