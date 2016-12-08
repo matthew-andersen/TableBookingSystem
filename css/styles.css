@@ -85,7 +85,7 @@ div#cart-box-header {
     height: 100%;
     width: 10%;
     float: left;
-    background-image: url("assets/left-hour-arrow.png");
+    background-image: url("../images/arrow-icons/left-hour-arrow.png");
     background-repeat: no-repeat;
 }
 
@@ -93,7 +93,7 @@ div#cart-box-header {
     height: 100%;
     width: 10%;
     float: left;
-    background-image: url("assets/left-day-arrow.png");
+    background-image: url("../images/arrow-icons/left-day-arrow.png");
     background-repeat: no-repeat;
 }
 
@@ -101,7 +101,7 @@ div#cart-box-header {
     height: 100%;
     width: 10%;
     float: right;
-    background-image: url("assets/right-hour-arrow.png");
+    background-image: url("../images/arrow-icons/right-hour-arrow.png");
     background-repeat: no-repeat;
 }
 
@@ -109,7 +109,7 @@ div#cart-box-header {
     height: 100%;
     width: 10%;
     float: right;
-    background-image: url("assets/right-day-arrow.png");
+    background-image: url("../images/arrow-icons/right-day-arrow.png");
     background-repeat: no-repeat;
 }
 

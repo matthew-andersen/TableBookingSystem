@@ -36,26 +36,7 @@ $(document).ready(function roomGen() {
     }
 });
 
-// // Used to turn data received from the database into a list which can be used to change the colour of room objects
-// function listHandle(workspaceList) {
-//     workspaceList = workspaceList.split(",");
-//     for (var count = 2; count < workspaceList.length + 1; count += 2) {
-//         colourChange(workspaceList.slice(count - 2, count))
-//     }
-// }
-
-// Changes colour of room based on availability
-// function colourChange(workspaceInfo) {
-//     var roomID = workspaceInfo[0];
-//     var room = document.getElementById(roomID);
-//     if (workspaceInfo[1] == 1) {
-//         room.style.fill = AVAILABLE;
-//     } else if (workspaceInfo[1] == 0) {
-//         room.style.fill = UNAVAILABLE;
-//     }
-// }
-
-/* Sets 'datebox' div to contain the current date*/
+// Sets 'datebox' div to contain the current date //
 function initialiseDate() {
     // TODO: alert(currentDateTime.format("Y,M,D,HH"))
     document.getElementById("date-display-box").innerHTML = moment(onScreenDate).format('MMMM Do YYYY - h:00a');
@@ -77,7 +58,7 @@ function handleLocationSelection(name, location) {
     } else if (room_svg_object.style.fill == SELECTED) {
         alert("This booking needs to be confirmed")
     } else {
-        //get the user account information from the database;
+        // Get the user account information from the database;
         var accountInfo = getUserAccount();
         var numDaysRemaining = accountInfo[1];
         var days = window.prompt("Enter how many days").trim();
@@ -89,10 +70,7 @@ function handleLocationSelection(name, location) {
                 if (isValidEndDatetime(bookingDateTime)) {
                     room_svg_object.style.fill = SELECTED;
                     userOrder.push(['4', currentDateTime.format('YYYYMMDD'), '14', days.toString(), '24', '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
-
                     //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
-                    //text(location + " for " + days + " days: $" + cost);
-                    //$("#cart-box").text(location + " for " + days + " days: $" + cost);
                     document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + days + " days: $" + cost + "</p>";
                 }
                 else {
@@ -106,7 +84,7 @@ function handleLocationSelection(name, location) {
     }
 }
 
-//checks whether passed date does not conflict with existing bookings
+// Checks whether passed date does not conflict with existing bookings
 function isValidEndDatetime(bookingEndDatetime) {
     bookingEndDatetime = moment(bookingEndDatetime, "YYYY-MM-DD HH:mm:ss");
     var currentBookings = getBookings();
@@ -117,7 +95,7 @@ function isValidEndDatetime(bookingEndDatetime) {
         var startDateTime = moment(startDatetimeString, "YYYY-MM-DD HH:mm:ss");
         var endDateTime = moment(endDatetimeString, "YYYY-MM-DD HH:mm:ss");
 
-        //if the end datetime of this potential booking conflicts with an existing booking
+        // If the end datetime of this potential booking conflicts with an existing booking
         if (bookingEndDatetime.isBetween(startDateTime, endDateTime) || bookingEndDatetime.isSame(endDateTime)) {
             return false;
         }
@@ -128,13 +106,13 @@ function isValidEndDatetime(bookingEndDatetime) {
 function getUserAccount() {
     var userRequest = new XMLHttpRequest();
     var userAccountInfo;
-    //when the request loads, run this anonymous function
+    // When the request loads, run this anonymous function
     userRequest.onload = function () {
-        //what to you want to do with the response?
+        // What to you want to do with the response?
         userAccountInfo = this.responseText.split(',');
     };
-    //open the file to make the request. Need to be false so program execution halts until response is ready
-    userRequest.open("get", "getUserAccount.php", false);
+    // Open the file to make the request. Need to be false so program execution halts until response is ready
+    userRequest.open("GET", "php/get_user_account.php", false);
 
     userRequest.send();
     return userAccountInfo;
@@ -143,31 +121,14 @@ function getUserAccount() {
 // Sends all the rooms the user ordered to be processed then resets the 'cart' and reloads the page
 function submitOrder() {
     $.ajax({
-        url: 'order_process.php',
+        url: 'php/order_process.php',
         type: 'POST',
         data: {'q': JSON.stringify(userOrder)}
-        // success: function(data) {
-        //     window.alert(data);
-        // }
     });
-    // newRequest.open("POST", "order_process.php?q=" + newArr, true);
-    // newRequest.send();
     alert("Thank you for your booking!");
     $("#cart-box-order").text("");
     location.reload();
 }
-//     for (var i = 0; i < userOrder.length; i++) {
-//         alert(userOrder[i]);
-//         // document.getElementById(userOrder[i]).style.fill = UNAVAILABLE
-//         //TODO: Here is where we need to send the record (booking_id, table_id, onScreenDate, duration, user_id) to a new record table
-//         newRequest.open("GET", "order_process.php?q=" + userOrder[i], true);
-//         newRequest.send();
-//         alert("Thank you for your booking!");
-//         $("#cart-box-order").text("");
-//         location.reload();
-//
-//     }
-// }
 
 // Essentially the Magnum Opus of this JS file... lmao
 // Used to go back/forward in day/time - won't allow the user to go behind the current time
@@ -213,12 +174,12 @@ function updateView(bookings, onScreenDate) {
     }
 }
 
-//returns an array of bookings from the database, each booking is its own array with location, start datetime of booking and end datetime of booking
+// Returns an array of bookings from the database, each booking is its own array with location, start datetime of booking and end datetime of booking
 function getBookings() {
     //final array where each booking is its own array
     var arrayBookings = [];
 
-    //when the request loads, run this anonymous function
+    // When the request loads, run this anonymous function
     newRequest.onload = function () {
         //what to you want to do with the response?
         var strBookings = this.responseText.replace("\"", "").split("|");
@@ -227,8 +188,8 @@ function getBookings() {
             arrayBookings.push(arrayBooking);
         }
     };
-    //open the file to make the request. Need to be false so program execution halts until response is ready
-    newRequest.open("get", "update_availability.php", false);
+    // Open the file to make the request. Need to be false so program execution halts until response is ready
+    newRequest.open("GET", "php/update_availability.php", false);
 
     newRequest.send();
     return arrayBookings;
