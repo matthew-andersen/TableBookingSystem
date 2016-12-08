@@ -11,7 +11,7 @@ var SELECTED = "rgb(41, 145, 42)";
 
 // List that stores all the selected rooms of the user
 var userOrder = [];
-// var roomList = [];
+var roomList = ['room_1', 'room_2', 'room_3', 'room_4', 'desk_1', 'desk_2', 'desk_3', 'desk_4', 'desk_5', 'desk_6', 'desk_7', 'desk_8'];
 
 // Global variables to handle date/time - both current and onscreen date/time
 var todayDate = new Date();
@@ -50,11 +50,11 @@ function initialiseDate() {
 function isValidNumDays(days, numDaysRemaining) {
     //returns true if days is a number, greater than 0 and within the num of days left to the user.
     // return (!isNaN(days) && (days > 0) && (days <= numDaysRemaining));
-    if (isNaN(days) || days <= 0){
+    if (isNaN(days) || days <= 0) {
         alert("Please enter a valid number of days.");
         return false;
     }
-    else if (days > numDaysRemaining){
+    else if (days > numDaysRemaining) {
         alert("You do not have enough time in your account for this booking.");
         return false;
     }
@@ -153,7 +153,7 @@ function submitOrder() {
     var numRoomHours = userOrder[0][5];
     // alert(numDays + " " + numDeskHours + " " + numRoomHours);
     var currentAccountInfo = getUserAccount();
-    if (numDays != 0 ){
+    if (numDays != 0) {
         currentAccountInfo[1] -= numDays;
     }
     //UNCOMMENT WHEN NEEDED
@@ -200,7 +200,11 @@ function changeDate(change) {
 }
 
 function updateView(bookings, onScreenDate) {
-    for (var i = 0; i < bookings.length; i++) {
+    for (var i = 0; i < roomList.length; i++) {
+        document.getElementById(roomList[i]).style.fill = AVAILABLE;
+    }
+
+    for (i = 0; i < bookings.length; i++) {
         var startDatetimeString = bookings[i][1];
         var endDatetimeString = bookings[i][2];
 
@@ -210,9 +214,10 @@ function updateView(bookings, onScreenDate) {
         var locationElement = document.getElementById(bookings[i][0]);
         if (onScreenDate.isBetween(startDateTime, endDateTime) || onScreenDate.isSame(startDateTime)) {
             locationElement.style.fill = UNAVAILABLE;
-        }
-        else {
-            locationElement.style.fill = AVAILABLE;
+            // }
+            // else {
+            //     locationElement.style.fill = AVAILABLE;
+            // }
         }
     }
 }

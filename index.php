@@ -83,6 +83,68 @@
             </g>
         </a>
 
+        <a fill="white" href="#" id="room_3" onclick="handleLocationSelection('room_3', 'Room 3')">
+            <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
+                <path d="M4910 3855 l0 -575 780 0 780 0 0 575 0 575 -780 0 -780 0 0 -575z"></path>
+            </g>
+        </a>
+
+        <a fill="white" href="#" id="room_4" onclick="handleLocationSelection('room_5', 'Room 5')">
+            <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
+                <path d="M6530 3855 l0 -575 234 0 233 0 207 210 206 211 0 364 0 365 -440 0
+-440 0 0 -575z"></path>
+            </g>
+        </a>
+
+
+        <a fill="white" href="#" id="desk_1" onclick="handleLocationSelection('desk_1', 'Desk 1')">
+            <g stroke="none" transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)">
+                <path d="M2280 3450 l0 -100 155 0 155 0 0 100 0 100 -155 0 -155 0 0 -100z"></path>
+            </g>
+        </a>
+
+        <a fill="white" href="#" id="desk_2" onclick="handleLocationSelection('desk_2', 'Desk 2')">
+            <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
+                <path d="M2620 3450 l0 -100 160 0 160 0 0 100 0 100 -160 0 -160 0 0 -100z"></path>
+            </g>
+        </a>
+
+        <a fill="white" href="#" id="desk_3" onclick="handleLocationSelection('desk_3', 'Desk 3')">
+            <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
+                <path d="M2280 3220 l0 -100 155 0 155 0 0 100 0 100 -155 0 -155 0 0 -100z"></path>
+            </g>
+        </a>
+
+        <a fill="white" href="#" id="desk_4" onclick="handleLocationSelection('desk_4', 'Desk 4')">
+            <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
+                <path d="M2620 3220 l0 -100 160 0 160 0 0 100 0 100 -160 0 -160 0 0 -100z"></path>
+            </g>
+        </a>
+
+        <a fill="white" href="#" id="desk_5" onclick="handleLocationSelection('desk_5', 'Desk 5')">
+            <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
+                <path d="M2400 2425 l0 -155 100 0 100 0 0 155 0 155 -100 0 -100 0 0 -155z"></path>
+            </g>
+        </a>
+
+        <a fill="white" href="#" id="desk_6" onclick="handleLocationSelection('desk_6', 'Desk 6')">
+            <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
+                <path d="M2630 2425 l0 -155 100 0 100 0 0 155 0 155 -100 0 -100 0 0 -155z"></path>
+            </g>
+        </a>
+
+        <a fill="white" href="#" id="desk_7" onclick="handleLocationSelection('desk_7', 'Desk 7')">
+            <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
+                <path d="M2400 2080 l0 -160 100 0 100 0 0 160 0 160 -100 0 -100 0 0 -160z"></path>
+            </g>
+        </a>
+
+        <a fill="white" href="#" id="desk_8" onclick="handleLocationSelection('desk_8', 'Desk 8')">
+            <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
+                <path d="M2630 2080 l0 -160 100 0 100 0 0 160 0 160 -100 0 -100 0 0 -160z"></path>
+            </g>
+        </a>
+
     </svg>
 </div>
 </body>
