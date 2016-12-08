@@ -6,7 +6,7 @@ var newRequest = new XMLHttpRequest();
 
 // Global variables for various colours of the SVG objects
 var AVAILABLE = "rgb(94, 172, 95)";
-var UNAVAILABLE = "rgb(223, 223, 223)";
+var UNAVAILABLE = "rgb(165, 165, 140)";
 var SELECTED = "rgb(41, 145, 42)";
 
 // List that stores all the selected rooms of the user
@@ -81,7 +81,7 @@ function handleLocationSelection(name, location) {
             if (window.confirm("Your booking is for " + days + " days. This will cost a total of: $" + cost + ". Press OK to confirm.") == true) {
                 var bookingDateTime = onScreenDate.clone();
                 bookingDateTime.add(days, 'days');
-                if (isValidEndDatetime(bookingDateTime)) {
+                if (isValidEndDatetime(bookingDateTime, name)) {
                     room_svg_object.style.fill = SELECTED;
                     userOrder.push(['4', currentDateTime.format('YYYYMMDD'), '14', days.toString(), '24', '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
                     //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
@@ -99,19 +99,23 @@ function handleLocationSelection(name, location) {
 }
 
 // Checks whether passed date does not conflict with existing bookings
-function isValidEndDatetime(bookingEndDatetime) {
+function isValidEndDatetime(bookingEndDatetime, location) {
     bookingEndDatetime = moment(bookingEndDatetime, "YYYY-MM-DD HH:mm:ss");
     var currentBookings = getBookings();
     for (var i = 0; i < currentBookings.length; i++) {
         var startDatetimeString = currentBookings[i][1];
         var endDatetimeString = currentBookings[i][2];
+        var bookingLocation = currentBookings[i][0];
 
         var startDateTime = moment(startDatetimeString, "YYYY-MM-DD HH:mm:ss");
         var endDateTime = moment(endDatetimeString, "YYYY-MM-DD HH:mm:ss");
 
-        // If the end datetime of this potential booking conflicts with an existing booking
-        if (bookingEndDatetime.isBetween(startDateTime, endDateTime) || bookingEndDatetime.isSame(endDateTime)) {
-            return false;
+        //if this booking pertains to the location trying to be booked
+        if (bookingLocation == location) {
+            // If the end datetime of this potential booking conflicts with an existing booking
+            if (bookingEndDatetime.isBetween(startDateTime, endDateTime) || bookingEndDatetime.isSame(endDateTime)) {
+                return false;
+            }
         }
     }
     return true;
