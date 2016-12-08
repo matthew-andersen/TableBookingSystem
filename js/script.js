@@ -50,6 +50,8 @@ function initialiseDate() {
 function isValidNumDays(days, numDaysRemaining) {
     //returns true if days is a number, greater than 0 and within the num of days left to the user.
     // return (!isNaN(days) && (days > 0) && (days <= numDaysRemaining));
+    days = parseInt(days);
+    numDaysRemaining = parseInt(numDaysRemaining);
     if (isNaN(days) || days <= 0) {
         alert("Please enter a valid number of days.");
         return false;

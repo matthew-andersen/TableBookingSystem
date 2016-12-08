@@ -9,7 +9,7 @@
 $HOST = 'localhost';
 $USER = 'root';
 $PASS = '';
-$DB = 'booking_system';
+$DB = 'inq_dashboard';
 
 // WEBHOST000 REMOTE DATABASE
 //$HOST = 'localhost';
@@ -46,7 +46,7 @@ $num_days = $q[1];
 $num_desk_hours = $q[2];
 $num_room_hours = $q[3];
 
-$sql = "UPDATE `user_account_table` SET `num_days`='$num_days',`num_desk_hours`='$num_desk_hours',`num_room_hours`='$num_room_hours' WHERE `user_id`='$user_id'";
+$sql = "UPDATE `user` SET `num_days`='$num_days',`num_desk_hours`='$num_desk_hours',`num_room_hours`='$num_room_hours' WHERE `id`='$user_id'";
 
 //$sql = "INSERT INTO `booking_record_table`(`booking_id`, `date_created`, `user_id`, `num_days`, `num_desk_hours`, `num_room_hours`, `start_datetime`, `end_datetime`, `location_id`) VALUES ('5','1','1','1', '1', '1', '1', 'HERE','1')";
 //$sql = "INSERT INTO `booking_record_table`(`booking_id`, `date_created`, `user_id`, `num_days`, `num_desk_hours`, `num_room_hours`, `start_datetime`, `end_datetime`, `location_id`) VALUES ('$booking_id','$date_created','$user_id','$num_days', '$num_desk_hours', '$num_room_hours', '$start_datetime', '$end_datetime','$location_id')";
