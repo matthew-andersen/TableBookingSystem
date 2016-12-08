@@ -49,7 +49,18 @@ function initialiseDate() {
 // The booking is then confirmed by the user and the location is 'greyed-out'
 function isValidNumDays(days, numDaysRemaining) {
     //returns true if days is a number, greater than 0 and within the num of days left to the user.
-    return (!isNaN(days) && (days > 0) && (days <= numDaysRemaining));
+    // return (!isNaN(days) && (days > 0) && (days <= numDaysRemaining));
+    if (isNaN(days) || days <= 0){
+        alert("Please enter a valid number of days.");
+        return false;
+    }
+    else if (days > numDaysRemaining){
+        alert("You do not have enough time in your account for this booking.");
+        return false;
+    }
+    else {
+        return true;
+    }
 }
 
 // Function checks if location has been booked and if it is not it allows the user to make a booking also includes basic error checking
@@ -81,9 +92,9 @@ function handleLocationSelection(name, location) {
                 }
             }
         }
-        else {
-            window.alert("Please enter a valid booking duration")
-        }
+        // else {
+        //     window.alert("Please enter a valid booking duration")
+        // }
     }
 }
 
@@ -142,7 +153,6 @@ function submitOrder() {
     var numRoomHours = userOrder[0][5];
     // alert(numDays + " " + numDeskHours + " " + numRoomHours);
     var currentAccountInfo = getUserAccount();
-    alert(currentAccountInfo[1]);
     if (numDays != 0 ){
         currentAccountInfo[1] -= numDays;
     }
