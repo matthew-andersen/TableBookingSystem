@@ -31,8 +31,8 @@ $(document).ready(function roomGen() {
     updateView(currentBookings, onScreenDate);
     var userInfo = getUserAccount();
     var spanTags = document.getElementsByTagName("SPAN");
-    for (var i = 1; i < userInfo.length; i++){
-        spanTags[i-1].innerHTML = spanTags[i-1].innerHTML + userInfo[i];
+    for (var i = 1; i < userInfo.length; i++) {
+        spanTags[i - 1].innerHTML = spanTags[i - 1].innerHTML + userInfo[i];
     }
 });
 
@@ -84,22 +84,45 @@ function handleLocationSelection(name, location) {
         if (isValidNumDays(days, numDaysRemaining)) {
             var cost = days * 25;
             if (window.confirm("Your booking is for " + days + " days. This will cost a total of: $" + cost + ". Press OK to confirm.") == true) {
-                document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + days + " days: $" + cost + "</p>";
-                //text(location + " for " + days + " days: $" + cost);
-                //$("#cart-box").text(location + " for " + days + " days: $" + cost);
-                room_svg_object.style.fill = SELECTED;
                 var bookingDateTime = onScreenDate.clone();
                 bookingDateTime.add(days, 'days');
-                userOrder.push(['4', currentDateTime.format('YYYY MM DD HH'), '14', days.toString(), '24', '0', onScreenDate.format('YYYY MM DD HH'), bookingDateTime.format('YYYY MM DD HH'), name]);
-                // userOrder.push(['99', '1', '1', '1', '1', '1', '1', '1', '1']);
-                // userOrder.push(name);
-                alert(userOrder);
+                if (isValidEndDatetime(bookingDateTime)) {
+                    room_svg_object.style.fill = SELECTED;
+                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), '14', days.toString(), '24', '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
+
+                    //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
+                    //text(location + " for " + days + " days: $" + cost);
+                    //$("#cart-box").text(location + " for " + days + " days: $" + cost);
+                    document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + days + " days: $" + cost + "</p>";
+                }
+                else {
+                    alert("This booking conflicts with a later booking. Please make sure the entire booking duration is available.");
+                }
             }
         }
         else {
             window.alert("Please enter a valid booking duration")
         }
     }
+}
+
+//checks whether passed date does not conflict with existing bookings
+function isValidEndDatetime(bookingEndDatetime) {
+    bookingEndDatetime = moment(bookingEndDatetime, "YYYY-MM-DD HH:mm:ss");
+    var currentBookings = getBookings();
+    for (var i = 0; i < currentBookings.length; i++) {
+        var startDatetimeString = currentBookings[i][1];
+        var endDatetimeString = currentBookings[i][2];
+
+        var startDateTime = moment(startDatetimeString, "YYYY-MM-DD HH:mm:ss");
+        var endDateTime = moment(endDatetimeString, "YYYY-MM-DD HH:mm:ss");
+
+        //if the end datetime of this potential booking conflicts with an existing booking
+        if (bookingEndDatetime.isBetween(startDateTime, endDateTime) || bookingEndDatetime.isSame(endDateTime)) {
+            return false;
+        }
+    }
+    return true;
 }
 
 function getUserAccount() {
@@ -132,7 +155,6 @@ function submitOrder() {
     alert("Thank you for your booking!");
     $("#cart-box-order").text("");
     location.reload();
-
 }
 //     for (var i = 0; i < userOrder.length; i++) {
 //         alert(userOrder[i]);
