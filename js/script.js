@@ -22,6 +22,12 @@ var currentHour = todayDate.getHours();
 var currentDateTime = moment([currentYear, currentMonth, currentDay, currentHour]);
 var onScreenDate = moment([currentYear, currentMonth, currentDay, currentHour]);
 
+function updateUserInfoView(userInfo) {
+    var spanTags = document.getElementsByTagName("SPAN");
+    for (var i = 1; i < userInfo.length; i++) {
+        spanTags[i - 1].innerHTML = spanTags[i - 1].innerHTML + userInfo[i];
+    }
+}
 
 // Initialises the application on page load/refresh
 // Sets the date, and displays room availability via colouring
@@ -30,10 +36,7 @@ $(document).ready(function roomGen() {
     var currentBookings = getBookings();
     updateView(currentBookings, onScreenDate);
     var userInfo = getUserAccount();
-    var spanTags = document.getElementsByTagName("SPAN");
-    for (var i = 1; i < userInfo.length; i++) {
-        spanTags[i - 1].innerHTML = spanTags[i - 1].innerHTML + userInfo[i];
-    }
+    updateUserInfoView(userInfo);
 });
 
 // Sets 'datebox' div to contain the current date //
@@ -124,10 +127,40 @@ function submitOrder() {
         url: 'php/order_process.php',
         type: 'POST',
         data: {'q': JSON.stringify(userOrder)}
+        // success: function(data) {
+        //     window.alert(data);
+        // }
     });
+    // newRequest.open("POST", "order_process.php?q=" + newArr, true);
+    // newRequest.send();
     alert("Thank you for your booking!");
     $("#cart-box-order").text("");
     location.reload();
+    //user order indices: 3, 4, 5
+    var numDays = userOrder[0][3];
+    var numDeskHours = userOrder[0][4];
+    var numRoomHours = userOrder[0][5];
+    // alert(numDays + " " + numDeskHours + " " + numRoomHours);
+    var currentAccountInfo = getUserAccount();
+    alert(currentAccountInfo[1]);
+    if (numDays != 0 ){
+        currentAccountInfo[1] -= numDays;
+    }
+    //UNCOMMENT WHEN NEEDED
+    // else if (numDeskHours != 0){
+    //     currentAccountInfo[2] -= numDeskHours;
+    // }
+    // else if (numRoomHours != 0){
+    //     currentAccountInfo[3] -= numRoomHours;
+    // }
+    $.ajax({
+        url: 'php/update_user_account.php',
+        type: 'POST',
+        data: {'q': JSON.stringify(currentAccountInfo)}
+        // success: function () {
+        //     window.alert(data);
+        // }
+    });
 }
 
 // Essentially the Magnum Opus of this JS file... lmao
