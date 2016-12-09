@@ -1,3 +1,4 @@
+<?php session_start() ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +38,7 @@
                         <svg class="glyph stroked male-user">
                             <use href="#stroked-male-user"></use>
                         </svg>
-                        User <span class="caret"></span></a>
+                        <span id="user"><?php echo $_SESSION['user_name']; ?></span> <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#">
                             <svg class="glyph stroked male-user">
@@ -122,7 +123,7 @@
                         </svg>
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large">120</div>
+                        <div class="large"><?php echo $_SESSION['num_desk_hours']; ?></div>
                         <div class="text-muted">Hours</div>
                     </div>
                 </div>
@@ -137,7 +138,7 @@
                         </svg>
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large">52</div>
+                        <div class="large"><?php echo $_SESSION['num_days']; ?></div>
                         <div class="text-muted">Days</div>
                     </div>
                 </div>
@@ -152,7 +153,7 @@
                         </svg>
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large">24</div>
+                        <div class="large"><?php echo $_SESSION['num_room_hours']; ?></div>
                         <div class="text-muted">Meetings</div>
                     </div>
                 </div>
@@ -222,23 +223,7 @@
 <script src="dashboard/website/webpages/js/easypiechart.js"></script>
 <script src="dashboard/website/webpages/js/easypiechart-data.js"></script>
 <script src="dashboard/website/webpages/js/bootstrap-datepicker.js"></script>
-<script>
-    $('#calendar').datepicker({});
-
-    !function ($) {
-        $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
-            $(this).find('em:first').toggleClass("glyphicon-minus");
-        });
-        $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
-    }(window.jQuery);
-
-    $(window).on('resize', function () {
-        if ($(window).width() > 768) $('#sidebar-collapse').collapse('show')
-    })
-    $(window).on('resize', function () {
-        if ($(window).width() <= 767) $('#sidebar-collapse').collapse('hide')
-    })
-</script>
+<script src="dashboard/website/webpages/js/populateUserInfo.js"></script>
 </body>
 
 </html>

@@ -1,11 +1,12 @@
 <?php
 session_start();
 
+
 // LOCAL WAMP HOST
-$servername = "localhost";
-$db_username = "root";
-$db_password = "";
-$dbname = "inq_dashboard";
+$HOST = "localhost";
+$USER = "root";
+$PASS = "";
+$DB = "inq_dashboard";
 
 // WEBHOST000 REMOTE DATABASE
 //$HOST = 'localhost';
@@ -24,26 +25,40 @@ if (isset($_POST["username"], $_POST["password"])) {
     $name = $_POST["username"];
     $password = $_POST["password"];
 
-    $sql = "SELECT `id`, `username`, `name`, `password` FROM `user` WHERE `username` = '$name'";
+    $sql = "SELECT `id`, `username`, `name`, `password`, `num_days`, `num_desk_hours`, `num_room_hours` FROM `user` WHERE `username` = '$name'";
     $result1 = $connection->query($sql);
 
-    $USER = "";
-    $PASS = "";
-    $user_id = "";
-    $user_name = "";
+    $db_username = "";
+    $db_password = "";
+    $db_user_id = "";
+    $db_user_name = "";
+
+    $db_num_days = "";
+    $db_num_desk_hours = "";
+    $db_num_room_hours = "";
 
     while ($row = $result1->fetch_assoc()) {
-        $USER = $row['username'];
-        $PASS = $row['password'];
-        $user_id = $row['id'];
-        $user_name = $row['name'];
+        $db_username = $row['username'];
+        $db_password = $row['password'];
+        $db_user_id = $row['id'];
+        $db_user_name = $row['name'];
+
+        $db_num_days = $row['num_days'];
+        $db_num_desk_hours = $row['num_desk_hours'];
+        $db_num_room_hours = $row['num_room_hours'];
     }
 
-    if ($name == $USER && $password == $PASS) {
-        $_SESSION['current_userid']= $user_id;
-        $_SESSION['current_username'] = $USER;
-        $_SESSION['user_name'] = $user_name;
-        echo "Welcome " . $_SESSION['user_name'] . "!";
+    if ($name == $db_username && $password == $db_password) {
+        $_SESSION['current_userid']= $db_user_id;
+        $_SESSION['current_username'] = $db_username;
+        $_SESSION['user_name'] = $db_user_name;
+
+        $_SESSION['num_days'] = $db_num_days;
+        $_SESSION['num_desk_hours'] = $db_num_desk_hours;
+        $_SESSION['num_room_hours'] = $db_num_room_hours;
+
+        $userHome = "../../../";
+        header('Location: '.$userHome);
     } else {
         echo "No match.";
     }
