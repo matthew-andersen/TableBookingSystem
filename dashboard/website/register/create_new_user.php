@@ -1,18 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: login_system_inq
- * Date: 25/11/2016
- * Time: 4:01 PM
- */
 
+// LOCAL WAMP HOST
 $servername = "localhost";
 $db_username = "root";
 $db_password = "";
 $dbname = "inq_dashboard";
 
+// WEBHOST000 REMOTE DATABASE
+//$HOST = 'localhost';
+//$USER = 'id241545_inq_dashboard';
+//$PASS = 'goforth';
+//$DB = 'id241545_inq_dashboard';
+
 // Create connection
-$conn = new mysqli($servername, $db_username, $db_password, $dbname);
+$conn = new mysqli($HOST, $USER, $PASS, $DB);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

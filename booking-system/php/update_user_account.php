@@ -1,10 +1,5 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Draga
- * Date: 8/12/2016
- * Time: 11:56 AM
- */
+
 // LOCAL WAMP HOST
 $HOST = 'localhost';
 $USER = 'root';
@@ -13,9 +8,9 @@ $DB = 'inq_dashboard';
 
 // WEBHOST000 REMOTE DATABASE
 //$HOST = 'localhost';
-//$USER = 'id241545_inqinterns';
+//$USER = 'id241545_inq_dashboard';
 //$PASS = 'goforth';
-//$DB = 'id241545_booking_system';
+//$DB = 'id241545_inq_dashboard';
 
 // DODGY FREE REMOTE DATABASE
 //$HOST = 'sql6.freesqldatabase.com';

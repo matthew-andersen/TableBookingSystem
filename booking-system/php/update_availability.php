@@ -1,10 +1,22 @@
 <?php
 
+// LOCAL WAMP HOST
 $HOST = 'localhost';
 $USER = 'root';
 $PASS = '';
-
 $DB = 'booking_system';
+
+// WEBHOST000 REMOTE DATABASE
+//$HOST = 'localhost';
+//$USER = 'id241545_inqinterns';
+//$PASS = 'goforth';
+//$DB = 'id241545_booking_system';
+
+// DODGY FREE REMOTE DATABASE
+//$HOST = 'sql6.freesqldatabase.com';
+//$USER = 'sql6147851';
+//$PASS = 'JKPbi1FfB7';
+//$DB = 'sql6147851';
 
 $connection = new mysqli($HOST, $USER, $PASS,$DB);
 

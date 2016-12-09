@@ -89,7 +89,7 @@
             </g>
         </a>
 
-        <a fill="white" href="#" id="room_4" onclick="handleLocationSelection('room_5', 'Room 5')">
+        <a fill="white" href="#" id="room_4" onclick="handleLocationSelection('room_4', 'Room 4')">
             <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M6530 3855 l0 -575 234 0 233 0 207 210 206 211 0 364 0 365 -440 0
 -440 0 0 -575z"></path>

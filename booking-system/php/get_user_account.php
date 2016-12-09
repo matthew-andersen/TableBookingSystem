@@ -1,10 +1,16 @@
 <?php
 
+// LOCAL WAMP HOST
 $HOST = 'localhost';
 $USER = 'root';
 $PASS = '';
-
 $DB = 'inq_dashboard';
+
+// WEBHOST000 REMOTE DATABASE
+//$HOST = 'localhost';
+//$USER = 'id241545_inq_dashboard';
+//$PASS = 'goforth';
+//$DB = 'id241545_inq_dashboard';
 
 $connection = new mysqli($HOST, $USER, $PASS,$DB);
 
