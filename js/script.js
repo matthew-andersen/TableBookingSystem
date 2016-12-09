@@ -1,5 +1,4 @@
 // JavaScript for handling events
-
 // XMLHttp object is used to communicate with the server without refreshing the page
 xhttp = new XMLHttpRequest();
 var newRequest = new XMLHttpRequest();
