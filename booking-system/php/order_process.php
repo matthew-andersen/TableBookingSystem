@@ -33,28 +33,26 @@ if (!$con) {
     die('Could not connect: ' . mysqli_error($con));
 }
 
-// Actually querying the database
 mysqli_select_db($con, $DB);
 
-// The SQL query which updates the availability in the the database
-//for($i = 0; $q.length)
 
-//$booking_id = $q[0][0];
-$date_created = $q[0][1];
-$user_id = $q[0][2];
-$num_days = $q[0][3];
-$num_desk_hours = $q[0][4];
-$num_room_hours = $q[0][5];
-$start_datetime = $q[0][6];
-$end_datetime = $q[0][7];
-$location_id = $q[0][8];
+for ($i = 0; $i < count($q); $i++) {
+    $booking_id = $q[0][0];
+    $date_created = $q[$i][1];
+    $user_id = $q[$i][2];
+    $num_days = $q[$i][3];
+    $num_desk_hours = $q[$i][4];
+    $num_room_hours = $q[$i][5];
+    $start_datetime = $q[$i][6];
+    $end_datetime = $q[$i][7];
+    $location_id = $q[$i][8];
 
-//$sql = "INSERT INTO `booking_record_table`(`booking_id`, `date_created`, `user_id`, `num_days`, `num_desk_hours`, `num_room_hours`, `start_datetime`, `end_datetime`, `location_id`) VALUES ('5','1','1','1', '1', '1', '1', 'HERE','1')";
-$sql = "INSERT INTO `booking_record_table`(`date_created`, `user_id`, `num_days`, `num_desk_hours`, `num_room_hours`, `start_datetime`, `end_datetime`, `location_id`) VALUES ('$date_created','$user_id','$num_days', '$num_desk_hours', '$num_room_hours', '$start_datetime', '$end_datetime','$location_id')";
+    $sql = "INSERT INTO `booking_record_table`(`date_created`, `user_id`, `num_days`, `num_desk_hours`, `num_room_hours`, `start_datetime`, `end_datetime`, `location_id`) VALUES ('$date_created','$user_id','$num_days', '$num_desk_hours', '$num_room_hours', '$start_datetime', '$end_datetime','$location_id')";
 
-
-// Actually querying the database
-mysqli_query($con, $sql);
+    // Actually querying the database
+    mysqli_query($con, $sql);
+}
 
 mysqli_close($con);
+
 ?>
