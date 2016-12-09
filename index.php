@@ -50,7 +50,8 @@
                                 <use href="#stroked-gear"></use>
                             </svg>
                             Settings</a></li>
-                        <li><a href="#">
+                        <!--TODO: go to a php file to log user out-->
+                        <li><a href="logout.php">
                             <svg class="glyph stroked cancel">
                                 <use href="#stroked-cancel"></use>
                             </svg>
