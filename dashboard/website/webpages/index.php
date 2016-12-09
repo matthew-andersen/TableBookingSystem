@@ -30,6 +30,7 @@ if (isset($_POST["username"], $_POST["password"])) {
     $USER = "";
     $PASS = "";
     $user_id = "";
+    $user_name = "";
 
     while ($row = $result1->fetch_assoc()) {
         $USER = $row['username'];

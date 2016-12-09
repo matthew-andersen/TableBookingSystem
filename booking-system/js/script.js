@@ -81,15 +81,15 @@ function handleLocationSelection(name, location) {
         var days = window.prompt("Enter how many days").trim();
         if (isValidNumDays(days, numDaysRemaining)) {
             var cost = days * 25;
+            //calculate the end datetime of the booking
+            var bookingDateTime = onScreenDate.clone();
+            bookingDateTime.add(days, 'days');
 
-            //if user confirms addition to cart
-            if (window.confirm("Your booking is for " + days + " days. This will cost a total of: $" + cost + ". Press OK to confirm.") == true) {
-                //calculate the end datetime of the booking
-                var bookingDateTime = onScreenDate.clone();
-                bookingDateTime.add(days, 'days');
+            //if it does not conflict with existing bookings
+            if (isValidEndDatetime(bookingDateTime, name)) {
+                //if user confirms addition to cart
+                if (window.confirm("Your booking is for " + days + " days. This will cost a total of: $" + cost + ". Press OK to confirm.") == true) {
 
-                //if it does not conflict with existing bookings
-                if (isValidEndDatetime(bookingDateTime, name)) {
                     room_svg_object.style.fill = SELECTED;
 
                     //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
@@ -99,9 +99,9 @@ function handleLocationSelection(name, location) {
                     //add to cart
                     document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + days + " days: $" + cost + "</p>";
                 }
-                else {
-                    alert("This booking conflicts with a later booking. Please make sure the entire booking duration is available.");
-                }
+            }
+            else {
+                alert("This booking conflicts with a later booking. Please make sure the entire booking duration is available.");
             }
         }
     }
@@ -120,7 +120,7 @@ function isValidEndDatetime(bookingEndDatetime, location) {
         var endDateTime = moment(endDatetimeString, "YYYY-MM-DD HH:mm:ss");
         //if this iteration's booking pertains to the location trying to be booked
         if (bookingLocation == location) {
-;            // If the end datetime of this potential booking conflicts with an existing booking
+            ;            // If the end datetime of this potential booking conflicts with an existing booking
             if (bookingEndDatetime.isBetween(startDateTime, endDateTime) || bookingEndDatetime.isSame(endDateTime)) {
                 return false;
             }
