@@ -7,7 +7,6 @@
     <title>i-NQ - Dashboard</title>
 
     <link href="dashboard/website/webpages/css/bootstrap.min.css" rel="stylesheet">
-    <link href="dashboard/website/webpages/css/datepicker3.css" rel="stylesheet">
     <link href="dashboard/website/webpages/css/styles.css" rel="stylesheet">
 
     <!--Icons-->
@@ -50,7 +49,6 @@
                                 <use href="#stroked-gear"></use>
                             </svg>
                             Settings</a></li>
-                        <!--TODO: go to a php file to log user out-->
                         <li><a href="logout.php">
                             <svg class="glyph stroked cancel">
                                 <use href="#stroked-cancel"></use>
@@ -209,8 +207,7 @@
                 <div class="panel-heading dark-overlay">
                     Current Bookings
                 </div>
-                <div class="panel-body">
-                    <p>Lorem ipsum dolor</p>
+                <div id="bookings" class="panel-body">
                 </div>
             </div>
         </div><!--/.col-->
@@ -219,12 +216,8 @@
 
 <script src="dashboard/website/webpages/js/jquery-1.11.1.min.js"></script>
 <script src="dashboard/website/webpages/js/bootstrap.min.js"></script>
-<script src="dashboard/website/webpages/js/chart.min.js"></script>
-<script src="dashboard/website/webpages/js/chart-data.js"></script>
-<script src="dashboard/website/webpages/js/easypiechart.js"></script>
-<script src="dashboard/website/webpages/js/easypiechart-data.js"></script>
-<script src="dashboard/website/webpages/js/bootstrap-datepicker.js"></script>
-<script src="dashboard/website/webpages/js/populateUserInfo.js"></script>
+<script src="booking-system/js/moment.js"></script>
+<script src="booking-system/js/populateUserInfo.js"></script>
 </body>
 
 </html>
