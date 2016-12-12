@@ -5,13 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Forms</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/datepicker3.css" rel="stylesheet">
-    <link href="../css/styles.css" rel="stylesheet">
+    <link href="../webpages/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../webpages/css/styles.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
-    <script src="js/html5shiv.js"></script>
-    <script src="../js/respond.min.js"></script>
+    <script src="../webpages/js/html5shiv.min.js"></script>
+    <script src="../webpages/js/respond.min.js"></script>
     <![endif]-->
 
 </head>
@@ -37,11 +36,6 @@
                             <label>Password</label>
                             <input class="form-control" placeholder="Password" name="password" type="password" value="">
                         </div>
-<!--                        <div class="form-group">-->
-<!--                            <label>Confirm password</label>-->
-<!--                            <input class="form-control" placeholder="Password" name="password" type="password" value="">-->
-<!--                        </div>-->
-
                         <div class="form-group">
                             <label>Email</label>
                             <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="">
@@ -58,13 +52,8 @@
     </div><!-- /.col-->
 </div><!-- /.row -->
 
-<script src="../js/jquery-1.11.1.min.js"></script>
-<script src="../js/bootstrap.min.js"></script>
-<script src="../js/chart.min.js"></script>
-<script src="../js/chart-data.js"></script>
-<script src="../js/easypiechart.js"></script>
-<script src="../js/easypiechart-data.js"></script>
-<script src="../js/bootstrap-datepicker.js"></script>
+<script src="../webpages/js/jquery-1.11.1.min.js"></script>
+<script src="../webpages/js/bootstrap.min.js"></script>
 <script>
     !function ($) {
         $(document).on("click","ul.nav li.parent > a > span.icon", function(){

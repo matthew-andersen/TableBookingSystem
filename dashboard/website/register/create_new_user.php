@@ -1,10 +1,10 @@
 <?php
 
 // LOCAL WAMP HOST
-$servername = "localhost";
-$db_username = "root";
-$db_password = "";
-$dbname = "inq_dashboard";
+$HOST = "localhost";
+$USER = "root";
+$PASS = "";
+$DB = "inq_dashboard";
 
 // WEBHOST000 REMOTE DATABASE
 //$HOST = 'localhost';
@@ -65,6 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 } if ($error){
     echo "Didn't create a user";
+    echo $error;
 } else{
     $sql = "INSERT INTO user (`name`, `username`, `email`, `password`, `num_days`, `num_desk_hours`, `num_room_hours`) VALUES ('$name', '$username', '$email', '$password', 0, 10, 4)";
     if ($conn->query($sql) === TRUE) {
