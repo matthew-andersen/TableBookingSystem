@@ -1,5 +1,4 @@
 <?php
-
 // LOCAL WAMP HOST
 $HOST = 'localhost';
 $USER = 'root';
