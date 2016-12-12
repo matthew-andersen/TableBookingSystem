@@ -578,7 +578,7 @@
 			}
 
 			// auto y orientation is best-situation: top or bottom, no fudging,
-			// decision based on which shows more of the calendar
+			// decision based on which shows more of the calendarHandle
 			var yorient = this.o.orientation.y,
 				top_overflow, bottom_overflow;
 			if (yorient === 'auto'){
