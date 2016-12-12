@@ -20,11 +20,11 @@
     <div id="filter-box">
         <div id="account-info">
             <img src="images/account-icons/calendar2.png" alt="number of days" height="30" width="30">
-            <span id="numDays"></span>
+            <span class="userInfo" id="numDays"></span>
             <img src="images/account-icons/clock2.png" alt="number of desk hours" height="30" width="30">
-            <span id="numDeskHours"></span>
+            <span class="userInfo" id="numDeskHours"></span>
             <img src="images/account-icons/meeting2.png" alt="number of meeting hours" height="30" width="30">
-            <span id="numRoomHours"></span>
+            <span class="userInfo" id="numRoomHours"></span>
         </div>
         <div id="calendar">
             <p>Date: <input type="text" id="datepicker"></p>

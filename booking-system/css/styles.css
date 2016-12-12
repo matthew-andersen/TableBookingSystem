@@ -127,7 +127,7 @@ img {
     vertical-align: middle;
 }
 
-span{
+.userInfo{
     display: inline-block;
     margin-right: 25px;
     color: white;
