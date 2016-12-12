@@ -19,7 +19,7 @@ var currentMonth = todayDate.getMonth();
 var currentDay = todayDate.getDate();
 var currentHour = todayDate.getHours();
 var currentDateTime = moment([currentYear, currentMonth, currentDay, currentHour]);
-var onScreenDate = moment([currentYear, currentMonth, currentDay, currentHour]);
+var onScreenDate = [currentYear, currentMonth, currentDay, currentHour];
 
 //Updates banked days/hours for user any time they make a booking/refresh the page
 function updateUserInfoView(userInfo) {
@@ -32,7 +32,9 @@ function updateUserInfoView(userInfo) {
 // Initialises the application on page load/refresh
 // Sets the date, updates the view based on availabilities, updates the user's account information
 $(document).ready(function roomGen() {
+    alert(onScreenDate);
     initialiseDate();
+    calendar();
     var currentBookings = getBookings();
     updateView(currentBookings, onScreenDate);
     var userInfo = getUserAccount();
@@ -192,6 +194,21 @@ function submitOrder() {
         url: 'php/update_user_account.php',
         type: 'POST',
         data: {'q': JSON.stringify(currentAccountInfo)}
+    });
+}
+
+function calendar() {
+    $("#datepicker").datepicker();
+    $("#datepicker").on("change",function(){
+        var selected = $(this).val();
+        selected = selected.split("/");
+/*        selected.split()*/
+        // alert(onScreenDate);
+        onScreenTime = onScreenDate.format('HH');
+        // onScreenDate = [selected[2], selected[1], selected[0]-1, onScreenTime];
+        onScreenDate = moment([selected[2], selected[1], selected[0]-1, onScreenTime]);
+        alert([selected[2], selected[0]-1, selected[1], onScreenTime]);
+        document.getElementById("date-display-box").innerHTML = onScreenDate.format('MMMM Do YYYY - h:00a');
     });
 }
 

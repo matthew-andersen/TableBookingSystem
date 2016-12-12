@@ -87,6 +87,7 @@ div#cart-box-header {
     float: left;
     background-image: url("../images/arrow-icons/left-hour-arrow.png");
     background-repeat: no-repeat;
+    background-position: center center;
 }
 
 #day-nav-arrow-left {
@@ -95,6 +96,7 @@ div#cart-box-header {
     float: left;
     background-image: url("../images/arrow-icons/left-day-arrow.png");
     background-repeat: no-repeat;
+    background-position: center center;
 }
 
 #hour-nav-arrow-right {
@@ -103,6 +105,7 @@ div#cart-box-header {
     float: right;
     background-image: url("../images/arrow-icons/right-hour-arrow.png");
     background-repeat: no-repeat;
+    background-position: center center;
 }
 
 #day-nav-arrow-right {
@@ -111,6 +114,7 @@ div#cart-box-header {
     float: right;
     background-image: url("../images/arrow-icons/right-day-arrow.png");
     background-repeat: no-repeat;
+    background-position: center center;
 }
 
 #account-info {

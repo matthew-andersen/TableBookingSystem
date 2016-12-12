@@ -9,7 +9,9 @@
     <script src="js/moment.js"></script>
     <script src="js/script.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+    </script>
 </head>
 
 <body>
@@ -24,6 +26,9 @@
             <img src="images/account-icons/meeting2.png" alt="number of meeting hours" height="30" width="30">
             <span id="numRoomHours"></span>
         </div>
+        <div id="calendar">
+            <p>Date: <input type="text" id="datepicker"></p>
+        </div>
     </div>
     <div id="review-box">
         <div id="cart-box">
@@ -36,17 +41,17 @@
 
 <div id="right-col">
     <div id="date-nav-box">
-        <div id="hour-nav-arrow-left" onclick="changeDate('hourBack')"></div>
         <div id="day-nav-arrow-left" onclick="changeDate('dayBack')"></div>
+        <div id="hour-nav-arrow-left" onclick="changeDate('hourBack')"></div>
         <div id="date-display-box"></div>
-        <div id="hour-nav-arrow-right" onclick="changeDate('hourForward')"></div>
         <div id="day-nav-arrow-right" onclick="changeDate('dayForward')"></div>
+        <div id="hour-nav-arrow-right" onclick="changeDate('hourForward')"></div>
     </div>
 
     <svg height="698pt" preserveaspectratio="xMidYMid meet" version="1.0" viewbox="0 0 971 698"
          xmlns="http://www.w3.org/2000/svg">
 
-        <!--SVG coordinates for map outline-->
+        <!--SVG coordinates for map outline. Make sure to overwrite this if changing the floor plan.-->
         <g fill="#000000" stroke="none" transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)">
             <path
                 d="M4850 4910 l0 -1690 660 0 660 0 0 30 0 30 -630 0 -630 0 0 575 0 575 780 0 780 0 0 -585 0 -585 30 0 30 0 0 585 0 585 440 0 440 0 0 -357 -1 -358 -212 -218 -212 -217 -77 0 -78 0 0 -30 0 -30 93 0 92 0 228 228 227 227 0 1118 0 1117 560 0 560 0 0 30 0 30 -620 0 -620 0 0 -30 c0 -27 3 -30 30 -30 l30 0 0 -710 0 -710 -355 0 -355 0 0 710 0 710 140 0 140 0 0 30 0 30 -140 0 -140 0 0 65 0 65 -30 0 -30 0 0 -805 0 -805 -380 0 -380 0 0 1025 0 1025 380 0 380 0 0 -40 c0 -38 2 -40 30 -40 l30 0 0 70 0 70 -485 0 -485 0 0 -30 c0 -29 2 -30 45 -30 l45 0 0 -1025 0 -1025 -455 0 -455 0 0 1025 0 1025 225 0 225 0 0 30 0 30 -255 0 -255 0 0 -1690z"></path>
