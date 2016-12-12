@@ -1,4 +1,3 @@
-<?php session_start() ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +36,7 @@
                         <svg class="glyph stroked male-user">
                             <use href="#stroked-male-user"></use>
                         </svg>
-                        <span id="user"><?php echo $_SESSION['user_name']; ?></span> <span class="caret"></span></a>
+                        <span id="user"></span> <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="#">
                             <svg class="glyph stroked male-user">
@@ -79,7 +78,7 @@
                 <use xlink:href="#stroked-calendar"></use>
             </svg>
             Book Now</a></li>
-        <li><a href="dashboard/website/webpages/charts.html">
+        <li><a href="#">
             <svg class="glyph stroked plus sign">
                 <use xlink:href="#stroked-plus-sign"/>
             </svg>
@@ -122,7 +121,7 @@
                         </svg>
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large"><?php echo $_SESSION['num_desk_hours']; ?></div>
+                        <div class="large"><span id="num_desk_hours"></span></div>
                         <div class="text-muted">Hours</div>
                     </div>
                 </div>
@@ -137,7 +136,7 @@
                         </svg>
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large"><?php echo $_SESSION['num_days']; ?></div>
+                        <div class="large"><span id="num_days"></span></div>
                         <div class="text-muted">Days</div>
                     </div>
                 </div>
@@ -152,7 +151,7 @@
                         </svg>
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">
-                        <div class="large"><?php echo $_SESSION['num_room_hours']; ?></div>
+                        <div class="large"><span id="num_room_hours"></span></div>
                         <div class="text-muted">Meetings</div>
                     </div>
                 </div>
