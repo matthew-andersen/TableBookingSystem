@@ -92,9 +92,20 @@ function handleLocationSelection(name, location) {
 
                     room_svg_object.style.fill = SELECTED;
 
+                    var userId;
+                    var userRequest = new XMLHttpRequest();
+                    userRequest.onload = function () {
+                        // alert(this.responseText);
+                        //what to you want to do with the response?
+                        userId = this.responseText;
+                        alert(userId);
+                    };
+                    userRequest.open("GET", "../checkUser.php", false);
+                    userRequest.send();
+
                     //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
                     //populate the list with relevant order information for sending to database
-                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), '14', days.toString(), '24', '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
+                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, days.toString(), '24', '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
 
                     //add to cart
                     document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + days + " days: $" + cost + "</p>";
