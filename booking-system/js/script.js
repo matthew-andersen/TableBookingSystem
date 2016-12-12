@@ -19,7 +19,7 @@ var currentMonth = todayDate.getMonth();
 var currentDay = todayDate.getDate();
 var currentHour = todayDate.getHours();
 var currentDateTime = moment([currentYear, currentMonth, currentDay, currentHour]);
-var onScreenDate = [currentYear, currentMonth, currentDay, currentHour];
+var onScreenDate = moment([currentYear, currentMonth, currentDay, currentHour]);
 
 //Updates banked days/hours for user any time they make a booking/refresh the page
 function updateUserInfoView(userInfo) {

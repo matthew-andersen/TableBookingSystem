@@ -5,8 +5,8 @@
 <head>
     <meta charset="UTF-8">
     <title>iNQ Bookings</title>
-    <script src="js/jquery-3.1.1.js"></script>
     <script src="js/moment.js"></script>
+    <script src="js/jquery-3.1.1.js"></script>
     <script src="js/script.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
