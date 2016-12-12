@@ -158,11 +158,8 @@
                 </div>
                 <div class="panel-body">
                     <ul>
-                        <li class="left clearfix">
-								<span class="chat-img pull-left">
-									<img src="http://placehold.it/80/30a5ff/fff" alt="User Avatar" class="img-circle"/>
-								</span>
-                            <div class="chat-body clearfix">
+                        <li class="left">
+                            <div>
                                 <div class="header">
                                     <strong class="primary-font">John Doe</strong>
                                     <small class="text-muted">32 mins ago</small>
@@ -175,16 +172,6 @@
                             </div>
                         </li>
                     </ul>
-                </div>
-
-                <div class="panel-footer">
-                    <div class="input-group">
-                        <input id="btn-input" type="text" class="form-control input-md"
-                               placeholder="Type your message here..."/>
-                        <span class="input-group-btn">
-								<button class="btn btn-success btn-md" id="btn-chat">Send</button>
-							</span>
-                    </div>
                 </div>
             </div>
 
