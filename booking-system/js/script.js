@@ -1,4 +1,5 @@
-// JavaScript for handling events
+// JavaScript for handling application events
+
 // XMLHttp object is used to communicate with the server without refreshing the page
 xhttp = new XMLHttpRequest();
 var newRequest = new XMLHttpRequest();
@@ -32,7 +33,6 @@ function updateUserInfoView(userInfo) {
 // Initialises the application on page load/refresh
 // Sets the date, updates the view based on availabilities, updates the user's account information
 $(document).ready(function roomGen() {
-    alert(onScreenDate);
     initialiseDate();
     calendar();
     var currentBookings = getBookings();
@@ -100,7 +100,6 @@ function handleLocationSelection(name, location) {
                         // alert(this.responseText);
                         //what to you want to do with the response?
                         userId = this.responseText;
-                        alert(userId);
                     };
                     userRequest.open("GET", "../checkUser.php", false);
                     userRequest.send();
@@ -198,16 +197,23 @@ function submitOrder() {
 }
 
 function calendar() {
-    $("#datepicker").datepicker();
-    $("#datepicker").on("change",function(){
+    var $datepicker = $('#datepicker');
+    $datepicker.datepicker();
+    $datepicker.datepicker("setDate", new Date());
+    $datepicker.on("change", function () {
         var selected = $(this).val();
         selected = selected.split("/");
-/*        selected.split()*/
-        // alert(onScreenDate);
+
         onScreenTime = onScreenDate.format('HH');
-        // onScreenDate = [selected[2], selected[1], selected[0]-1, onScreenTime];
-        onScreenDate = moment([selected[2], selected[1], selected[0]-1, onScreenTime]);
-        alert([selected[2], selected[0]-1, selected[1], onScreenTime]);
+        calendarDate = selected[1];
+        calendarMonth = selected[0] - 1;
+        calendarYear = selected[2];
+
+        if (calendarDate[0] == 0) {
+            calendarDate = calendarDate[1]
+        }
+
+        onScreenDate = moment([calendarYear, calendarMonth, calendarDate, onScreenTime]);
         document.getElementById("date-display-box").innerHTML = onScreenDate.format('MMMM Do YYYY - h:00a');
     });
 }

@@ -63,7 +63,7 @@
                 <use xlink:href="#stroked-dashboard-dial"></use>
             </svg>
             Dashboard</a></li>
-        <li><a href="booking-system/index.php">
+        <li><a href="booking-system/application.php" target="_blank">
             <svg class="glyph stroked calendar">
                 <use xlink:href="#stroked-calendar"></use>
             </svg>

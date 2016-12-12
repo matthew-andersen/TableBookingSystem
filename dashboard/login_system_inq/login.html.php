@@ -38,7 +38,7 @@ if (!$error){
 
     if( $count == 1 && $row['password']==$password ) {
 //        $_SESSION['user'] = $row['userId'];
-        header("Location: index.php");
+        header("Location: application.php");
     } else {
         $errMSG = "Incorrect Credentials, Try again...";
     }

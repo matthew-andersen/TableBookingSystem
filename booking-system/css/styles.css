@@ -127,6 +127,12 @@ img {
     vertical-align: middle;
 }
 
+
+#calendar {
+    margin-top: 3%;
+    margin-left: 3%;
+}
+
 .userInfo{
     display: inline-block;
     margin-right: 25px;
