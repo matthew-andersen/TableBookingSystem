@@ -79,7 +79,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
                 </svg>
                 Buy More Time</a></li>
         <li role="presentation" class="divider"></li>
-        <li><a href="dashboard/website/webpages/login.html">
+        <li><a href="index.html">
                 <svg class="glyph stroked male-user">
                     <use xlink:href="#stroked-male-user"></use>
                 </svg>

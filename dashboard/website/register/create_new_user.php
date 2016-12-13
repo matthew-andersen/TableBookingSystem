@@ -76,7 +76,7 @@ $email = test_input($_POST["email"]);
 
 $sql = "INSERT INTO user (`name`, `username`, `email`, `password`, `num_days`, `num_desk_hours`, `num_room_hours`) VALUES ('$name', '$username', '$email', '$password', 0, 10, 4)";
 if ($conn->query($sql) === TRUE) {
-    header("Location: ../webpages/login.html");
+    header("Location: ../../../");
 
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;

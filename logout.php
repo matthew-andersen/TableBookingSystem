@@ -5,8 +5,6 @@
  * Date: 9/12/2016
  * Time: 2:42 PM
  */
-// Initialize the session.
-// If you are using session_name("something"), don't forget it now!
 session_start();
 $redirect = "/inqtablebookingsystem/index.html";
 
