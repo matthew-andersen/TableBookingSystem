@@ -34,7 +34,7 @@ function updateUserInfoView(userInfo) {
 // Sets the date, updates the view based on availabilities, updates the user's account information
 $(document).ready(function roomGen() {
     initialiseDate();
-    calendar();
+    calendarHandle();
     var currentBookings = getBookings();
     updateView(currentBookings, onScreenDate);
     var userInfo = getUserAccount();
@@ -196,7 +196,7 @@ function submitOrder() {
     });
 }
 
-function calendar() {
+function calendarHandle() {
     var $datepicker = $('#datepicker');
     $datepicker.datepicker();
     $datepicker.datepicker("setDate", new Date());
@@ -215,6 +215,8 @@ function calendar() {
 
         onScreenDate = moment([calendarYear, calendarMonth, calendarDate, onScreenTime]);
         document.getElementById("date-display-box").innerHTML = onScreenDate.format('MMMM Do YYYY - h:00a');
+        var bookings = getBookings();
+        updateView(bookings, onScreenDate);
     });
 }
 
