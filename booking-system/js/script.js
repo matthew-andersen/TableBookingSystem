@@ -197,7 +197,7 @@ function isValidEndDatetime(bookingEndDatetime, location) {
         var endDateTime = moment(endDatetimeString, "YYYY-MM-DD HH:mm:ss");
         //if this iteration's booking pertains to the location trying to be booked
         if (bookingLocation == location) {
-            ;            // If the end datetime of this potential booking conflicts with an existing booking
+            // If the end datetime of this potential booking conflicts with an existing booking
             if (bookingEndDatetime.isBetween(startDateTime, endDateTime) || bookingEndDatetime.isSame(endDateTime)) {
                 return false;
             }
