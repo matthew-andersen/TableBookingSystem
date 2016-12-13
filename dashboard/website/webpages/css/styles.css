@@ -928,6 +928,11 @@ h1.page-header {
 	overflow: scroll;
 }
 
+#error-msg {
+	font-weight: bold;
+	text-align: center;
+	color: red;
+}
 
 
 
