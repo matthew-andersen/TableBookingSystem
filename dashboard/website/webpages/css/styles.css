@@ -341,8 +341,8 @@ a.bg-danger:hover {
 	text-decoration: none;
 }
 
-.panel-blue { background: #3B6891; color: #fff; }
-.panel-teal { background: #6eb3b4; color: #fff; }
+.panel-blue { background: #314869; color: #fff; }
+.panel-teal { background: #3B6891; color: #fff; }
 .panel-orange { background: #eeb768; color: #fff; }
 .panel-red { background: #f9243f; color: #fff; }
 
@@ -422,8 +422,8 @@ a.bg-danger:hover {
 	color: #5f6468;
 }
 
-.panel-blue .widget-left { background: #3B6891; color: #fff; }
-.panel-teal .widget-left { background: #6eb3b4; color: #fff; }
+.panel-blue .widget-left { background: #314869; color: #fff; }
+.panel-teal .widget-left { background: #3B6891; color: #fff; }
 .panel-orange .widget-left { background: #eeb768; color: #fff; }
 .panel-red .widget-left { background: #f9243f; color: #fff; }
 
@@ -934,6 +934,10 @@ h1.page-header {
 	color: red;
 }
 
+.panel-green{
+	background-color: #5eac5f;
+	color: #fff
+}
 
 
 
