@@ -5,6 +5,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
     header("Location: dashboard/website/webpages/login.html");
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,7 +63,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
         </div>
     </form>
     <ul class="nav menu">
-        <li class="active"><a href="index.php">
+        <li class="active"><a href="dashboard.php">
                 <svg class="glyph stroked dashboard-dial">
                     <use xlink:href="#stroked-dashboard-dial"></use>
                 </svg>

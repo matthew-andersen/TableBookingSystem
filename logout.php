@@ -8,7 +8,7 @@
 // Initialize the session.
 // If you are using session_name("something"), don't forget it now!
 session_start();
-$redirect = "/inqtablebookingsystem/homePage.html";
+$redirect = "/inqtablebookingsystem/index.html";
 
 // Unset all of the session variables.
 $_SESSION = array();
