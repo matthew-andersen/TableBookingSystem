@@ -117,6 +117,10 @@ function validateRegistration() {
     else {
         document.getElementById('emailError').innerHTML = "";
     }
+
+    if (hasErrors == false){
+        alert("New user registered. Please log in to access dashboard.");
+    }
     return !hasErrors;
 }
 

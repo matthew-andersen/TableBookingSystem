@@ -23,8 +23,8 @@
         <div class="login-panel panel panel-default">
             <div class="panel-heading">Register</div>
             <div class="panel-body">
-                <!--                <form action="create_new_user.php" method="post">-->
-                <form onsubmit="return validateRegistration()" method="post" id="registration">
+                <!--                <form  method="post">-->
+                <form action="create_new_user.php" onsubmit="return validateRegistration()" method="post" id="registration">
                     <fieldset>
                         <div class="form-group tightDiv">
                             <label>Full Name</label>
