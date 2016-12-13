@@ -7,6 +7,7 @@
 
     <link href="../webpages/css/bootstrap.min.css" rel="stylesheet">
     <link href="../webpages/css/styles.css" rel="stylesheet">
+    <link href="../../../booking-system/css/validationStyles.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
     <script src="../webpages/js/html5shiv.min.js"></script>
@@ -22,28 +23,44 @@
         <div class="login-panel panel panel-default">
             <div class="panel-heading">Register</div>
             <div class="panel-body">
-                <form action="create_new_user.php" method="post">
+                <!--                <form action="create_new_user.php" method="post">-->
+                <form onsubmit="return validateRegistration()" method="post" id="registration">
                     <fieldset>
-                        <div class="form-group">
-                            <label>Name</label>
-                        <input class="form-control" placeholder="John Smith" name="name" type="text" autofocus="">
+                        <div class="form-group tightDiv">
+                            <label>Full Name</label>
+                            <input class="form-control" id="name" placeholder="John Smith" name="name" type="text"
+                                   autofocus="">
                         </div>
-                        <div class="form-group">
+                        <div class="errorDiv">
+                            <span id="nameError"></span>
+                        </div>
+                        <div class="form-group tightDiv">
                             <label>Username</label>
-                        <input class="form-control" placeholder="Username" name="username" type="text" autofocus="">
+                            <input class="form-control" id="username" placeholder="jsmith91" name="username" type="text"
+                                   autofocus="">
                         </div>
-                        <div class="form-group">
+                        <div class="errorDiv">
+                            <span id="userNameError"></span>
+                        </div>
+                        <div class="form-group tightDiv">
                             <label>Password</label>
-                            <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                            <input class="form-control" id="password" placeholder="Password" name="password"
+                                   type="password" value="">
                         </div>
-                        <div class="form-group">
+                        <div class="errorDiv">
+                            <span id="passwordError"></span>
+                        </div>
+                        <div class="form-group tightDiv">
                             <label>Email</label>
-                            <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="">
+                            <input class="form-control" id="email" placeholder="jsmith91@electronicmail.com"
+                                   name="email" autofocus="">
+                        </div>
+                        <div class="errorDiv">
+                            <span id="emailError"></span>
                         </div>
                         <div class="form-group">
-                            <input name="submit" type="submit" value="Submit Me">
+                            <input class="btn btn-primary topMargin" name="submit" type="submit" value="Create Account">
                         </div>
-                        <a href="../login.html.php" class="btn btn-primary">Login</a>
 
                     </fieldset>
                 </form>
@@ -54,9 +71,11 @@
 
 <script src="../webpages/js/jquery-1.11.1.min.js"></script>
 <script src="../webpages/js/bootstrap.min.js"></script>
+<script src="../../../booking-system/js/registrationValidator.js"></script>
+
 <script>
     !function ($) {
-        $(document).on("click","ul.nav li.parent > a > span.icon", function(){
+        $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
             $(this).find('em:first').toggleClass("glyphicon-minus");
         });
         $(".sidebar span.icon").find('em:first').addClass("glyphicon-plus");
