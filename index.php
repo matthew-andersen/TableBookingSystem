@@ -122,7 +122,7 @@ if (!isset($_SESSION['current_userid'])) {
             </div>
         </div>
         <div class="col-xs-12 col-md-6 col-lg-3">
-            <div class="panel panel-orange panel-widget">
+            <div class="panel panel-green panel-widget">
                 <div class="row no-padding">
                     <div class="col-sm-3 col-lg-5 widget-left">
                         <svg class="glyph stroked notepad ">

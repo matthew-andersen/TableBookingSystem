@@ -5,21 +5,10 @@
  * Date: 9/12/2016
  * Time: 2:42 PM
  */
-
-//session_start();
-//$sessionID = session_id();
-//
-$redirect = "/inqtablebookingsystem/homePage.html";
-//if (isset($_SESSION['loggedIn'])){
-//    session_id($sessionID);
-//    session_start();
-//    session_destroy();
-//
-//}
-
 // Initialize the session.
 // If you are using session_name("something"), don't forget it now!
 session_start();
+$redirect = "/inqtablebookingsystem/homePage.html";
 
 // Unset all of the session variables.
 $_SESSION = array();

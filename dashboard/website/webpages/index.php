@@ -21,7 +21,7 @@ $connection->select_db($DB);
 //    include '../../website/register/register.html.php';
 //}
 
-if (isset($_POST["username"], $_POST["password"])) {
+if (isset($_POST["username"], $_POST["password"]) && !empty($_POST["username"]) && !empty($_POST["password"])) {
     $name = $_POST["username"];
     $password = $_POST["password"];
 
@@ -60,7 +60,10 @@ if (isset($_POST["username"], $_POST["password"])) {
         $userHome = "../../../";
         header('Location: '.$userHome);
     } else {
-        echo "No match.";
+        header('Location: login_reattempt.html');
     }
+}
+else {
+    header('Location: login_reattempt.html');
 }
 ?>
