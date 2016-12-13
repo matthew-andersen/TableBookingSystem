@@ -1,3 +1,11 @@
+<!--TODO: The rooms/desks need to be properly identified to avoid later confusion-->
+<?php
+session_start();
+
+if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
+    header("Location: ../dashboard/website/webpages/login.html");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
