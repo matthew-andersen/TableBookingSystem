@@ -34,7 +34,7 @@ div#right-col {
 }
 
 div#date-nav-box {
-    height: 10%;
+    height: 8%;
     background-color: #3B6891;
 }
 
@@ -74,7 +74,7 @@ div#cart-box-header {
     float: left;
     text-align: center;
     width: 60%;
-    color: black;
+    color: rgba(252, 252, 252, 1);
     height: 100%;
     font-size: 2em;
     vertical-align: middle;
@@ -118,13 +118,13 @@ div#cart-box-header {
 }
 
 #account-info {
-    height: 45px;
+    height: 16%;
     background-color: #314869;
     text-align: center;
 }
 
 img {
-    vertical-align: middle;
+    vertical-align: bottom;
 }
 
 
@@ -139,5 +139,11 @@ img {
     color: white;
     font-size: 1.5em;
     line-height: 1.5em;
-    vertical-align: middle;
+    vertical-align: bottom;
+    text-align: center;
+}
+
+.userInfo *{
+    margin-top: auto;
+    margin-bottom: auto;
 }
