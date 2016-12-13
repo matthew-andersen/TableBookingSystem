@@ -3,7 +3,7 @@
 session_start();
 
 if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
-    header("Location: ../dashboard/website/webpages/login.html");
+    header("Location: ../index.html");
 }
 ?>
 <!DOCTYPE html>
