@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['current_userid'])) {
+    header("Location: dashboard/website/webpages/login.html");
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,9 +32,6 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                     data-target="#sidebar-collapse">
                 <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#"><span>i-NQ</span>Admin</a>
             <ul class="user-menu">
@@ -39,10 +43,10 @@
                         <span id="user"></span> <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="logout.php">
-                            <svg class="glyph stroked cancel">
-                                <use href="#stroked-cancel"></use>
-                            </svg>
-                            Logout</a></li>
+                                <svg class="glyph stroked cancel">
+                                    <use href="#stroked-cancel"></use>
+                                </svg>
+                                Logout</a></li>
                     </ul>
                 </li>
             </ul>
@@ -58,27 +62,27 @@
         </div>
     </form>
     <ul class="nav menu">
-        <li class="active"><a href="index.html">
-            <svg class="glyph stroked dashboard-dial">
-                <use xlink:href="#stroked-dashboard-dial"></use>
-            </svg>
-            Dashboard</a></li>
+        <li class="active"><a href="index.php">
+                <svg class="glyph stroked dashboard-dial">
+                    <use xlink:href="#stroked-dashboard-dial"></use>
+                </svg>
+                Dashboard</a></li>
         <li><a href="booking-system/application.php" target="_blank">
-            <svg class="glyph stroked calendar">
-                <use xlink:href="#stroked-calendar"></use>
-            </svg>
-            Book Now</a></li>
+                <svg class="glyph stroked notepad ">
+                    <use xlink:href="#stroked-notepad">
+                </svg>
+                Book Now</a></li>
         <li><a href="#">
-            <svg class="glyph stroked plus sign">
-                <use xlink:href="#stroked-plus-sign"/>
-            </svg>
-            Buy More Time</a></li>
+                <svg class="glyph stroked plus sign">
+                    <use xlink:href="#stroked-plus-sign">
+                </svg>
+                Buy More Time</a></li>
         <li role="presentation" class="divider"></li>
         <li><a href="dashboard/website/webpages/login.html">
-            <svg class="glyph stroked male-user">
-                <use xlink:href="#stroked-male-user"></use>
-            </svg>
-            Login Page</a></li>
+                <svg class="glyph stroked male-user">
+                    <use xlink:href="#stroked-male-user"></use>
+                </svg>
+                Login Page</a></li>
     </ul>
 
 </div><!--/.sidebar-->
@@ -87,10 +91,10 @@
     <div class="row">
         <ol class="breadcrumb">
             <li><a href="#">
-                <svg class="glyph stroked home">
-                    <use xlink:href="#stroked-home"></use>
-                </svg>
-            </a></li>
+                    <svg class="glyph stroked home">
+                        <use xlink:href="#stroked-home"></use>
+                    </svg>
+                </a></li>
             <li class="active">Icons</li>
         </ol>
     </div><!--/.row-->
@@ -121,8 +125,8 @@
             <div class="panel panel-orange panel-widget">
                 <div class="row no-padding">
                     <div class="col-sm-3 col-lg-5 widget-left">
-                        <svg class="glyph stroked calendar">
-                            <use xlink:href="#stroked-calendar"></use>
+                        <svg class="glyph stroked notepad ">
+                            <use xlink:href="#stroked-notepad"/>
                         </svg>
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">

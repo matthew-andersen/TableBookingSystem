@@ -119,13 +119,13 @@ function validateRegistration() {
     }
 
     if (hasErrors == false){
-        alert("New user registered. Please log in to access dashboard.");
+        alert("New user registered! Please log in to access dashboard.");
     }
     return !hasErrors;
 }
 
 function getCurrentUsers() {
-    var allAccounts;
+    var allAccounts=[];
 
     var userAccountRequest = new XMLHttpRequest();
     userAccountRequest.onload = function () {

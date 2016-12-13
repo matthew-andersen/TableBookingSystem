@@ -14,6 +14,7 @@
     <script src="../webpages/js/respond.min.js"></script>
     <![endif]-->
 
+
 </head>
 
 <body>
@@ -72,7 +73,6 @@
 <script src="../webpages/js/jquery-1.11.1.min.js"></script>
 <script src="../webpages/js/bootstrap.min.js"></script>
 <script src="../../../booking-system/js/registrationValidator.js"></script>
-
 <script>
     !function ($) {
         $(document).on("click", "ul.nav li.parent > a > span.icon", function () {
