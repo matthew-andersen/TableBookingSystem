@@ -39,11 +39,37 @@ $(document).ready(function roomGen() {
     updateView(currentBookings, onScreenDate);
     var userInfo = getUserAccount();
     updateUserInfoView(userInfo);
+    // $(function () {
+    //
+    //     // Dialog
+    //     $('#dialog').dialog({
+    //         resizable: false,
+    //         autoOpen: false,
+    //         width: 400,
+    //         height: 300,
+    //         modal: true,
+    //         buttons: {
+    //             "Ok": function () {
+    //                 alert("BAZINGA!");
+    //                 $(this).dialog("close");
+    //             },
+    //             "Cancel": function () {
+    //                 $(this).dialog("close");
+    //             }
+    //         }
+    //     });
+
+    // // Dialog Link
+    // $('#dialog_link').click(function () {
+    //     $('#dialog').dialog('open');
+    //     return false;
+    // });
+    //
+    // });
 });
 
 // Sets 'datebox' div to contain the current date //
 function initialiseDate() {
-    // TODO: alert(currentDateTime.format("Y,M,D,HH"))
     document.getElementById("date-display-box").innerHTML = moment(onScreenDate).format('MMMM Do YYYY - h:00a');
 }
 
@@ -66,55 +92,94 @@ function isValidNumDays(days, numDaysRemaining) {
     }
 }
 
-// Function checks if location has been booked and if it is not it allows the user to make a booking also includes basic error checking
-// The booking is then confirmed by the user and the location is 'greyed-out'
-function handleLocationSelection(name, location) {
+function handlePopup(name, location) {
+    if (name.slice(0, 4) == "room") {
+        document.getElementById("dialog").innerHTML = "<label>Hours: <input name='hours' type='number' min='1' value='' class='text' title=''/></label>";
+    } else if (name.slice(0, 4) == "desk") {
+        document.getElementById("dialog").innerHTML = "<label>Days: </label><input name='days' type='number' min='1' value='' class='text' title=''/><p>or</p><label>Hours: </label><input name='hours' type='number' min='1' value='' class='text' title=''/>";
+    }
+
+    $('#dialog').dialog({
+        resizable: false,
+        autoOpen: false,
+        width: 400,
+        height: 250,
+        modal: true,
+        buttons: {
+            "Submit": function () {
+                $(this).dialog("close");
+                var days = $('#dialog').find('input[name="days"]').val();
+                var hours = $('#dialog').find('input[name="hours"]').val();
+                if (days == false || days == undefined) {
+                    handleLocationSelection(name, location, hours, "hours")
+                } else {
+                    handleLocationSelection(name, location, days, "days")
+                }
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
     var room_svg_object = document.getElementById(name);
     if (room_svg_object.style.fill == UNAVAILABLE) {
         alert("Sorry, this has been booked");
     } else if (room_svg_object.style.fill == SELECTED) {
         alert("This booking needs to be confirmed");
     } else {
-        // Get the user account information from the database;
-        var accountInfo = getUserAccount();
-        var numDaysRemaining = accountInfo[1];
+        $('#dialog').dialog('open', false);
+    }
+}
 
-        //Ask user how long they would like to book for
-        var days = window.prompt("Enter how many days").trim();
-        if (isValidNumDays(days, numDaysRemaining)) {
-            var cost = days * 25;
-            //calculate the end datetime of the booking
-            var bookingDateTime = onScreenDate.clone();
-            bookingDateTime.add(days, 'days');
 
-            //if it does not conflict with existing bookings
-            if (isValidEndDatetime(bookingDateTime, name)) {
-                //if user confirms addition to cart
-                if (window.confirm("Your booking is for " + days + " days. This will cost a total of: $" + cost + ". Press OK to confirm.") == true) {
+// Function checks if location has been booked and if it is not it allows the user to make a booking also includes basic error checking
+// The booking is then confirmed by the user and the location is 'greyed-out'
+function handleLocationSelection(name, location, duration, durationType) {
+    var room_svg_object = document.getElementById(name);
+    // Get the user account information from the database;
+    var accountInfo = getUserAccount();
+    var numDaysRemaining = accountInfo[1];
 
-                    room_svg_object.style.fill = SELECTED;
+    //Ask user how long they would like to book for
+    // var days = window.prompt("Enter how many days").trim();
+    if (isValidNumDays(duration, numDaysRemaining)) {
+        var cost = duration * 25;
+        //calculate the end datetime of the booking
 
-                    var userId;
-                    var userRequest = new XMLHttpRequest();
-                    userRequest.onload = function () {
-                        // alert(this.responseText);
-                        //what to you want to do with the response?
-                        userId = this.responseText;
-                    };
-                    userRequest.open("GET", "../checkUser.php", false);
-                    userRequest.send();
+        //if it does not conflict with existing bookings
+        if (isValidEndDatetime(bookingDateTime, name)) {
+            //if user confirms addition to cart
+            if (window.confirm("Your booking is for " + duration + " " + durationType + ". This will cost a total of: $" + cost + ". Press OK to confirm.") == true) {
 
-                    //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
-                    //populate the list with relevant order information for sending to database
-                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, days.toString(), '24', '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
+                room_svg_object.style.fill = SELECTED;
 
-                    //add to cart
-                    document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + days + " days: $" + cost + "</p>";
+                var userId;
+                var userRequest = new XMLHttpRequest();
+                userRequest.onload = function () {
+                    // alert(this.responseText);
+                    //what to you want to do with the response?
+                    userId = this.responseText;
+                };
+                userRequest.open("GET", "../checkUser.php", false);
+                userRequest.send();
+
+                //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
+                //populate the list with relevant order information for sending to database
+                var bookingDateTime = onScreenDate.clone();
+                if (durationType == "days") {
+                    bookingDateTime.add(duration, 'days');
+                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, duration.toString(), '24', '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
+                } else {
+                    bookingDateTime.add(duration, 'hours');
+                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '0', duration.toString(), duration.toString(), onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
                 }
+
+                //add to cart
+                document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + duration + " " + durationType + ": $" + cost + "</p>";
             }
-            else {
-                alert("This booking conflicts with a later booking. Please make sure the entire booking duration is available.");
-            }
+        }
+        else {
+            alert("This booking conflicts with a later booking. Please make sure the entire booking duration is available.");
         }
     }
 }
@@ -177,16 +242,16 @@ function submitOrder() {
     var numRoomHours = userOrder[0][5];
     // alert(numDays + " " + numDeskHours + " " + numRoomHours);
     var currentAccountInfo = getUserAccount();
+    alert(currentAccountInfo);
     if (numDays != 0) {
         currentAccountInfo[1] -= numDays;
     }
-    //UNCOMMENT WHEN NEEDED
-    // else if (numDeskHours != 0){
-    //     currentAccountInfo[2] -= numDeskHours;
-    // }
-    // else if (numRoomHours != 0){
-    //     currentAccountInfo[3] -= numRoomHours;
-    // }
+    else if (numDeskHours != 0){
+        currentAccountInfo[2] -= numDeskHours;
+    }
+    else if (numRoomHours != 0){
+        currentAccountInfo[3] -= numRoomHours;
+    }
 
     //sends updated account information to user table
     $.ajax({

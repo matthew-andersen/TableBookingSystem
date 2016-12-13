@@ -9,11 +9,9 @@
     <script src="js/jquery-3.1.1.js"></script>
     <script src="js/script.js" type="text/javascript"></script>
     <link rel="stylesheet" type="text/css" href="css/styles.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="/resources/demos/style.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 </head>
 
 <body>
@@ -43,11 +41,15 @@
 
 <div id="right-col">
     <div id="date-nav-box">
-        <div id="day-nav-arrow-left" onclick="changeDate('dayBack')"></div>
-        <div id="hour-nav-arrow-left" onclick="changeDate('hourBack')"></div>
-        <div id="date-display-box"></div>
-        <div id="day-nav-arrow-right" onclick="changeDate('dayForward')"></div>
-        <div id="hour-nav-arrow-right" onclick="changeDate('hourForward')"></div>
+        <a href="#"><div id="day-nav-arrow-left" onclick="changeDate('dayBack')"></div></a>
+        <a href="#"><div id="hour-nav-arrow-left" onclick="changeDate('hourBack')"></div></a>
+        <a><div id="date-display-box"></div></a>
+        <a href="#"><div id="day-nav-arrow-right" onclick="changeDate('dayForward')"></div></a>
+        <a href="#"><div id="hour-nav-arrow-right" onclick="changeDate('hourForward')"></div></a>
+    </div>
+
+
+    <div id="dialog" title="Please Enter a Duration" hidden>
     </div>
 
     <svg height="698pt" preserveaspectratio="xMidYMid meet" version="1.0" viewbox="0 0 971 698"
@@ -75,7 +77,7 @@
         </g>
 
         <!--SVG coordinates for 'Room 1'-->
-        <a href="#" fill="white" id="room_1" onclick="handleLocationSelection('room_1', 'Room 1')">
+        <a href="#" fill="white" id="room_1" class="room" onclick="handlePopup('room_1', 'Room 1')">
             <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)">
                 <path stroke-width="5" stroke="#557731"
                       d="M440 3365 l0 -815 700 0 700 0 0 815 0 815 -700 0 -700 0 0 -815z"></path>
@@ -83,20 +85,20 @@
         </a>
 
         <!--SVG coordinates for 'Room 2'-->
-        <a fill="white" href="#" id="room_2" onclick="handleLocationSelection('room_2', 'Room 2')">
+        <a fill="white" href="#" id="room_2" onclick="handlePopup('room_2', 'Room 2')">
             <g stroke="none" transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)">
                 <path
                     d="M440 1615 l0 -904 33 -5 c30 -4 1213 -37 1320 -36 l47 0 0 925 0 925 -700 0 -700 0 0 -905z"></path>
             </g>
         </a>
 
-        <a fill="white" href="#" id="room_3" onclick="handleLocationSelection('room_3', 'Room 3')">
+        <a fill="white" href="#" id="room_3" onclick="handlePopup('room_3', 'Room 3')">
             <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M4910 3855 l0 -575 780 0 780 0 0 575 0 575 -780 0 -780 0 0 -575z"></path>
             </g>
         </a>
 
-        <a fill="white" href="#" id="room_4" onclick="handleLocationSelection('room_4', 'Room 4')">
+        <a fill="white" href="#" id="room_4" onclick="handlePopup('room_4', 'Room 4')">
             <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M6530 3855 l0 -575 234 0 233 0 207 210 206 211 0 364 0 365 -440 0
 -440 0 0 -575z"></path>
@@ -104,49 +106,49 @@
         </a>
 
 
-        <a fill="white" href="#" id="desk_1" onclick="handleLocationSelection('desk_1', 'Desk 1')">
+        <a fill="white" href="#" id="desk_1" onclick="handlePopup('desk_1', 'Desk 1')">
             <g stroke="none" transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)">
                 <path d="M2280 3450 l0 -100 155 0 155 0 0 100 0 100 -155 0 -155 0 0 -100z"></path>
             </g>
         </a>
 
-        <a fill="white" href="#" id="desk_2" onclick="handleLocationSelection('desk_2', 'Desk 2')">
+        <a fill="white" href="#" id="desk_2" onclick="handlePopup('desk_2', 'Desk 2')">
             <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M2620 3450 l0 -100 160 0 160 0 0 100 0 100 -160 0 -160 0 0 -100z"></path>
             </g>
         </a>
 
-        <a fill="white" href="#" id="desk_3" onclick="handleLocationSelection('desk_3', 'Desk 3')">
+        <a fill="white" href="#" id="desk_3" onclick="handlePopup('desk_3', 'Desk 3')">
             <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M2280 3220 l0 -100 155 0 155 0 0 100 0 100 -155 0 -155 0 0 -100z"></path>
             </g>
         </a>
 
-        <a fill="white" href="#" id="desk_4" onclick="handleLocationSelection('desk_4', 'Desk 4')">
+        <a fill="white" href="#" id="desk_4" onclick="handlePopup('desk_4', 'Desk 4')">
             <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M2620 3220 l0 -100 160 0 160 0 0 100 0 100 -160 0 -160 0 0 -100z"></path>
             </g>
         </a>
 
-        <a fill="white" href="#" id="desk_5" onclick="handleLocationSelection('desk_5', 'Desk 5')">
+        <a fill="white" href="#" id="desk_5" onclick="handlePopup('desk_5', 'Desk 5')">
             <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M2400 2425 l0 -155 100 0 100 0 0 155 0 155 -100 0 -100 0 0 -155z"></path>
             </g>
         </a>
 
-        <a fill="white" href="#" id="desk_6" onclick="handleLocationSelection('desk_6', 'Desk 6')">
+        <a fill="white" href="#" id="desk_6" onclick="handlePopup('desk_6', 'Desk 6')">
             <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M2630 2425 l0 -155 100 0 100 0 0 155 0 155 -100 0 -100 0 0 -155z"></path>
             </g>
         </a>
 
-        <a fill="white" href="#" id="desk_7" onclick="handleLocationSelection('desk_7', 'Desk 7')">
+        <a fill="white" href="#" id="desk_7" onclick="handlePopup('desk_7', 'Desk 7')">
             <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M2400 2080 l0 -160 100 0 100 0 0 160 0 160 -100 0 -100 0 0 -160z"></path>
             </g>
         </a>
 
-        <a fill="white" href="#" id="desk_8" onclick="handleLocationSelection('desk_8', 'Desk 8')">
+        <a fill="white" href="#" id="desk_8" onclick="handlePopup('desk_8', 'Desk 8')">
             <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)" stroke="none">
                 <path d="M2630 2080 l0 -160 100 0 100 0 0 160 0 160 -100 0 -100 0 0 -160z"></path>
             </g>
