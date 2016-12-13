@@ -47,12 +47,12 @@ function initialiseDate() {
 }
 
 //Returns true if the first parameter is a positive number smaller than or equal to the second parameter
-function isValidNumDays(days, numDaysRemaining) {
+function isValidNumDays(duration, durationRemaining) {
     //returns true if days is a number, greater than 0 and within the num of days left to the user.
     // return (!isNaN(days) && (days > 0) && (days <= numDaysRemaining));
-    days = parseInt(days);
-    numDaysRemaining = parseInt(numDaysRemaining);
-    if (isNaN(days) || days <= 0) {
+    duration = parseInt(duration);
+    durationRemaining = parseInt(durationRemaining);
+    if (isNaN(duration) || duration <= 0) {
         document.getElementById("dialog").innerHTML = "Please enter a valid number of days.";
         $('#dialog').dialog({
             buttons: {
@@ -65,7 +65,7 @@ function isValidNumDays(days, numDaysRemaining) {
         $('#dialog').dialog('open');
         return false;
     }
-    else if (days > numDaysRemaining) {
+    else if (duration > durationRemaining) {
         document.getElementById("dialog").innerHTML = "You do not have enough time in your account for this booking.";
         $('#dialog').dialog({
             buttons: {
@@ -147,11 +147,15 @@ function handleLocationSelection(name, location, duration, durationType) {
     var room_svg_object = document.getElementById(name);
     // Get the user account information from the database;
     var accountInfo = getUserAccount();
-    var numDaysRemaining = accountInfo[1];
 
-    //Ask user how long they would like to book for
-    // var days = window.prompt("Enter how many days").trim();
-    if (isValidNumDays(duration, numDaysRemaining)) {
+    var durationRemaining;
+    if (durationType == "hours") {
+        durationRemaining = accountInfo[2];
+    } else if (durationType == "days") {
+        durationRemaining = accountInfo[1]
+    }
+
+    if (isValidNumDays(duration, durationRemaining)) {
         //calculate the end datetime of the booking
 
         //if it does not conflict with existing bookings

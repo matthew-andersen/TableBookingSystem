@@ -1,5 +1,3 @@
-<!--TODO: The rooms/desks need to be properly identified to avoid later confusion-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
