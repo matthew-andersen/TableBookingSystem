@@ -36,8 +36,8 @@ mysqli_select_db($con, $DB);
 //for($i = 0; $q.length)
 
 $user_id = $q[0];
-$num_days = $q[1];
-$num_desk_hours = $q[2];
+$num_days = $q[2];
+$num_desk_hours = $q[1];
 $num_room_hours = $q[3];
 
 $sql = "UPDATE `user` SET `num_days`='$num_days',`num_desk_hours`='$num_desk_hours',`num_room_hours`='$num_room_hours' WHERE `id`='$user_id'";

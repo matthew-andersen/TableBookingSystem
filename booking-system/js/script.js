@@ -154,10 +154,16 @@ function handleLocationSelection(name, location, duration, durationType) {
     var accountInfo = getUserAccount();
 
     var durationRemaining;
+    alert(durationType);
     if (durationType == "hours") {
-        durationRemaining = accountInfo[2];
+        if (location.slice(0,4)=="Room"){
+            durationRemaining = accountInfo[3];
+        }
+        else {
+            durationRemaining = accountInfo[1];
+        }
     } else if (durationType == "days") {
-        durationRemaining = accountInfo[1]
+        durationRemaining = accountInfo[2]
     }
 
     if (isValidNumDays(duration, durationRemaining)) {
@@ -183,9 +189,14 @@ function handleLocationSelection(name, location, duration, durationType) {
             //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
             //populate the list with relevant order information for sending to database
             if (durationType == "days") {
-                userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, duration.toString(), '24', '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
+                userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, duration.toString(), '0', '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
             } else {
-                userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '0', duration.toString(), duration.toString(), onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
+                if (location.slice(0,4) == "Room") {
+                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '0', '0', duration.toString(), onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
+                }
+                else {
+                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '0', duration.toString(), '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
+                }
             }
 
             //add to cart
@@ -270,10 +281,10 @@ function submitOrder() {
                 var numRoomHours = userOrder[0][5];
                 var currentAccountInfo = getUserAccount();
                 if (numDays != 0) {
-                    currentAccountInfo[1] -= numDays;
+                    currentAccountInfo[2] -= numDays;
                 }
                 else if (numDeskHours != 0) {
-                    currentAccountInfo[2] -= numDeskHours;
+                    currentAccountInfo[1] -= numDeskHours;
                 }
                 else if (numRoomHours != 0) {
                     currentAccountInfo[3] -= numRoomHours;

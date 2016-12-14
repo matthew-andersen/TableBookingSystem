@@ -35,17 +35,17 @@ if (isset($_SESSION['current_userid'])) {
     echo $userAccountString;
 }
 else {
-    //#######################PERFORMS SAME OPERATIONS WITH FIRST ENTRY IN USER TABLE!!!##########################
-    $sqlQuery = "SELECT `id`, `num_days`, `num_desk_hours`, `num_room_hours` FROM `user` WHERE `id` = 1";
-
-    $queryResult = $connection->query($sqlQuery);
-
-    $userAccountString = "";
-
-    while ($row = $queryResult->fetch_assoc()) {
-        $userAccountString = $userAccountString . $row['id'] . ',' . $row['num_days'] . ',' . $row['num_desk_hours'] . ',' . $row['num_room_hours'];
-    }
-
-    echo $userAccountString;
+//    //#######################PERFORMS SAME OPERATIONS WITH FIRST ENTRY IN USER TABLE!!!##########################
+//    $sqlQuery = "SELECT `id`, `num_days`, `num_desk_hours`, `num_room_hours` FROM `user` WHERE `id` = 1";
+//
+//    $queryResult = $connection->query($sqlQuery);
+//
+//    $userAccountString = "";
+//
+//    while ($row = $queryResult->fetch_assoc()) {
+//        $userAccountString = $userAccountString . $row['id'] . ',' . $row['num_days'] . ',' . $row['num_desk_hours'] . ',' . $row['num_room_hours'];
+//    }
+//
+//    echo $userAccountString;
 }
 ?>
