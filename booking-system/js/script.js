@@ -53,8 +53,9 @@ function isValidNumDays(duration, durationRemaining) {
     duration = parseInt(duration);
     durationRemaining = parseInt(durationRemaining);
     if (isNaN(duration) || duration <= 0) {
-        document.getElementById("dialog").innerHTML = "Please enter a valid number of days.";
+        document.getElementById("dialog").innerHTML = "Please enter a valid duration.";
         $('#dialog').dialog({
+            title: "Invalid Duration",
             buttons: {
                 "OK": function () {
                     $(this).dialog("close")
@@ -68,6 +69,7 @@ function isValidNumDays(duration, durationRemaining) {
     else if (duration > durationRemaining) {
         document.getElementById("dialog").innerHTML = "You do not have enough time in your account for this booking.";
         $('#dialog').dialog({
+            title: "Insufficient Time",
             buttons: {
                 "OK": function () {
                     $(this).dialog("close")
@@ -96,16 +98,15 @@ function handlePopup(name, location) {
         width: 300,
         height: 220,
         modal: true,
+        title: "Please Enter A Duration",
         buttons: {
             "OK": function () {
                 $(this).dialog("close");
                 if ($("input[name='duration']:checked").val() == "days") {
                     var days = $('#dialog').find('input[name="days"]').val();
-                    alert(days);
                     handleLocationSelection(name, location, days, "days")
                 } else {
                     var hours = $('#dialog').find('input[name="duration"]').val();
-                    alert(hours);
                     handleLocationSelection(name, location, hours, "hours")
                 }
             },
@@ -118,6 +119,7 @@ function handlePopup(name, location) {
     if (room_svg_object.style.fill == UNAVAILABLE) {
         document.getElementById("dialog").innerHTML = "Sorry, this has been booked";
         $('#dialog').dialog({
+            title: "Already Booked",
             buttons: {
                 "OK": function () {
                     $(this).dialog("close")
@@ -129,6 +131,7 @@ function handlePopup(name, location) {
     } else if (room_svg_object.style.fill == SELECTED) {
         document.getElementById("dialog").innerHTML = "This booking needs to be confirmed";
         $('#dialog').dialog({
+            title: "Booking Needs Confirmation",
             buttons: {
                 "OK": function () {
                     $(this).dialog("close")
@@ -209,6 +212,7 @@ function isValidEndDatetime(bookingEndDatetime, location) {
             if (bookingEndDatetime.isBetween(startDateTime, endDateTime) || bookingEndDatetime.isSame(endDateTime)) {
                 document.getElementById("dialog").innerHTML = "This booking conflicts with a later booking. Please make sure the entire booking duration is available.";
                 $('#dialog').dialog({
+                    title: "Booking Conflict",
                     buttons: {
                         "OK": function () {
                             $(this).dialog("close")
@@ -216,7 +220,7 @@ function isValidEndDatetime(bookingEndDatetime, location) {
 
                     }
                 });
-                $('#dialog').dialog('open')
+                $('#dialog').dialog('open');
                 return false;
             }
         }
@@ -245,10 +249,7 @@ function getUserAccount() {
 function submitOrder() {
     document.getElementById("dialog").innerHTML = "Press Submit to confirm your order";
     $('#dialog').dialog({
-        resizable: false,
-        autoOpen: false,
-        width: 400,
-        height: 250,
+        title: "Submit Order",
         modal: true,
         buttons: {
             "Submit": function () {
@@ -293,11 +294,38 @@ function submitOrder() {
     $('#dialog').dialog('open');
 }
 
+function clearOrder() {
+    document.getElementById("dialog").innerHTML = "Are you sure you wish to clear your cart?";
+    $('#dialog').dialog({
+            title: "Clear Cart",
+            buttons: {
+                "Yes": function () {
+                    userOrder = [];
+                    document.getElementById("cart-box-order").innerHTML = "";
+                    $(this).dialog("close");
+                    location.reload();
+                },
+                "Cancel": function () {
+                    $(this).dialog("close")
+                }
+            }
+        }
+    )
+    ;
+    $('#dialog').dialog('open');
+    return false;
+}
+
 function calendarHandle() {
-    var $datepicker = $('#datepicker');
-    $datepicker.datepicker();
-    $datepicker.datepicker("setDate", new Date());
-    $datepicker.on("change", function () {
+    var dateToday = new Date();
+    var $calendar = $('#calendar');
+    $('#calendar').datepicker({
+        inline: true,
+        minDate: dateToday
+    });
+
+    $calendar.datepicker("setDate", dateToday);
+    $calendar.on("change", function () {
         var selected = $(this).val();
         selected = selected.split("/");
 
