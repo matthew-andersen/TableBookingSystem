@@ -101,6 +101,7 @@ function handlePopup(name, location) {
         title: "Please Enter A Duration",
         buttons: {
             "OK": function () {
+                $(this).dialog("close");
                 if ($("input[name='time']:checked").val() == "days") {
                     var days = $('#dialog').find('input[name="duration"]').val();
                     handleLocationSelection(name, location, days, "days")
@@ -108,7 +109,6 @@ function handlePopup(name, location) {
                     var hours = $('#dialog').find('input[name="duration"]').val();
                     handleLocationSelection(name, location, hours, "hours")
                 }
-                $(this).dialog("close");
             },
             "Cancel": function () {
                 $(this).dialog("close");
@@ -131,7 +131,7 @@ function handlePopup(name, location) {
     } else if (room_svg_object.style.fill == SELECTED) {
         document.getElementById("dialog").innerHTML = "This booking needs to be confirmed";
         $('#dialog').dialog({
-            title: "Booking Needs Confirmation",
+            title: "Needs Confirmation",
             buttons: {
                 "OK": function () {
                     $(this).dialog("close")
@@ -152,7 +152,6 @@ function handleLocationSelection(name, location, duration, durationType) {
     var room_svg_object = document.getElementById(name);
     // Get the user account information from the database;
     var accountInfo = getUserAccount();
-
     var durationRemaining;
     if (durationType == "hours") {
         if (location.slice(0, 4) == "Room") {
