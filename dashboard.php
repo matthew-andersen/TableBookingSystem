@@ -166,13 +166,42 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
                         <li class="left">
                             <div>
                                 <div class="header">
-                                    <strong class="primary-font">John Doe</strong>
-                                    <small class="text-muted">32 mins ago</small>
+                                    <strong class="primary-font">Exhibition Opening</strong>
+                                    <small class="text-muted">December 15th 2016</small>
                                 </div>
                                 <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ante turpis, rutrum
-                                    ut ullamcorper sed, dapibus ac nunc. Vivamus luctus convallis mauris, eu gravida
-                                    tortor aliquam ultricies.
+                                    Ciska McCormack will be updating her exhibition at iNQ, with new works to inspire
+                                    and delight. We will be hosting a small opening event (with a few Christmas
+                                    specials) ... Please join us. A pefect excuse to gather before people head off on
+                                    holidays.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="left">
+                            <div>
+                                <div class="header">
+                                    <strong class="primary-font">Back to Work Regional</strong>
+                                    <small class="text-muted">December 13th 2016</small>
+                                </div>
+                                <p>
+                                    - Back to Work updates;
+                                    - Training and Skills update from TAFE North;
+                                    - Back to Work network updates from Department Education and Training and Industry
+                                    Skills Fund; and
+                                    - Industry Updates from National Disability Insurance Scheme and Department State
+                                    Development
+                                </p>
+                            </div>
+                        </li>
+                        <li class="left">
+                            <div>
+                                <div class="header">
+                                    <strong class="primary-font">End of Year Drinks</strong>
+                                    <small class="text-muted">December 06th 2016</small>
+                                </div>
+                                <p>
+                                    A combined event for iNQ, Townsville Chamber, RDA and TBDC Members to celebrate the
+                                    year that was! Join us at the Townsville Motor Boat and Yacht Club
                                 </p>
                             </div>
                         </li>
