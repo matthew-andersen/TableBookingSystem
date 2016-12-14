@@ -69,7 +69,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
     <div id="dialog" hidden>
     </div>
 
-    <svg height="698pt" preserveaspectratio="xMidYMid meet" version="1.0" viewbox="0 0 971 698"
+    <svg height="698pt" preserveAspectRatio="xMidYMid meet" version="1.0" viewBox="0 0 971 698"
          xmlns="http://www.w3.org/2000/svg">
 
         <!--SVG coordinates for map outline. Make sure to overwrite this if changing the floor plan.-->

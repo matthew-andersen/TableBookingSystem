@@ -34,7 +34,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
                     data-target="#sidebar-collapse">
                 <span class="sr-only">Toggle navigation</span>
             </button>
-            <a class="navbar-brand" href="#"><span>i-NQ</span>Admin</a>
+            <a class="navbar-brand" href="#"><span>i-NQ</span>Members</a>
             <ul class="user-menu">
                 <li class="dropdown pull-right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -57,11 +57,6 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
 </nav>
 
 <div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-    <form role="search">
-        <div class="form-group">
-            <input type="text" class="form-control" placeholder="Search">
-        </div>
-    </form>
     <ul class="nav menu">
         <li class="active"><a href="dashboard.php">
                 <svg class="glyph stroked dashboard-dial">
@@ -95,19 +90,8 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
 
 <div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
     <div class="row">
-        <ol class="breadcrumb">
-            <li><a href="#">
-                    <svg class="glyph stroked home">
-                        <use xlink:href="#stroked-home"></use>
-                    </svg>
-                </a></li>
-            <li class="active">Icons</li>
-        </ol>
-    </div><!--/.row-->
-
-    <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Dashboard</h1>
+            <h1 class="page-header" id="dash-header">Dashboard</h1>
         </div>
     </div><!--/.row-->
 
@@ -122,7 +106,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">
                         <div class="large"><span id="num_desk_hours"></span></div>
-                        <div class="text-muted">Hours</div>
+                        <div class="text-muted">Desk Hours</div>
                     </div>
                 </div>
             </div>
@@ -137,7 +121,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">
                         <div class="large"><span id="num_days"></span></div>
-                        <div class="text-muted">Days</div>
+                        <div class="text-muted">Desk Days</div>
                     </div>
                 </div>
             </div>
@@ -152,7 +136,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">
                         <div class="large"><span id="num_room_hours"></span></div>
-                        <div class="text-muted">Meetings</div>
+                        <div class="text-muted">Meeting Hours</div>
                     </div>
                 </div>
             </div>
