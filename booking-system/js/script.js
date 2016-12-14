@@ -101,14 +101,14 @@ function handlePopup(name, location) {
         title: "Please Enter A Duration",
         buttons: {
             "OK": function () {
-                $(this).dialog("close");
-                if ($("input[name='duration']:checked").val() == "days") {
-                    var days = $('#dialog').find('input[name="days"]').val();
+                if ($("input[name='time']:checked").val() == "days") {
+                    var days = $('#dialog').find('input[name="duration"]').val();
                     handleLocationSelection(name, location, days, "days")
                 } else {
                     var hours = $('#dialog').find('input[name="duration"]').val();
                     handleLocationSelection(name, location, hours, "hours")
                 }
+                $(this).dialog("close");
             },
             "Cancel": function () {
                 $(this).dialog("close");
@@ -154,9 +154,8 @@ function handleLocationSelection(name, location, duration, durationType) {
     var accountInfo = getUserAccount();
 
     var durationRemaining;
-    alert(durationType);
     if (durationType == "hours") {
-        if (location.slice(0,4)=="Room"){
+        if (location.slice(0, 4) == "Room") {
             durationRemaining = accountInfo[3];
         }
         else {
@@ -191,7 +190,7 @@ function handleLocationSelection(name, location, duration, durationType) {
             if (durationType == "days") {
                 userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, duration.toString(), '0', '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
             } else {
-                if (location.slice(0,4) == "Room") {
+                if (location.slice(0, 4) == "Room") {
                     userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '0', '0', duration.toString(), onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
                 }
                 else {
