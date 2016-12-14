@@ -187,7 +187,16 @@ function handleLocationSelection(name, location, duration, durationType) {
             //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
             //populate the list with relevant order information for sending to database
             if (durationType == "days") {
-                userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, duration.toString(), '0', '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
+                for (var i = 0; i < duration; i++){
+                    var bookingStartDatetime = onScreenDate.clone().add(i, 'days');
+                    bookingStartDatetime.hour(8);
+                    bookingStartDatetime.minute(30);
+                    var bookingEndDatetime = bookingStartDatetime.clone();
+                    bookingEndDatetime.hour(18);
+                    bookingEndDatetime.minute(0);
+
+                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '1', '0', '0', bookingStartDatetime.format('YYYY-MM-DD HH:mm:ss'), bookingEndDatetime.format('YYYY-MM-DD HH:mm:ss'), name]);
+                }
             } else {
                 if (location.slice(0, 4) == "Room") {
                     userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '0', '0', duration.toString(), onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), name]);
@@ -270,22 +279,21 @@ function submitOrder() {
                     data: {'q': JSON.stringify(userOrder)}
                 });
 
-                $("#cart-box-order").text("");
-                location.reload();
-
-                //user order indices: 3, 4, 5
-                var numDays = userOrder[0][3];
-                var numDeskHours = userOrder[0][4];
-                var numRoomHours = userOrder[0][5];
                 var currentAccountInfo = getUserAccount();
-                if (numDays != 0) {
-                    currentAccountInfo[2] -= numDays;
-                }
-                else if (numDeskHours != 0) {
-                    currentAccountInfo[1] -= numDeskHours;
-                }
-                else if (numRoomHours != 0) {
-                    currentAccountInfo[3] -= numRoomHours;
+                for (var i=0; i < userOrder.length; i++) { //user order indices: 3, 4, 5
+                    var numDays = userOrder[i][3];
+                    var numDeskHours = userOrder[i][4];
+                    var numRoomHours = userOrder[i][5];
+
+                    if (numDays != 0) {
+                        currentAccountInfo[2] -= numDays;
+                    }
+                    else if (numDeskHours != 0) {
+                        currentAccountInfo[1] -= numDeskHours;
+                    }
+                    else if (numRoomHours != 0) {
+                        currentAccountInfo[3] -= numRoomHours;
+                    }
                 }
 
                 //sends updated account information to user table
@@ -294,6 +302,9 @@ function submitOrder() {
                     type: 'POST',
                     data: {'q': JSON.stringify(currentAccountInfo)}
                 });
+
+                $("#cart-box-order").text("");
+                location.reload();
             },
             "Cancel": function () {
                 $(this).dialog("close");
