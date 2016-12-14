@@ -148,9 +148,9 @@ img {
     margin-bottom: auto;
 }
 
-.btn-primary {
+#submit-button, #clear-button {
     background-color: #3B6891;
-    border-color: #3B6891;
+    /*border-color: #3B6891;*/
     color: white;
     display: inline-block;
     padding: 6px 12px;
@@ -168,4 +168,9 @@ img {
     user-select: none;
     background-image: none;
     border-radius: 4px;
+    border: 1px solid transparent;
+}
+
+#submit-button {
+    background-color: #5eac5f;
 }

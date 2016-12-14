@@ -14,9 +14,9 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
     <script src="js/moment.js"></script>
     <script src="js/jquery-3.1.1.js"></script>
     <script src="js/script.js" type="text/javascript"></script>
-    <link rel="stylesheet" type="text/css" href="css/styles.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
