@@ -85,26 +85,28 @@ function isValidNumDays(duration, durationRemaining) {
 
 function handlePopup(name, location) {
     if (name.slice(0, 4) == "room") {
-        document.getElementById("dialog").innerHTML = "<label>Hours: <input name='hours' type='number' min='1' value='' class='text' title=''/></label>";
+        document.getElementById("dialog").innerHTML = "<label>Hours: <input name='duration' type='number' min='1' value='' class='text' title=''/></label>";
     } else if (name.slice(0, 4) == "desk") {
-        document.getElementById("dialog").innerHTML = "<label>Days: </label><input name='days' type='number' min='1' value='' class='text' title=''/><p>or</p><label>Hours: </label><input name='hours' type='number' min='1' value='' class='text' title=''/>";
+        document.getElementById("dialog").innerHTML = "<input type='radio' name='time' value='hours' checked> Hours<br> <input type='radio' name='time' value='days'> Days<br><input name='duration' type='number' min='1' value='' class='text' title=''/>";
     }
 
     $('#dialog').dialog({
         resizable: false,
         autoOpen: false,
-        width: 400,
-        height: 250,
+        width: 300,
+        height: 220,
         modal: true,
         buttons: {
             "OK": function () {
                 $(this).dialog("close");
-                var days = $('#dialog').find('input[name="days"]').val();
-                var hours = $('#dialog').find('input[name="hours"]').val();
-                if (days == false || days == undefined) {
-                    handleLocationSelection(name, location, hours, "hours")
-                } else {
+                if ($("input[name='duration']:checked").val() == "days") {
+                    var days = $('#dialog').find('input[name="days"]').val();
+                    alert(days);
                     handleLocationSelection(name, location, days, "days")
+                } else {
+                    var hours = $('#dialog').find('input[name="duration"]').val();
+                    alert(hours);
+                    handleLocationSelection(name, location, hours, "hours")
                 }
             },
             "Cancel": function () {
