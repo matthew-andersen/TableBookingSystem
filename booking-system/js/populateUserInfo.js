@@ -27,8 +27,8 @@ function populateTimeAllocations() {
     accountRequest.send();
 
     var userName = accountInfo[4];
-    var num_desk_hours = accountInfo[2];
-    var num_days = accountInfo[1];
+    var num_desk_hours = accountInfo[1];
+    var num_days = accountInfo[2];
     var num_room_hours = accountInfo[3];
 
     document.getElementById('user').innerHTML = userName;

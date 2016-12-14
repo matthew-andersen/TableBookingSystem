@@ -29,7 +29,7 @@ if (isset($_SESSION['current_userid'])) {
     $userAccountString = "";
 //while there are still rows in the table
     while ($row = $queryResult->fetch_assoc()) {
-        $userAccountString = $userAccountString . $row['id'] . ',' . $row['num_days'] . ',' . $row['num_desk_hours'] . ',' . $row['num_room_hours'] . ',' . $row['name'];
+        $userAccountString = $userAccountString . $row['id'] . ',' . $row['num_desk_hours'] . ',' . $row['num_days'] . ',' . $row['num_room_hours'] . ',' . $row['name'];
     }
 
     echo $userAccountString;
