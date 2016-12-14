@@ -87,7 +87,7 @@ function isValidNumDays(duration, durationRemaining) {
 
 function handlePopup(name, location) {
     if (name.slice(0, 4) == "room") {
-        document.getElementById("dialog").innerHTML = "<label>Hours: <input name='duration' type='number' min='1' value='' class='text' title=''/></label>";
+        document.getElementById("dialog").innerHTML = "Hours: <input name='duration' type='number' min='1' value='' class='text' title=''/>";
     } else if (name.slice(0, 4) == "desk") {
         document.getElementById("dialog").innerHTML = "<input type='radio' name='time' value='hours' checked> Hours<br> <input type='radio' name='time' value='days'> Days<br><input name='duration' type='number' min='1' value='' class='text' title=''/>";
     }

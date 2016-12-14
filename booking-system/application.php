@@ -43,9 +43,8 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
             <div id="cart-box-header">Your Cart</div>
             <div id="cart-box-order"></div>
         </div>
-        <button id="submit-button" onclick="submitOrder()">Buy Now</button>
-        <button id="clear-button" onclick="clearOrder()">Clear Cart</button>
-        <button class="btn-primary" id="submit-button" onclick="submitOrder()">Book Now</button>
+        <button class="btn-primary" id="submit-button" onclick="submitOrder()">Buy Now</button>
+        <button class="btn-primary" id="clear-button" onclick="clearOrder()">Clear Cart</button>
     </div>
 </div>
 
