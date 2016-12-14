@@ -83,7 +83,7 @@ div#cart-box-header {
     height: 100%;
     font-size: 1.5em;
     vertical-align: middle;
-    line-height: 1.5em;
+    line-height: 50px;
     font-weight: 100;
 }
 
@@ -130,7 +130,7 @@ div#cart-box-header {
 }
 
 img {
-    vertical-align: bottom;
+    vertical-align: middle;
 }
 
 .userInfo {
@@ -138,8 +138,8 @@ img {
     margin-right: 25px;
     color: white;
     font-size: 1.5em;
-    line-height: 1.5em;
-    vertical-align: bottom;
+    line-height: 50px;
+    vertical-align: middle;
     text-align: center;
 }
 

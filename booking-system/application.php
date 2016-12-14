@@ -18,6 +18,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="css/styles.css">
 </head>
 
 <body>
@@ -55,9 +56,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
         <a href="#">
             <div id="hour-nav-arrow-left" onclick="changeDate('hourBack')"></div>
         </a>
-        <a>
             <div id="date-display-box"></div>
-        </a>
         <a href="#">
             <div id="day-nav-arrow-right" onclick="changeDate('dayForward')"></div>
         </a>

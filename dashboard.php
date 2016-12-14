@@ -84,6 +84,11 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
                     <use xlink:href="#stroked-male-user"></use>
                 </svg>
                 Login Page</a></li>
+        <li><a href="https://i-nq.com.au/">
+                <svg class="glyph stroked chevron left">
+                    <use xlink:href="#stroked-chevron-left"/>
+                </svg>
+                Back@iNQ</a></li>
     </ul>
 
 </div><!--/.sidebar-->
@@ -215,7 +220,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
 
             <div class="panel panel-blue">
                 <div class="panel-heading dark-overlay">
-                    Current Bookings
+                    Your Bookings
                 </div>
                 <div id="bookings" class="panel-body">
                 </div>
