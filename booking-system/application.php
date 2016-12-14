@@ -17,6 +17,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
     <link rel="stylesheet" type="text/css" href="css/styles.css">
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 </head>
 
@@ -25,10 +26,12 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
 <div id="left-col">
     <div id="filter-box">
         <div id="account-info">
-            <img src="images/account-icons/calendar2.png" alt="number of days" height="30" width="30">
-            <span class="userInfo" id="numDays"></span>
             <img src="images/account-icons/clock2.png" alt="number of desk hours" height="30" width="30">
             <span class="userInfo" id="numDeskHours"></span>
+
+            <img src="images/account-icons/calendar2.png" alt="number of days" height="30" width="30">
+            <span class="userInfo" id="numDays"></span>
+
             <img src="images/account-icons/meeting2.png" alt="number of meeting hours" height="30" width="30">
             <span class="userInfo" id="numRoomHours"></span>
         </div>
@@ -41,7 +44,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
             <div id="cart-box-header">Your Cart</div>
             <div id="cart-box-order"></div>
         </div>
-        <button id="submit-button" onclick="submitOrder()">Buy Now</button>
+        <button class="btn-primary" id="submit-button" onclick="submitOrder()">Book Now</button>
     </div>
 </div>
 
