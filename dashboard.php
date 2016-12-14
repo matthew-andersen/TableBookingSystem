@@ -60,28 +60,28 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
     <ul class="nav menu">
         <li class="active"><a href="dashboard.php">
                 <svg class="glyph stroked dashboard-dial">
-                    <use xlink:href="#stroked-dashboard-dial"></use>
+                    <use href="#stroked-dashboard-dial"></use>
                 </svg>
                 Dashboard</a></li>
         <li><a href="booking-system/application.php" target="_blank">
                 <svg class="glyph stroked notepad ">
-                    <use xlink:href="#stroked-notepad">
+                    <use href="#stroked-notepad">
                 </svg>
                 Book Now</a></li>
         <li><a href="#">
                 <svg class="glyph stroked plus sign">
-                    <use xlink:href="#stroked-plus-sign">
+                    <use href="#stroked-plus-sign">
                 </svg>
                 Buy More Time</a></li>
         <li role="presentation" class="divider"></li>
         <li><a href="index.html">
                 <svg class="glyph stroked male-user">
-                    <use xlink:href="#stroked-male-user"></use>
+                    <use href="#stroked-male-user"></use>
                 </svg>
                 Login Page</a></li>
         <li><a href="https://i-nq.com.au/">
                 <svg class="glyph stroked chevron left">
-                    <use xlink:href="#stroked-chevron-left"/>
+                    <use href="#stroked-chevron-left"/>
                 </svg>
                 Back@iNQ</a></li>
     </ul>
@@ -116,7 +116,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
                 <div class="row no-padding">
                     <div class="col-sm-3 col-lg-5 widget-left">
                         <svg class="glyph stroked notepad ">
-                            <use xlink:href="#stroked-notepad"/>
+                            <use href="#stroked-notepad"/>
                         </svg>
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">
@@ -131,7 +131,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
                 <div class="row no-padding">
                     <div class="col-sm-3 col-lg-5 widget-left">
                         <svg class="glyph stroked male-user">
-                            <use xlink:href="#stroked-male-user"></use>
+                            <use href="#stroked-male-user"></use>
                         </svg>
                     </div>
                     <div class="col-sm-9 col-lg-7 widget-right">
