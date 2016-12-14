@@ -9,7 +9,7 @@ var AVAILABLE = "rgb(94, 172, 95)";
 var UNAVAILABLE = "rgb(165, 165, 140)";
 var SELECTED = "rgb(41, 145, 42)";
 
-var roomList = ['room_1', 'room_2', 'room_3', 'room_4', 'desk_1', 'desk_2', 'desk_3', 'desk_4', 'desk_5', 'desk_6', 'desk_7', 'desk_8'];
+var roomList = ['room_1', 'room_2', 'room_3', 'room_4', 'room_5', 'room_6', 'room_7', 'desk_1', 'desk_2', 'desk_3', 'desk_4', 'desk_5', 'desk_6', 'desk_7', 'desk_8', 'desk_9', 'desk_10', 'desk_11', 'desk_12', 'desk_13', 'desk_14'];
 // List that stores all the selected rooms of the user
 var userOrder = [];
 
