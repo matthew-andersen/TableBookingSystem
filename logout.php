@@ -6,7 +6,7 @@
  * Time: 2:42 PM
  */
 session_start();
-$redirect = "/inqtablebookingsystem/index.html";
+$redirect = "/tablebookingsystem/index.html";
 
 // Unset all of the session variables.
 $_SESSION = array();
