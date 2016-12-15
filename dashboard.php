@@ -11,7 +11,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>i-NQ - Dashboard</title>
+    <title>INQ | Dashboard</title>
 
     <link href="dashboard/website/webpages/css/bootstrap.min.css" rel="stylesheet">
     <link href="dashboard/website/webpages/css/styles.css" rel="stylesheet">
@@ -34,7 +34,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
                     data-target="#sidebar-collapse">
                 <span class="sr-only">Toggle navigation</span>
             </button>
-            <a class="navbar-brand" href="#"><span>i-NQ</span>Members</a>
+            <a class="navbar-brand" href="#"><span>INQ</span>Members</a>
             <ul class="user-menu">
                 <li class="dropdown pull-right">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -83,7 +83,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
                 <svg class="glyph stroked chevron left">
                     <use href="#stroked-chevron-left"/>
                 </svg>
-                Back@iNQ</a></li>
+                Back@INQ</a></li>
     </ul>
 
 </div><!--/.sidebar-->
@@ -148,7 +148,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
 
             <div class="panel panel-default chat">
                 <div class="panel-heading" id="accordion">
-                    On@iNQ
+                    On@INQ
                 </div>
                 <div class="panel-body">
                     <ul>

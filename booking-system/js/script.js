@@ -9,7 +9,7 @@ var AVAILABLE = "rgb(94, 172, 95)";
 var UNAVAILABLE = "rgb(165, 165, 140)";
 var SELECTED = "rgb(41, 145, 42)";
 
-var roomList = ['room_1', 'room_2', 'room_3', 'room_4', 'room_5', 'room_6', 'room_7', 'desk_1', 'desk_2', 'desk_3', 'desk_4', 'desk_5', 'desk_6', 'desk_7', 'desk_8', 'desk_9', 'desk_10', 'desk_11', 'desk_12', 'desk_13', 'desk_14'];
+var roomList = ['room_1', 'room_2', 'room_3', 'room_4', 'room_5', 'room_6', 'room_7', 'room_8', 'desk_1', 'desk_2', 'desk_3', 'desk_4', 'desk_5', 'desk_6', 'desk_7', 'desk_8', 'desk_9', 'desk_10', 'desk_11', 'desk_12', 'desk_13', 'desk_14'];
 // List that stores all the selected rooms of the user
 var userOrder = [];
 
@@ -187,7 +187,7 @@ function handleLocationSelection(name, location, duration, durationType) {
             //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
             //populate the list with relevant order information for sending to database
             if (durationType == "days") {
-                for (var i = 0; i < duration; i++){
+                for (var i = 0; i < duration; i++) {
                     var bookingStartDatetime = onScreenDate.clone().add(i, 'days');
                     bookingStartDatetime.hour(8);
                     bookingStartDatetime.minute(30);
@@ -265,75 +265,106 @@ function getUserAccount() {
 
 // Sends all the rooms the user ordered to be processed then resets the 'cart' and reloads the page
 function submitOrder() {
-    document.getElementById("dialog").innerHTML = "Press Submit to confirm your order";
-    $('#dialog').dialog({
-        title: "Submit Order",
-        modal: true,
-        buttons: {
-            "Submit": function () {
-                $(this).dialog("close");
-                //sends order information to booking records
-                $.ajax({
-                    url: 'php/order_process.php',
-                    type: 'POST',
-                    data: {'q': JSON.stringify(userOrder)}
-                });
-
-                var currentAccountInfo = getUserAccount();
-                for (var i=0; i < userOrder.length; i++) { //user order indices: 3, 4, 5
-                    var numDays = userOrder[i][3];
-                    var numDeskHours = userOrder[i][4];
-                    var numRoomHours = userOrder[i][5];
-
-                    if (numDays != 0) {
-                        currentAccountInfo[2] -= numDays;
-                    }
-                    else if (numDeskHours != 0) {
-                        currentAccountInfo[1] -= numDeskHours;
-                    }
-                    else if (numRoomHours != 0) {
-                        currentAccountInfo[3] -= numRoomHours;
-                    }
-                }
-
-                //sends updated account information to user table
-                $.ajax({
-                    url: 'php/update_user_account.php',
-                    type: 'POST',
-                    data: {'q': JSON.stringify(currentAccountInfo)}
-                });
-
-                $("#cart-box-order").text("");
-                location.reload();
-            },
-            "Cancel": function () {
-                $(this).dialog("close");
-            }
-        }
-    });
-    $('#dialog').dialog('open');
-}
-
-function clearOrder() {
-    document.getElementById("dialog").innerHTML = "Are you sure you wish to clear your cart?";
-    $('#dialog').dialog({
-            title: "Clear Cart",
+    if (userOrder.length > 0) {
+        document.getElementById("dialog").innerHTML = "Press Submit to confirm your order";
+        $('#dialog').dialog({
+            title: "Submit Order",
+            modal: true,
             buttons: {
-                "Yes": function () {
-                    userOrder = [];
-                    document.getElementById("cart-box-order").innerHTML = "";
+                "Submit": function () {
                     $(this).dialog("close");
+                    //sends order information to booking records
+                    $.ajax({
+                        url: 'php/order_process.php',
+                        type: 'POST',
+                        data: {'q': JSON.stringify(userOrder)}
+                    });
+
+                    var currentAccountInfo = getUserAccount();
+                    for (var i = 0; i < userOrder.length; i++) { //user order indices: 3, 4, 5
+                        var numDays = userOrder[i][3];
+                        var numDeskHours = userOrder[i][4];
+                        var numRoomHours = userOrder[i][5];
+
+                        if (numDays != 0) {
+                            currentAccountInfo[2] -= numDays;
+                        }
+                        else if (numDeskHours != 0) {
+                            currentAccountInfo[1] -= numDeskHours;
+                        }
+                        else if (numRoomHours != 0) {
+                            currentAccountInfo[3] -= numRoomHours;
+                        }
+                    }
+
+                    //sends updated account information to user table
+                    $.ajax({
+                        url: 'php/update_user_account.php',
+                        type: 'POST',
+                        data: {'q': JSON.stringify(currentAccountInfo)}
+                    });
+
+                    $("#cart-box-order").text("");
                     location.reload();
                 },
                 "Cancel": function () {
-                    $(this).dialog("close")
+                    $(this).dialog("close");
                 }
             }
-        }
-    )
-    ;
-    $('#dialog').dialog('open');
-    return false;
+        });
+        $('#dialog').dialog('open');
+    } else {
+        document.getElementById("dialog").innerHTML = "Your cart is empty";
+        $('#dialog').dialog({
+            title: "Empty Cart",
+            buttons: {
+                "OK": function () {
+                    $(this).dialog("close")
+                }
+
+            }
+        });
+        $('#dialog').dialog('open')
+    }
+}
+
+function clearOrder() {
+    if (userOrder.length > 0) {
+        document.getElementById("dialog").innerHTML = "Are you sure you wish to clear your cart?";
+        $('#dialog').dialog({
+                title: "Clear Cart",
+                buttons: {
+                    "Yes": function () {
+                        userOrder = [];
+                        document.getElementById("cart-box-order").innerHTML = "";
+                        $(this).dialog("close");
+                        location.reload();
+                    },
+                    "Cancel": function () {
+                        $(this).dialog("close")
+                    }
+                }
+            }
+        )
+        ;
+        $('#dialog').dialog('open');
+        return false;
+
+    } else {
+        document.getElementById("dialog").innerHTML = "Your cart is empty";
+        $('#dialog').dialog({
+            title: "Empty Cart",
+            buttons: {
+                "OK": function () {
+                    $(this).dialog("close")
+                }
+
+            }
+        });
+        $('#dialog').dialog('open')
+
+    }
+
 }
 
 function calendarHandle() {
@@ -408,6 +439,13 @@ function updateView(bookings, onScreenDate) {
         var locationElement = document.getElementById(bookings[i][0]);
         if (onScreenDate.isBetween(startDateTime, endDateTime) || onScreenDate.isSame(startDateTime)) {
             locationElement.style.fill = UNAVAILABLE;
+            if (bookings[i][0] == "room_8") {
+                for (i = 0; i < roomList.length; i++) {
+                    if (roomList[i].slice(0, 4) == "desk") {
+                        document.getElementById(roomList[i]).style.fill = UNAVAILABLE;
+                    }
+                }
+            }
         }
     }
 }

@@ -10,7 +10,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Booking System</title>
+    <title>INQ | Booking System</title>
     <script src="js/moment.js"></script>
     <script src="js/jquery-3.1.1.js"></script>
     <script src="js/script.js" type="text/javascript"></script>
@@ -169,6 +169,15 @@ m230 175 l0 -155 -100 0 -100 0 0 155 0 155 100 0 100 0 0 -155z m230 0 l0
             <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)">
                 <path
                     d="M7610 1520 l0 -1030 73 0 c39 0 362 -9 717 -20 355 -11 684 -20 733 -20 l87 0 0 1050 0 1050 -805 0 -805 0 0 -1030z"></path>
+            </g>
+        </a>
+
+        <a fill="white" href="#" id="room_8" onclick="handlePopup('room_8', 'Room 8')">
+            <g transform="translate(0.000000,698.000000) scale(0.100000,-0.100000)">
+                <path d="M1870 2885 l0 -1295 1085 0 1085 0 0 1295 0 1295 -1085 0 -1085 0 0
+-1295z m2070 360 l0 -535 -245 0 -245 0 0 535 0 535 245 0 245 0 0 -535z
+m-970 90 l0 -245 -360 0 -360 0 0 245 0 245 360 0 360 0 0 -245z m-110 -1085
+l0 -360 -245 0 -245 0 0 360 0 360 245 0 245 0 0 -360z"></path>
             </g>
         </a>
 
