@@ -4,7 +4,8 @@
  */
 
 //retrieve current user information (name, email) from database
-var currentUsers = getCurrentUsers();
+var currentUsers = [];
+getCurrentUsers();
 
 function isAlpha(str) {
     return /^[a-zA-Z ]+$/.test(str);
@@ -134,13 +135,13 @@ function getCurrentUsers() {
 
     var userAccountRequest = new XMLHttpRequest();
     userAccountRequest.onload = function () {
-        var allUsers = this.responseText.split('|');
-        //remove trailing empty element before returning
-        allAccounts = allUsers.slice(0, allUsers.length - 1);
+        if (userAccountRequest.readyState == 4 && userAccountRequest.status == 200) {
+            var allUsers = this.responseText.split('|');
+            //remove trailing empty element before returning
+            allAccounts = allUsers.slice(0, allUsers.length - 1);
+            currentUsers = allAccounts;
+        }
     };
-    userAccountRequest.open("GET", "../../../booking-system/php/get_accounts.php", false);
+    userAccountRequest.open("GET", "../../../booking-system/php/get_accounts.php", true);
     userAccountRequest.send();
-
-    return allAccounts;
 }
-
