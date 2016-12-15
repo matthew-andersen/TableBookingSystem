@@ -66,9 +66,7 @@ function initialiseDate() {
  *
  * @returns {boolean} true if duration is number > 0 and < duration remaining
  */
-function isValidNumDays(duration, durationRemaining) {
-    //returns true if days is a number, greater than 0 and within the num of days left to the user.
-    // return (!isNaN(days) && (days > 0) && (days <= numDaysRemaining));
+function isValidDuration(duration, durationRemaining) {
     duration = parseInt(duration);
     durationRemaining = parseInt(durationRemaining);
     var dialogBox = $('#dialog');
@@ -173,7 +171,6 @@ function handlePopup(locationID, locationName) {
     }
 }
 
-
 /**
  * Checks the state of clicked location and performs actions as appropriate- either displays error message or adds
  * user's location to cart and order array
@@ -200,12 +197,12 @@ function handleLocationSelection(locationID, location, duration, durationType) {
         durationRemaining = currentUserInfo[2]
     }
 
-    if (isValidNumDays(duration, durationRemaining)) {
+    if (isValidDuration(duration, durationRemaining)) {
+        var bookingDateTime = onScreenDate.clone();
+        bookingDateTime.add(duration, durationType);
         //calculate the end datetime of the booking
 
         //if it does not conflict with existing bookings
-        var bookingDateTime = onScreenDate.clone();
-        bookingDateTime.add(duration, durationType);
         if (isValidEndDatetime(bookingDateTime, locationID)) {
             //if user confirms addition to cart
             // if (window.confirm("Your booking is for " + duration + " " + durationType + ". This will cost a total of: $" + cost + ". Press OK to confirm.") == true) {
@@ -223,6 +220,7 @@ function handleLocationSelection(locationID, location, duration, durationType) {
             //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
             //populate the list with relevant order information for sending to database
             if (durationType == "days") {
+                var isAllValid = true;
                 for (var i = 0; i < duration; i++) {
                     var bookingStartDatetime = onScreenDate.clone().add(i, 'days');
                     bookingStartDatetime.hour(8);
@@ -231,7 +229,16 @@ function handleLocationSelection(locationID, location, duration, durationType) {
                     bookingEndDatetime.hour(18);
                     bookingEndDatetime.minute(0);
 
-                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '1', '0', '0', bookingStartDatetime.format('YYYY-MM-DD HH:mm:ss'), bookingEndDatetime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
+                    if (isValidDayBooking(bookingStartDatetime, bookingEndDatetime, locationID)) {
+                        userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '1', '0', '0', bookingStartDatetime.format('YYYY-MM-DD HH:mm:ss'), bookingEndDatetime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
+                    }
+                    else {
+                        isAllValid = false;
+                    }
+                }
+                if (isAllValid){
+                    //add to cart
+                    document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + duration + " " + durationType + "</p>";
                 }
             } else {
                 if (location.slice(0, 4) == "Room") {
@@ -240,13 +247,64 @@ function handleLocationSelection(locationID, location, duration, durationType) {
                 else {
                     userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '0', duration.toString(), '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
                 }
+                //add to cart
+                document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + duration + " " + durationType + "</p>";
             }
-
-            //add to cart
-            document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + duration + " " + durationType + "</p>";
         }
     }
     // }
+}
+
+/**
+ * Checks whether day bookings fall either in the middle of an existing booking (can happen with booking multiple days),
+ * or end in the middle of an existing booking
+ * @param bookingStartDatetime the desired start time of the booking
+ * @param bookingEndDatetime the desired end time of the booking
+ * @param location the desired location of the booking
+ * @returns {boolean} true if this is a valid booking, otherwise false
+ */
+function isValidDayBooking(bookingStartDatetime, bookingEndDatetime, location) {
+    var dialogBox = $('#dialog');
+    updateBookings();
+    for (var i = 0; i < currentBookings.length; i++) {
+        var dbBookingStartString = currentBookings[i][1];
+        var dbBookingEndString = currentBookings[i][2];
+        var dbBookingLocation = currentBookings[i][0];
+
+        var dbBookingStart = moment(dbBookingStartString, "YYYY-MM-DD HH:mm:ss");
+        var dbBookingEnd = moment(dbBookingEndString, "YYYY-MM-DD HH:mm:ss");
+        if (dbBookingLocation == location) {
+            if (bookingStartDatetime.isBetween(dbBookingStart, dbBookingEnd, 'hour') || bookingStartDatetime.isSame(dbBookingStart, 'hour')) {
+                document.getElementById("dialog").innerHTML = "This booking conflicts with a later booking. Please make sure the entire booking duration is available.";
+                dialogBox.dialog({
+                    title: "Booking Conflict",
+                    buttons: {
+                        "OK": function () {
+                            $(this).dialog("close")
+                        }
+
+                    }
+                });
+                dialogBox.dialog('open');
+                return false;
+            }
+            else if (bookingEndDatetime.isBetween(dbBookingStart, dbBookingEnd, 'hour') || bookingEndDatetime.isSame(dbBookingEnd, 'hour')) {
+                document.getElementById("dialog").innerHTML = "This booking conflicts with a later booking. Please make sure the entire booking duration is available.";
+                dialogBox.dialog({
+                    title: "Booking Conflict",
+                    buttons: {
+                        "OK": function () {
+                            $(this).dialog("close")
+                        }
+
+                    }
+                });
+                dialogBox.dialog('open');
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 /**
@@ -261,16 +319,16 @@ function isValidEndDatetime(bookingEndDatetime, location) {
     updateBookings();
     var dialogBox = $('#dialog');
     for (var i = 0; i < currentBookings.length; i++) {
-        var startDatetimeString = currentBookings[i][1];
-        var endDatetimeString = currentBookings[i][2];
-        var bookingLocation = currentBookings[i][0];
+        var dbBookingStartString = currentBookings[i][1];
+        var dbBookingEndString = currentBookings[i][2];
+        var dbBookingLocation = currentBookings[i][0];
 
-        var startDateTime = moment(startDatetimeString, "YYYY-MM-DD HH:mm:ss");
-        var endDateTime = moment(endDatetimeString, "YYYY-MM-DD HH:mm:ss");
+        var dbBookingStart = moment(dbBookingStartString, "YYYY-MM-DD HH:mm:ss");
+        var dbBookingEnd = moment(dbBookingEndString, "YYYY-MM-DD HH:mm:ss");
         //if this iteration's booking pertains to the location trying to be booked
-        if (bookingLocation == location) {
+        if (dbBookingLocation == location) {
             // If the end datetime of this potential booking conflicts with an existing booking
-            if (bookingEndDatetime.isBetween(startDateTime, endDateTime) || bookingEndDatetime.isSame(endDateTime)) {
+            if (bookingEndDatetime.isBetween(dbBookingStart, dbBookingEnd) || bookingEndDatetime.isSame(dbBookingEnd)) {
                 document.getElementById("dialog").innerHTML = "This booking conflicts with a later booking. Please make sure the entire booking duration is available.";
                 dialogBox.dialog({
                     title: "Booking Conflict",
