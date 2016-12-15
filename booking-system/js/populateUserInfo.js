@@ -44,8 +44,8 @@ function populateBookings() {
         var startDateTime = arrayBookings[i][1];
         var endDateTime = arrayBookings[i][2];
         //convert string type dates into moments for easy formatting and comparison
-        momentStart = moment(startDateTime, "YYYY-MM-DD HH:mm:ss");
-        momentEnd = moment(endDateTime, "YYYY-MM-DD HH:mm:ss");
+        var momentStart = moment(startDateTime, "YYYY-MM-DD HH:mm:ss");
+        var momentEnd = moment(endDateTime, "YYYY-MM-DD HH:mm:ss");
 
 
         //if the current booking is today or after
@@ -67,7 +67,7 @@ function populateBookings() {
  * fields on the dash
  */
 function populateTimeAllocations() {
-    var accountInfo;
+    var accountInfo=[];
 
     var accountRequest = new XMLHttpRequest();
     accountRequest.onload = function () {

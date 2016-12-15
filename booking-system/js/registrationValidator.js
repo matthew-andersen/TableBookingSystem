@@ -1,6 +1,9 @@
 /**
+ * Script gets form information from registration and validates before it's sent to index.php
  * Created by Draga on 13/12/2016.
  */
+
+//retrieve current user information (name, email) from database
 var currentUsers = getCurrentUsers();
 
 function isAlpha(str) {
@@ -25,6 +28,7 @@ function userNameExists(potentialUserName) {
 function isInvalidEmail(potentialEmail) {
     var indexOfAt = potentialEmail.indexOf('@');
     var indexOfDot = potentialEmail.indexOf('.');
+    //checks that the email contains an @ and . symbol, which are neither the first nor the last index in the string
     if ((indexOfAt < 0 || indexOfAt == 0 || indexOfAt == potentialEmail.length - 1) || (indexOfDot < 0 || indexOfDot == 0 || indexOfDot == potentialEmail.length - 1)) {
         return true;
     }
@@ -43,6 +47,7 @@ function emailExists(potentialEmail) {
     }
     return false;
 }
+
 function validateRegistration() {
     var hasErrors = false;
     var errorMsg = "";
@@ -129,7 +134,6 @@ function getCurrentUsers() {
 
     var userAccountRequest = new XMLHttpRequest();
     userAccountRequest.onload = function () {
-        //what to you want to do with the response?
         var allUsers = this.responseText.split('|');
         //remove trailing empty element before returning
         allAccounts = allUsers.slice(0, allUsers.length - 1);
