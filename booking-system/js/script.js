@@ -22,6 +22,12 @@ var currentHour = todayDate.getHours();
 var currentDateTime = moment([currentYear, currentMonth, currentDay, currentHour]);
 var onScreenDate = moment([currentYear, currentMonth, currentDay, currentHour]);
 
+var currentBookings = [];
+getBookings();
+
+var currentUserInfo = [];
+getUserAccount();
+
 //Updates banked days/hours for user any time they make a booking/refresh the page
 function updateUserInfoView(userInfo) {
     var spanTags = document.getElementsByTagName("SPAN");
@@ -35,10 +41,10 @@ function updateUserInfoView(userInfo) {
 $(document).ready(function roomGen() {
     initialiseDate();
     calendarHandle();
-    var currentBookings = getBookings();
+    getBookings();
     updateView(currentBookings, onScreenDate);
-    var userInfo = getUserAccount();
-    updateUserInfoView(userInfo);
+    getUserAccount();
+    updateUserInfoView(currentUserInfo);
 });
 
 // Sets 'datebox' div to contain the current date //
@@ -151,17 +157,17 @@ function handlePopup(name, location) {
 function handleLocationSelection(name, location, duration, durationType) {
     var room_svg_object = document.getElementById(name);
     // Get the user account information from the database;
-    var accountInfo = getUserAccount();
+    getUserAccount();
     var durationRemaining;
     if (durationType == "hours") {
         if (location.slice(0, 4) == "Room") {
-            durationRemaining = accountInfo[3];
+            durationRemaining = currentUserInfo[3];
         }
         else {
-            durationRemaining = accountInfo[1];
+            durationRemaining = currentUserInfo[1];
         }
     } else if (durationType == "days") {
-        durationRemaining = accountInfo[2]
+        durationRemaining = currentUserInfo[2]
     }
 
     if (isValidNumDays(duration, durationRemaining)) {
@@ -216,7 +222,7 @@ function handleLocationSelection(name, location, duration, durationType) {
 // Checks whether passed date does not conflict with existing bookings
 function isValidEndDatetime(bookingEndDatetime, location) {
     bookingEndDatetime = moment(bookingEndDatetime, "YYYY-MM-DD HH:mm:ss");
-    var currentBookings = getBookings();
+    getBookings();
     for (var i = 0; i < currentBookings.length; i++) {
         var startDatetimeString = currentBookings[i][1];
         var endDatetimeString = currentBookings[i][2];
@@ -252,15 +258,15 @@ function getUserAccount() {
     var userAccountInfo;
     // When the request loads, run this anonymous function
     userRequest.onload = function () {
-        // What to you want to do with the response?
-        userAccountInfo = this.responseText.split(',');
+        if (this.readyState == 4 && this.status == 200) { // What to you want to do with the response?
+            userAccountInfo = this.responseText.split(',');
+            currentUserInfo = userAccountInfo;
+        }
     };
 
     // Open the file to make the request. Need to be false so program execution halts until response is ready
-    userRequest.open("GET", "php/get_user_account.php", false);
+    userRequest.open("GET", "php/get_user_account.php", true);
     userRequest.send();
-
-    return userAccountInfo;
 }
 
 // Sends all the rooms the user ordered to be processed then resets the 'cart' and reloads the page
@@ -279,20 +285,20 @@ function submitOrder() {
                     data: {'q': JSON.stringify(userOrder)}
                 });
 
-                var currentAccountInfo = getUserAccount();
+                getUserAccount();
                 for (var i=0; i < userOrder.length; i++) { //user order indices: 3, 4, 5
                     var numDays = userOrder[i][3];
                     var numDeskHours = userOrder[i][4];
                     var numRoomHours = userOrder[i][5];
 
                     if (numDays != 0) {
-                        currentAccountInfo[2] -= numDays;
+                        currentUserInfo[2] -= numDays;
                     }
                     else if (numDeskHours != 0) {
-                        currentAccountInfo[1] -= numDeskHours;
+                        currentUserInfo[1] -= numDeskHours;
                     }
                     else if (numRoomHours != 0) {
-                        currentAccountInfo[3] -= numRoomHours;
+                        currentUserInfo[3] -= numRoomHours;
                     }
                 }
 
@@ -300,7 +306,7 @@ function submitOrder() {
                 $.ajax({
                     url: 'php/update_user_account.php',
                     type: 'POST',
-                    data: {'q': JSON.stringify(currentAccountInfo)}
+                    data: {'q': JSON.stringify(currentUserInfo)}
                 });
 
                 $("#cart-box-order").text("");
@@ -360,8 +366,10 @@ function calendarHandle() {
 
         onScreenDate = moment([calendarYear, calendarMonth, calendarDate, onScreenTime]);
         document.getElementById("date-display-box").innerHTML = onScreenDate.format('MMMM Do YYYY - h:00a');
-        var bookings = getBookings();
-        updateView(bookings, onScreenDate);
+        // var bookings = getBookings();
+        // updateView(bookings, onScreenDate);
+        getBookings();
+        updateView(currentBookings, onScreenDate);
     });
 }
 
@@ -388,8 +396,10 @@ function changeDate(change) {
         onScreenDate.add(1, 'days');
     }
     document.getElementById("date-display-box").innerHTML = onScreenDate.format('MMMM Do YYYY - h:00a');
-    var bookings = getBookings();
-    updateView(bookings, onScreenDate);
+    // var bookings = getBookings();
+    // updateView(bookings, onScreenDate);
+    getBookings();
+    updateView(currentBookings, onScreenDate);
 }
 
 //updates map based on bookings recorded in database
@@ -419,16 +429,17 @@ function getBookings() {
 
     // When the request loads, run this anonymous function
     newRequest.onload = function () {
-        //what to you want to do with the response?
-        var strBookings = this.responseText.replace("\"", "").split("|");
-        for (var i = 0; i < strBookings.length - 1; i++) {
-            var arrayBooking = strBookings[i].split(",");
-            arrayBookings.push(arrayBooking);
+        if (this.readyState == 4 && this.status == 200) { //what to you want to do with the response?
+            var strBookings = this.responseText.replace("\"", "").split("|");
+            for (var i = 0; i < strBookings.length - 1; i++) {
+                var arrayBooking = strBookings[i].split(",");
+                arrayBookings.push(arrayBooking);
+                currentBookings = arrayBookings;
+            }
         }
     };
     // Open the file to make the request. Need to be false so program execution halts until response is ready
-    newRequest.open("GET", "php/update_availability.php", false);
+    newRequest.open("GET", "php/update_availability.php", true);
 
     newRequest.send();
-    return arrayBookings;
 }
