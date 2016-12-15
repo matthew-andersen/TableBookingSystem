@@ -276,7 +276,6 @@ function getUserAccount() {
 function submitOrder() {
     var dialogBox = $('#dialog');
     if (userOrder.length > 0) {
-    var dialogBox = $('#dialog');
     document.getElementById("dialog").innerHTML = "Press Submit to confirm your order";
     dialogBox.dialog({
         title: "Submit Order",
@@ -342,7 +341,7 @@ function submitOrder() {
 function clearOrder() {
     if (userOrder.length > 0) {
     document.getElementById("dialog").innerHTML = "Are you sure you wish to clear your cart?";
-    dialogBox = $('#dialog');
+    var dialogBox = $('#dialog');
     dialogBox.dialog({
             title: "Clear Cart",
             buttons: {
@@ -360,7 +359,6 @@ function clearOrder() {
     )
     ;
     dialogBox.dialog('open');
-    return false;
     } else {
         document.getElementById("dialog").innerHTML = "Your cart is empty";
         $('#dialog').dialog({
@@ -390,10 +388,10 @@ function calendarHandle() {
         var selected = $(this).val();
         selected = selected.split("/");
 
-        onScreenTime = onScreenDate.format('HH');
-        calendarDate = selected[1];
-        calendarMonth = selected[0] - 1;
-        calendarYear = selected[2];
+        var onScreenTime = onScreenDate.format('HH');
+        var calendarDate = selected[1];
+        var calendarMonth = selected[0] - 1;
+        var calendarYear = selected[2];
 
         if (calendarDate[0] == 0) {
             calendarDate = calendarDate[1]
