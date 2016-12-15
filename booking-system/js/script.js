@@ -58,9 +58,10 @@ function isValidNumDays(duration, durationRemaining) {
     // return (!isNaN(days) && (days > 0) && (days <= numDaysRemaining));
     duration = parseInt(duration);
     durationRemaining = parseInt(durationRemaining);
+    var dialogBox = $('#dialog');
     if (isNaN(duration) || duration <= 0) {
         document.getElementById("dialog").innerHTML = "Please enter a valid duration.";
-        $('#dialog').dialog({
+        dialogBox.dialog({
             title: "Invalid Duration",
             buttons: {
                 "OK": function () {
@@ -69,12 +70,12 @@ function isValidNumDays(duration, durationRemaining) {
 
             }
         });
-        $('#dialog').dialog('open');
+        dialogBox.dialog('open');
         return false;
     }
     else if (duration > durationRemaining) {
         document.getElementById("dialog").innerHTML = "You do not have enough time in your account for this booking.";
-        $('#dialog').dialog({
+        dialogBox.dialog({
             title: "Insufficient Time",
             buttons: {
                 "OK": function () {
@@ -83,7 +84,7 @@ function isValidNumDays(duration, durationRemaining) {
 
             }
         });
-        $('#dialog').dialog('open');
+        dialogBox.dialog('open');
         return false;
     }
     else {
@@ -98,7 +99,8 @@ function handlePopup(name, location) {
         document.getElementById("dialog").innerHTML = "<input type='radio' name='time' value='hours' checked> Hours<br> <input type='radio' name='time' value='days'> Days<br><input name='duration' type='number' min='1' value='' class='text' title=''/>";
     }
 
-    $('#dialog').dialog({
+    var dialogBox = $('#dialog');
+    dialogBox.dialog({
         resizable: false,
         autoOpen: false,
         width: 300,
@@ -109,10 +111,10 @@ function handlePopup(name, location) {
             "OK": function () {
                 $(this).dialog("close");
                 if ($("input[name='time']:checked").val() == "days") {
-                    var days = $('#dialog').find('input[name="duration"]').val();
+                    var days = dialogBox.find('input[name="duration"]').val();
                     handleLocationSelection(name, location, days, "days")
                 } else {
-                    var hours = $('#dialog').find('input[name="duration"]').val();
+                    var hours = dialogBox.find('input[name="duration"]').val();
                     handleLocationSelection(name, location, hours, "hours")
                 }
             },
@@ -124,7 +126,7 @@ function handlePopup(name, location) {
     var room_svg_object = document.getElementById(name);
     if (room_svg_object.style.fill == UNAVAILABLE) {
         document.getElementById("dialog").innerHTML = "Sorry, this has been booked";
-        $('#dialog').dialog({
+        dialogBox.dialog({
             title: "Already Booked",
             buttons: {
                 "OK": function () {
@@ -133,10 +135,10 @@ function handlePopup(name, location) {
 
             }
         });
-        $('#dialog').dialog('open')
+        dialogBox.dialog('open')
     } else if (room_svg_object.style.fill == SELECTED) {
         document.getElementById("dialog").innerHTML = "This booking needs to be confirmed";
-        $('#dialog').dialog({
+        dialogBox.dialog({
             title: "Needs Confirmation",
             buttons: {
                 "OK": function () {
@@ -145,9 +147,9 @@ function handlePopup(name, location) {
 
             }
         });
-        $('#dialog').dialog('open')
+        dialogBox.dialog('open')
     } else {
-        $('#dialog').dialog('open');
+        dialogBox.dialog('open');
     }
 }
 
@@ -182,7 +184,7 @@ function handleLocationSelection(name, location, duration, durationType) {
 
             room_svg_object.style.fill = SELECTED;
 
-            var userId;
+            var userId = -1;
             var userRequest = new XMLHttpRequest();
             userRequest.onload = function () {
                 userId = this.responseText;
@@ -193,7 +195,7 @@ function handleLocationSelection(name, location, duration, durationType) {
             //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
             //populate the list with relevant order information for sending to database
             if (durationType == "days") {
-                for (var i = 0; i < duration; i++){
+                for (var i = 0; i < duration; i++) {
                     var bookingStartDatetime = onScreenDate.clone().add(i, 'days');
                     bookingStartDatetime.hour(8);
                     bookingStartDatetime.minute(30);
@@ -223,6 +225,7 @@ function handleLocationSelection(name, location, duration, durationType) {
 function isValidEndDatetime(bookingEndDatetime, location) {
     bookingEndDatetime = moment(bookingEndDatetime, "YYYY-MM-DD HH:mm:ss");
     getBookings();
+    var dialogBox = $('#dialog');
     for (var i = 0; i < currentBookings.length; i++) {
         var startDatetimeString = currentBookings[i][1];
         var endDatetimeString = currentBookings[i][2];
@@ -235,7 +238,7 @@ function isValidEndDatetime(bookingEndDatetime, location) {
             // If the end datetime of this potential booking conflicts with an existing booking
             if (bookingEndDatetime.isBetween(startDateTime, endDateTime) || bookingEndDatetime.isSame(endDateTime)) {
                 document.getElementById("dialog").innerHTML = "This booking conflicts with a later booking. Please make sure the entire booking duration is available.";
-                $('#dialog').dialog({
+                dialogBox.dialog({
                     title: "Booking Conflict",
                     buttons: {
                         "OK": function () {
@@ -244,7 +247,7 @@ function isValidEndDatetime(bookingEndDatetime, location) {
 
                     }
                 });
-                $('#dialog').dialog('open');
+                dialogBox.dialog('open');
                 return false;
             }
         }
@@ -271,8 +274,9 @@ function getUserAccount() {
 
 // Sends all the rooms the user ordered to be processed then resets the 'cart' and reloads the page
 function submitOrder() {
+    var dialogBox = $('#dialog');
     document.getElementById("dialog").innerHTML = "Press Submit to confirm your order";
-    $('#dialog').dialog({
+    dialogBox.dialog({
         title: "Submit Order",
         modal: true,
         buttons: {
@@ -286,7 +290,7 @@ function submitOrder() {
                 });
 
                 getUserAccount();
-                for (var i=0; i < userOrder.length; i++) { //user order indices: 3, 4, 5
+                for (var i = 0; i < userOrder.length; i++) { //user order indices: 3, 4, 5
                     var numDays = userOrder[i][3];
                     var numDeskHours = userOrder[i][4];
                     var numRoomHours = userOrder[i][5];
@@ -317,12 +321,13 @@ function submitOrder() {
             }
         }
     });
-    $('#dialog').dialog('open');
+    dialogBox.dialog('open');
 }
 
 function clearOrder() {
     document.getElementById("dialog").innerHTML = "Are you sure you wish to clear your cart?";
-    $('#dialog').dialog({
+    dialogBox = $('#dialog');
+    dialogBox.dialog({
             title: "Clear Cart",
             buttons: {
                 "Yes": function () {
@@ -338,14 +343,14 @@ function clearOrder() {
         }
     )
     ;
-    $('#dialog').dialog('open');
+    dialogBox.dialog('open');
     return false;
 }
 
 function calendarHandle() {
     var dateToday = new Date();
     var $calendar = $('#calendar');
-    $('#calendar').datepicker({
+    $calendar.datepicker({
         inline: true,
         minDate: dateToday
     });
