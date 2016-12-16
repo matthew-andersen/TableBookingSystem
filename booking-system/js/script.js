@@ -183,7 +183,7 @@ function handlePopup(locationID, locationName) {
 function handleLocationSelection(locationID, location, duration, durationType) {
     var room_svg_object = document.getElementById(locationID);
 
-    // Get the user account information from the database;
+    // Get the user account information from the database and work out remaining time allotments
     getUserAccount();
     var durationRemaining;
     if (durationType == "hours") {
@@ -197,16 +197,13 @@ function handleLocationSelection(locationID, location, duration, durationType) {
         durationRemaining = currentUserInfo[2]
     }
 
+    // If the user has not entered gibberish and has sufficient time remaining in his account
     if (isValidDuration(duration, durationRemaining)) {
         var bookingDateTime = onScreenDate.clone();
         bookingDateTime.add(duration, durationType);
-        //calculate the end datetime of the booking
 
-        //if it does not conflict with existing bookings
+        //if the proposed booking end datetime (in hours) is not conflicting
         if (isValidEndDatetime(bookingDateTime, locationID)) {
-            //if user confirms addition to cart
-            // if (window.confirm("Your booking is for " + duration + " " + durationType + ". This will cost a total of: $" + cost + ". Press OK to confirm.") == true) {
-
             room_svg_object.style.fill = SELECTED;
 
             var userId = -1;
@@ -217,19 +214,25 @@ function handleLocationSelection(locationID, location, duration, durationType) {
             userRequest.open("GET", "../checkUser.php", false);
             userRequest.send();
 
-            //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
-            //populate the list with relevant order information for sending to database
             if (durationType == "days") {
+                //clone initial user order in order to reset if necessary
+                var originalUserOrder = userOrder.clone();
+
                 var isAllValid = true;
+                //each booking day needs to be checked for validity
                 for (var i = 0; i < duration; i++) {
+                    //create start datetime at 08:30am on each day
                     var bookingStartDatetime = onScreenDate.clone().add(i, 'days');
                     bookingStartDatetime.hour(8);
                     bookingStartDatetime.minute(30);
+
+                    //create end datetime at 06:00pm on each day
                     var bookingEndDatetime = bookingStartDatetime.clone();
                     bookingEndDatetime.hour(18);
                     bookingEndDatetime.minute(0);
 
                     if (isValidDayBooking(bookingStartDatetime, bookingEndDatetime, locationID)) {
+                        //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
                         userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '1', '0', '0', bookingStartDatetime.format('YYYY-MM-DD HH:mm:ss'), bookingEndDatetime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
                     }
                     else {
@@ -237,22 +240,26 @@ function handleLocationSelection(locationID, location, duration, durationType) {
                     }
                 }
                 if (isAllValid){
-                    //add to cart
+                    //all days need to be valid for the duration to be added to cart
                     document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + duration + " " + durationType + "</p>";
+                }
+                else {
+                    //restore userOrder to its initial elements
+                    userOrder = originalUserOrder;
                 }
             } else {
                 if (location.slice(0, 4) == "Room") {
+                    //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
                     userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '0', '0', duration.toString(), onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
                 }
                 else {
+                    //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
                     userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '0', duration.toString(), '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
                 }
-                //add to cart
                 document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + duration + " " + durationType + "</p>";
             }
         }
     }
-    // }
 }
 
 /**
