@@ -22,9 +22,10 @@ These instructions will get the project up and running on your machine for devel
 
 ### Prerequisites
 
-A MySQL database with appropriate records will be needed for the software to function. Samples can be found in the 'database-samples' folder. Furthermore, a database will be needed to host the PHP files.
+A MySQL database with appropriate structuring and records will be needed for the software to function. Samples can be found in the 'db-assets' folder. Furthermore, a server will be needed to host the PHP files. For development purposes WAMP has been used so far.
 
 ### Modifying Map
+The map is based on SVG components, made clickable with anchor tags.
 
 1. A base outline template of the floor plan will need to be saved as an SVG and then the vector code must be added into the application.php (in the 'booking-system folder'). Make sure to replace the current one
 2. Too add rooms/desks/locations coloured blocks need to be overlayed on the template then these blocks need to be saved as SVGs
