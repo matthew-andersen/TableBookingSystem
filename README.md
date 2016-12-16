@@ -24,6 +24,14 @@ These instructions will get the project up and running on your machine for devel
 
 A MySQL database with appropriate structuring and records will be needed for the software to function. Samples can be found in the 'db-assets' folder. Furthermore, a server will be needed to host the PHP files. For development purposes WAMP has been used so far.
 
+For local testing purposes, the developers used an installation of the following WAMP bundle (instructions for Windows).
+1. Download and install the appropriate version of the software for your system architecture, ensuring to install it directly into C: drive (not in any subfolders).
+2. Create a database by clicking the icon in your taskbar and following the link to phpMyAdmin
+3. Import the two SQL tables provided in the db-assets folder
+4. Change the details in the php files to details of your newly created database
+5. Place your website directories in a newly created directory at C:\wamp64\www , titled tablebookingsystem
+6. View your website by following the link to localhost in WAMP and clicking tablebookingsystem under "My Projects"
+
 ### Modifying Map
 The map is based on SVG components, made clickable with anchor tags.
 
