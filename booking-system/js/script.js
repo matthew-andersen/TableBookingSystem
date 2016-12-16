@@ -58,6 +58,11 @@ function initialiseDate() {
     document.getElementById("date-display-box").innerHTML = moment(onScreenDate).format('MMMM Do YYYY - h:00a');
 }
 
+// function isNotInteger(num) {
+//     var intNum = parseInt(num);
+//     alert(intNum);
+//     alert(num);
+// }
 /**
  * Checks whether user's allotted time allows for the desired length of booking, and that desired length of booking is number > 0
  *
@@ -67,10 +72,12 @@ function initialiseDate() {
  * @returns {boolean} true if duration is number > 0 and < duration remaining
  */
 function isValidDuration(duration, durationRemaining) {
-    duration = parseInt(duration);
+    durationInt = parseInt(duration);
     durationRemaining = parseInt(durationRemaining);
+
     var dialogBox = $('#dialog');
-    if (isNaN(duration) || duration <= 0) {
+    //if not a number, if <0, if decimal
+    if (isNaN(duration) || duration <= 0 || !(durationInt.toString() == duration)) {
         document.getElementById("dialog").innerHTML = "Please enter a valid duration.";
         dialogBox.dialog({
             title: "Invalid Duration",
