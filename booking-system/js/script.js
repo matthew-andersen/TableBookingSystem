@@ -6,13 +6,11 @@
 xhttp = new XMLHttpRequest();
 var newRequest = new XMLHttpRequest();
 
-
 var AVAILABLE = "rgb(94, 172, 95)";
 var UNAVAILABLE = "rgb(165, 165, 140)";
 var SELECTED = "rgb(41, 145, 42)";
 
 var roomList = ['room_1', 'room_2', 'room_3', 'room_4', 'room_5', 'room_6', 'room_7', 'room_8', 'desk_1', 'desk_2', 'desk_3', 'desk_4', 'desk_5', 'desk_6', 'desk_7', 'desk_8', 'desk_9', 'desk_10', 'desk_11', 'desk_12', 'desk_13', 'desk_14'];
-// List that stores all the selected rooms of the user
 var userOrder = [];
 var currentBookings = [];
 updateBookings();
@@ -58,11 +56,6 @@ function initialiseDate() {
     document.getElementById("date-display-box").innerHTML = moment(onScreenDate).format('MMMM Do YYYY - h:00a');
 }
 
-// function isNotInteger(num) {
-//     var intNum = parseInt(num);
-//     alert(intNum);
-//     alert(num);
-// }
 /**
  * Checks whether user's allotted time allows for the desired length of booking, and that desired length of booking is number > 0
  *
@@ -218,7 +211,7 @@ function handleLocationSelection(locationID, location, duration, durationType) {
             userRequest.onload = function () {
                 userId = this.responseText;
             };
-            userRequest.open("GET", "../checkUser.php", false);
+            userRequest.open("GET", "php/checkUser.php", false);
             userRequest.send();
 
             if (durationType == "days") {
