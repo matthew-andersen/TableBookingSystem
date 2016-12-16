@@ -16,6 +16,9 @@ var currentBookings = [];
 updateBookings();
 var currentUserInfo = [];
 getUserAccount();
+var numDeskHoursRem = 0;
+var numDeskDaysRem = 0;
+var numRoomHoursRem = 0;
 
 var todayDate = new Date();
 var currentYear = todayDate.getFullYear();
@@ -36,6 +39,7 @@ function updateUserInfoView(userInfo) {
     }
 }
 
+
 /**
  * Initialises the application on page load/refresh
  * Sets the date, updates the view based on availabilities, updates the user's account information
@@ -47,7 +51,22 @@ $(document).ready(function roomGen() {
     updateView(currentBookings, onScreenDate);
     getUserAccount();
     updateUserInfoView(currentUserInfo);
+    numDeskHoursRem = currentUserInfo[1];
+    numDeskDaysRem = currentUserInfo[2];
+    numRoomHoursRem = currentUserInfo[3];
 });
+
+function updateUserAllotments(duration, durationType) {
+    if (durationType == "deskh"){
+        numDeskHoursRem -= duration;
+    }
+    else if (durationType == "deskd"){
+        numDeskDaysRem -= duration;
+    }
+    else if (durationType == "room"){
+        numRoomHoursRem -= duration;
+    }
+}
 
 /**
  * Sets 'datebox' div to contain the current date
@@ -183,18 +202,18 @@ function handlePopup(locationID, locationName) {
 function handleLocationSelection(locationID, location, duration, durationType) {
     var room_svg_object = document.getElementById(locationID);
 
-    // Get the user account information from the database and work out remaining time allotments
-    getUserAccount();
+    // // // Get the user account information from the database and work out remaining time allotments
+    // getUserAccount();
     var durationRemaining;
     if (durationType == "hours") {
         if (location.slice(0, 4) == "Room") {
-            durationRemaining = currentUserInfo[3];
+            durationRemaining = numRoomHoursRem;
         }
         else {
-            durationRemaining = currentUserInfo[1];
+            durationRemaining = numDeskHoursRem;
         }
     } else if (durationType == "days") {
-        durationRemaining = currentUserInfo[2]
+        durationRemaining = numDeskDaysRem;
     }
 
     // If the user has not entered gibberish and has sufficient time remaining in his account
@@ -234,6 +253,7 @@ function handleLocationSelection(locationID, location, duration, durationType) {
                     if (isValidDayBooking(bookingStartDatetime, bookingEndDatetime, locationID)) {
                         //pushing: date_created, user_id, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
                         userOrder.push([currentDateTime.format('YYYYMMDD'), userId, '1', '0', '0', bookingStartDatetime.format('YYYY-MM-DD HH:mm:ss'), bookingEndDatetime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
+                        numDeskDaysRem -= 1;
                     }
                     else {
                         isAllValid = false;
@@ -251,10 +271,12 @@ function handleLocationSelection(locationID, location, duration, durationType) {
                 if (location.slice(0, 4) == "Room") {
                     //pushing: date_created, user_id, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
                     userOrder.push([currentDateTime.format('YYYYMMDD'), userId, '0', '0', duration.toString(), onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
+                    numRoomHoursRem -= duration;
                 }
                 else {
                     //pushing: date_created, user_id, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
                     userOrder.push([currentDateTime.format('YYYYMMDD'), userId, '0', duration.toString(), '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
+                    numDeskHoursRem -= duration;
                 }
                 document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + duration + " " + durationType + "</p>";
             }
@@ -392,22 +414,25 @@ function submitOrder() {
                         data: {'q': JSON.stringify(userOrder)}
                     });
 
-                    getUserAccount();
-                    for (var i = 0; i < userOrder.length; i++) {
-                        var numDays = userOrder[i][2];
-                        var numDeskHours = userOrder[i][3];
-                        var numRoomHours = userOrder[i][4];
-
-                        if (numDays != 0) {
-                            currentUserInfo[2] -= numDays;
-                        }
-                        else if (numDeskHours != 0) {
-                            currentUserInfo[1] -= numDeskHours;
-                        }
-                        else if (numRoomHours != 0) {
-                            currentUserInfo[3] -= numRoomHours;
-                        }
-                    }
+                    // getUserAccount();
+                    // for (var i = 0; i < userOrder.length; i++) {
+                    //     var numDays = userOrder[i][2];
+                    //     var numDeskHours = userOrder[i][3];
+                    //     var numRoomHours = userOrder[i][4];
+                    //
+                    //     if (numDays != 0) {
+                    //         currentUserInfo[2] -= numDays;
+                    //     }
+                    //     else if (numDeskHours != 0) {
+                    //         currentUserInfo[1] -= numDeskHours;
+                    //     }
+                    //     else if (numRoomHours != 0) {
+                    //         currentUserInfo[3] -= numRoomHours;
+                    //     }
+                    // }
+                    currentUserInfo[2] = numDeskDaysRem;
+                    currentUserInfo[1] = numDeskHoursRem;
+                    currentUserInfo[3] = numRoomHoursRem;
 
                     //sends updated account information to user table
                     $.ajax({
