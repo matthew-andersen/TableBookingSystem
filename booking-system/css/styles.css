@@ -176,6 +176,10 @@ img {
     background-color: #5eac5f;
 }
 
+#cart-box-order {
+    margin-top: 10px;
+}
+
 /*Calendar Styles */
 .ui-widget-header {
     background: #ffffff;
