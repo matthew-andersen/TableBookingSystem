@@ -43,7 +43,7 @@ if (!isset($_SESSION['current_userid']) || empty($_SESSION['current_userid'])) {
                         </svg>
                         <span id="user"></span> <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="logout.php">
+                        <li><a href="booking-system/php/logout.php">
                                 <svg class="glyph stroked cancel">
                                     <use href="#stroked-cancel"></use>
                                 </svg>

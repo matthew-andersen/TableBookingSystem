@@ -57,13 +57,13 @@ if (isset($_POST["username"], $_POST["password"]) && !empty($_POST["username"]) 
         $_SESSION['num_desk_hours'] = $db_num_desk_hours;
         $_SESSION['num_room_hours'] = $db_num_room_hours;
 
-        $userHome = "../../../dashboard.php";
+        $userHome = "../../dashboard.php";
         header('Location: '.$userHome);
     } else {
-        header('Location: login_reattempt.html');
+        header('Location: ../../login_reattempt.html');
     }
 }
 else {
-    header('Location: login_reattempt.html');
+    header('Location: ../../login_reattempt.html');
 }
 ?>

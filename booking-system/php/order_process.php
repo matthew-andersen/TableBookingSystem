@@ -37,15 +37,14 @@ mysqli_select_db($con, $DB);
 
 
 for ($i = 0; $i < count($q); $i++) {
-    $booking_id = $q[0][0];
-    $date_created = $q[$i][1];
-    $user_id = $q[$i][2];
-    $num_days = $q[$i][3];
-    $num_desk_hours = $q[$i][4];
-    $num_room_hours = $q[$i][5];
-    $start_datetime = $q[$i][6];
-    $end_datetime = $q[$i][7];
-    $location_id = $q[$i][8];
+    $date_created = $q[$i][0];
+    $user_id = $q[$i][1];
+    $num_days = $q[$i][2];
+    $num_desk_hours = $q[$i][3];
+    $num_room_hours = $q[$i][4];
+    $start_datetime = $q[$i][5];
+    $end_datetime = $q[$i][6];
+    $location_id = $q[$i][7];
 
     $sql = "INSERT INTO `booking_record_table`(`date_created`, `user_id`, `num_days`, `num_desk_hours`, `num_room_hours`, `start_datetime`, `end_datetime`, `location_id`) VALUES ('$date_created','$user_id','$num_days', '$num_desk_hours', '$num_room_hours', '$start_datetime', '$end_datetime','$location_id')";
 
