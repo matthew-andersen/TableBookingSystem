@@ -466,9 +466,9 @@ function submitOrder() {
 }
 
 function removeSingleItem(bookingID) {
-    alert(userOrder);
     for (var i = 0; i < userOrder.length; i++) {
         if (userOrder[i][8] == bookingID) {
+            document.getElementById(userOrder[i][7]).style.fill = AVAILABLE;
             userOrder.splice(i, 1)
         }
     }
