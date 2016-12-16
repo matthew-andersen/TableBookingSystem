@@ -28,7 +28,7 @@ var currentHour = todayDate.getHours();
 var currentDateTime = moment([currentYear, currentMonth, currentDay, currentHour]);
 var onScreenDate = moment([currentYear, currentMonth, currentDay, currentHour]);
 
-var uniqueBookingID = 0;
+var uniqueCartID = 0;
 
 /**
  * Updates display of banked days/hours for user any time they make a booking/refresh the page
@@ -58,18 +58,6 @@ $(document).ready(function roomGen() {
     numRoomHoursRem = currentUserInfo[3];
 });
 
-function updateUserAllotments(duration, durationType) {
-    if (durationType == "deskh") {
-        numDeskHoursRem -= duration;
-    }
-    else if (durationType == "deskd") {
-        numDeskDaysRem -= duration;
-    }
-    else if (durationType == "room") {
-        numRoomHoursRem -= duration;
-    }
-}
-
 /**
  * Sets 'datebox' div to contain the current date
  */
@@ -86,7 +74,7 @@ function initialiseDate() {
  * @returns {boolean} true if duration is number > 0 and < duration remaining
  */
 function isValidDuration(duration, durationRemaining) {
-    durationInt = parseInt(duration);
+    var durationInt = parseInt(duration);
     durationRemaining = parseInt(durationRemaining);
 
     var dialogBox = $('#dialog');
@@ -204,7 +192,7 @@ function handlePopup(locationID, locationName) {
 function handleLocationSelection(locationID, location, duration, durationType) {
     var room_svg_object = document.getElementById(locationID);
 
-    // // // Get the user account information from the database and work out remaining time allotments
+    // Get the user account information from the database and work out remaining time allotments
     // getUserAccount();
     var durationRemaining;
     if (durationType == "hours") {
@@ -237,7 +225,7 @@ function handleLocationSelection(locationID, location, duration, durationType) {
 
             //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
             //populate the list with relevant order information for sending to database
-            uniqueBookingID++;
+            uniqueCartID++;
 
             if (durationType == "days") {
                 //clone initial user order in order to reset if necessary
@@ -257,9 +245,14 @@ function handleLocationSelection(locationID, location, duration, durationType) {
                     bookingEndDatetime.minute(0);
 
                     if (isValidDayBooking(bookingStartDatetime, bookingEndDatetime, locationID)) {
-                        //pushing: date_created, user_id, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
-                        userOrder.push([currentDateTime.format('YYYYMMDD'), userId, '1', '0', '0', bookingStartDatetime.format('YYYY-MM-DD HH:mm:ss'), bookingEndDatetime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
-                        numDeskDaysRem -= 1;
+                        if (i != duration-1) { //pushing: date_created, user_id, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
+                            userOrder.push([currentDateTime.format('YYYYMMDD'), userId, '1', '0', '0', bookingStartDatetime.format('YYYY-MM-DD HH:mm:ss'), bookingEndDatetime.format('YYYY-MM-DD HH:mm:ss'), locationID, uniqueCartID]);
+                            numDeskDaysRem -= 1;
+                        }
+                        else {
+                            userOrder.push([currentDateTime.format('YYYYMMDD'), userId, '1', '0', '0', bookingStartDatetime.format('YYYY-MM-DD HH:mm:ss'), bookingEndDatetime.format('YYYY-MM-DD HH:mm:ss'), locationID, uniqueCartID, 'end']);
+                            numDeskDaysRem -= 1;
+                        }
                     }
                     else {
                         isAllValid = false;
@@ -267,24 +260,25 @@ function handleLocationSelection(locationID, location, duration, durationType) {
                 }
                 if (isAllValid) {
                     //all days need to be valid for the duration to be added to cart
-                    document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + "<a href='#'" + " id=" + uniqueBookingID + " onclick=removeSingleItem(this.id)>" + "[X]" + "</a> " + location + " for " + duration + " " + durationType + "</p>";
+                    document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + "<a href='#'" + " id=" + uniqueCartID + " onclick=removeSingleItem(this.id)>" + "[X]" + "</a> " + location + " for " + duration + " " + durationType + "</p>";
                 }
                 else {
                     //restore userOrder to its initial elements
                     userOrder = originalUserOrder;
-                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '1', '0', '0', bookingStartDatetime.format('YYYY-MM-DD HH:mm:ss'), bookingEndDatetime.format('YYYY-MM-DD HH:mm:ss'), locationID, uniqueBookingID]);
+                    room_svg_object.style.fill = AVAILABLE;
                 }
             } else {
                 if (location.slice(0, 4) == "Room") {
-                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '0', '0', duration.toString(), onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), locationID, uniqueBookingID]);
+                    userOrder.push([currentDateTime.format('YYYYMMDD'), userId, '0', '0', duration.toString(), onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), locationID, uniqueCartID]);
                     //pushing: date_created, user_id, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
                     numRoomHoursRem -= duration;
                 }
                 else {
-                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '0', duration.toString(), '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), locationID, uniqueBookingID]);
+                    userOrder.push([currentDateTime.format('YYYYMMDD'), userId, '0', duration.toString(), '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), locationID, uniqueCartID]);
                     //pushing: date_created, user_id, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
                     numDeskHoursRem -= duration;
                 }
+                document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + "<a href='#'" + " id=" + uniqueCartID + " onclick=removeSingleItem(this.id)>" + "[X]" + "</a> " + location + " for " + duration + " " + durationType + "</p>";
             }
         }
     }
@@ -403,6 +397,7 @@ function getUserAccount() {
  * Sends all the rooms the user ordered to be processed then resets the 'cart' and reloads the page
  */
 function submitOrder() {
+
     var dialogBox = $('#dialog');
     if (userOrder.length > 0) {
         document.getElementById("dialog").innerHTML = "Press Submit to confirm your order";
@@ -473,25 +468,46 @@ function submitOrder() {
 function removeSingleItem(bookingID) {
     alert(userOrder);
     for (var i = 0; i < userOrder.length; i++) {
-        if (userOrder[i][9] == bookingID) {
+        if (userOrder[i][8] == bookingID) {
             userOrder.splice(i, 1)
         }
     }
     document.getElementById("cart-box-order").innerHTML = "";
+    var dayCount = 0;
+    var dayBookingID = -1;
     for (i = 0; userOrder.length; i++) {
-        uniqueBookingID++;
-        var roomString = userOrder[i][8].replace("_", " ");
+        uniqueCartID++;
+        var roomString = userOrder[i][7].replace("_", " ");
         roomString = roomString.charAt(0).toUpperCase() + roomString.slice(1);
         var durationType;
         var duration;
-        if (userOrder[i][5] != 0) { // If this is a day
+        //if this is the first day in a set of day bookings
+        if (userOrder[i][2] != 0 && dayBookingID == -1) {
+            // If this is a day
             durationType = "days";
-            duration = userOrder[i][5]
-        } else {
-            durationType = "hours";
-            duration = userOrder[i][6]
+            dayCount += parseInt(userOrder[i][2]);
+            dayBookingID = userOrder[i][8];
         }
-        document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + "<a href='#'" + " id=" + uniqueBookingID + " onclick=removeSingleItem(this.id)>" + "[X]" + "</a> " + roomString + " for " + duration + " " + durationType + "</p>";
+        //if this is some other day in a set of day bookings
+        else if (userOrder[i][2] != 0 && dayBookingID == userOrder[i][8]){
+            dayCount += parseInt(userOrder[i][2]);
+            if (userOrder[i].length == 10){
+                document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + "<a href='#'" + " id=" + uniqueCartID + " onclick=removeSingleItem(this.id)>" + "[X]" + "</a> " + roomString + " for " + dayCount.toString() + " " + durationType + "</p>";
+                dayCount = 0;
+                dayBookingID = -1;
+            }
+        }
+        //it's not a day booking
+        else {
+            durationType = "hours";
+            if (roomString.slice(0,4)=="Room"){
+                duration = userOrder[i][4];
+            }
+            else {
+                duration = userOrder[i][3];
+            }
+            document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + "<a href='#'" + " id=" + uniqueCartID + " onclick=removeSingleItem(this.id)>" + "[X]" + "</a> " + roomString + " for " + duration + " " + durationType + "</p>";
+        }
     }
 
 
