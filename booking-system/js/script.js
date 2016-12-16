@@ -59,13 +59,13 @@ $(document).ready(function roomGen() {
 });
 
 function updateUserAllotments(duration, durationType) {
-    if (durationType == "deskh"){
+    if (durationType == "deskh") {
         numDeskHoursRem -= duration;
     }
-    else if (durationType == "deskd"){
+    else if (durationType == "deskd") {
         numDeskDaysRem -= duration;
     }
-    else if (durationType == "room"){
+    else if (durationType == "room") {
         numRoomHoursRem -= duration;
     }
 }
@@ -265,9 +265,9 @@ function handleLocationSelection(locationID, location, duration, durationType) {
                         isAllValid = false;
                     }
                 }
-                if (isAllValid){
+                if (isAllValid) {
                     //all days need to be valid for the duration to be added to cart
-                    document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + duration + " " + durationType + "</p>";
+                    document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + "<a href='#'" + " id=" + uniqueBookingID + " onclick=removeSingleItem(this.id)>" + "[X]" + "</a> " + location + " for " + duration + " " + durationType + "</p>";
                 }
                 else {
                     //restore userOrder to its initial elements
@@ -286,10 +286,7 @@ function handleLocationSelection(locationID, location, duration, durationType) {
                     numDeskHoursRem -= duration;
                 }
             }
-            //add to cart
-            document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + "<a href='#'" + " id=" + uniqueBookingID + " onclick=removeSingleItem(this.id)>" + "[X]" + "</a> " + location + " for " + duration + " " + durationType + "</p>";
         }
-    }
     }
 }
 
