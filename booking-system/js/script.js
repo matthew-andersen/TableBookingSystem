@@ -216,7 +216,7 @@ function handleLocationSelection(locationID, location, duration, durationType) {
 
             if (durationType == "days") {
                 //clone initial user order in order to reset if necessary
-                var originalUserOrder = userOrder.clone();
+                var originalUserOrder = userOrder.slice(0);
 
                 var isAllValid = true;
                 //each booking day needs to be checked for validity
@@ -232,8 +232,8 @@ function handleLocationSelection(locationID, location, duration, durationType) {
                     bookingEndDatetime.minute(0);
 
                     if (isValidDayBooking(bookingStartDatetime, bookingEndDatetime, locationID)) {
-                        //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
-                        userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '1', '0', '0', bookingStartDatetime.format('YYYY-MM-DD HH:mm:ss'), bookingEndDatetime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
+                        //pushing: date_created, user_id, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
+                        userOrder.push([currentDateTime.format('YYYYMMDD'), userId, '1', '0', '0', bookingStartDatetime.format('YYYY-MM-DD HH:mm:ss'), bookingEndDatetime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
                     }
                     else {
                         isAllValid = false;
@@ -249,12 +249,12 @@ function handleLocationSelection(locationID, location, duration, durationType) {
                 }
             } else {
                 if (location.slice(0, 4) == "Room") {
-                    //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
-                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '0', '0', duration.toString(), onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
+                    //pushing: date_created, user_id, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
+                    userOrder.push([currentDateTime.format('YYYYMMDD'), userId, '0', '0', duration.toString(), onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
                 }
                 else {
-                    //pushing: user_id, date_created, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
-                    userOrder.push(['4', currentDateTime.format('YYYYMMDD'), userId, '0', duration.toString(), '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
+                    //pushing: date_created, user_id, num_days, num_desk_hours, num_room_hours, start_datetime, end_datetime, location_id
+                    userOrder.push([currentDateTime.format('YYYYMMDD'), userId, '0', duration.toString(), '0', onScreenDate.format('YYYY-MM-DD HH:mm:ss'), bookingDateTime.format('YYYY-MM-DD HH:mm:ss'), locationID]);
                 }
                 document.getElementById("cart-box-order").innerHTML = document.getElementById("cart-box-order").innerHTML + "<p>" + location + " for " + duration + " " + durationType + "</p>";
             }
@@ -393,10 +393,10 @@ function submitOrder() {
                     });
 
                     getUserAccount();
-                    for (var i = 0; i < userOrder.length; i++) { //user order indices: 3, 4, 5
-                        var numDays = userOrder[i][3];
-                        var numDeskHours = userOrder[i][4];
-                        var numRoomHours = userOrder[i][5];
+                    for (var i = 0; i < userOrder.length; i++) {
+                        var numDays = userOrder[i][2];
+                        var numDeskHours = userOrder[i][3];
+                        var numRoomHours = userOrder[i][4];
 
                         if (numDays != 0) {
                             currentUserInfo[2] -= numDays;
